@@ -195,7 +195,6 @@
     var KEY_LOKAL_DRAFT = "E597_AutoSave_Draft";
     var KEY_SESI_USER = "E597_Sesi_User";
 
-    // Fungsi Komunikasi API dari Vercel ke Google Apps Script (Bebas Blokir CORS)
     async function panggilServerAPI(payload) {
       var response = await fetch(URL_API_APPS_SCRIPT, {
         method: "POST",
@@ -288,7 +287,6 @@
       window.scrollTo(0, 0);
     }
 
-    // Ambil MasterData + Draft Awan Sekaligus dalam 1 Panggilan Cepat
     function mulaiAplikasi() {
       jalankanJam(); 
       panggilServerAPI({ action: "init" })
@@ -743,14 +741,46 @@
         });
     }
     
+    // Download File Excel dengan Timestamp Otomatis pada Nama File
     function downloadExcel() { 
-      if (linkExcelTersimpan !== "") {
-        window.open(linkExcelTersimpan, '_blank');
-      } else {
-        panggilServerAPI({ action: "getLinkExcel" }).then(function(res) {
-          if (res.linkExcel) window.open(res.linkExcel, '_blank');
+      var btn = document.getElementById('btnExcel');
+      btn.innerText = "⏳ Menyiapkan File Excel...";
+      btn.disabled = true;
+
+      panggilServerAPI({ action: "downloadExcel" })
+        .then(function(res) {
+          var byteCharacters = atob(res.base64);
+          var byteNumbers = new Array(byteCharacters.length);
+          for (var i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          var byteArray = new Uint8Array(byteNumbers);
+          var blob = new Blob([byteArray], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          });
+
+          var urlBlob = URL.createObjectURL(blob);
+          var linkDownload = document.createElement("a");
+          linkDownload.href = urlBlob;
+          linkDownload.download = res.namaFile || ("Opname_Accs_E597_" + new Date().getTime() + ".xlsx");
+          document.body.appendChild(linkDownload);
+          linkDownload.click();
+          document.body.removeChild(linkDownload);
+          setTimeout(function() { URL.revokeObjectURL(urlBlob); }, 5000);
+
+          btn.innerText = "⬇️ Download Laporan Excel";
+          btn.disabled = false;
+        })
+        .catch(function(err) {
+          btn.innerText = "⬇️ Download Laporan Excel";
+          btn.disabled = false;
+          // Fallback jika izin UrlFetchApp belum disetujui
+          if (linkExcelTersimpan !== "") {
+            window.open(linkExcelTersimpan, '_blank');
+          } else {
+            tampilkanModal("Gagal Mengunduh ❌", err.message);
+          }
         });
-      }
     }
   </script>
 </body>
