@@ -64,7 +64,7 @@
 
     #wadahFoto { display: none; text-align: center; margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;}
     #fotoPreview { max-width: 100%; max-height: 200px; border-radius: 5px; object-fit: contain;}
-    canvas { border: 2px dashed #0d6efd; border-radius: 8px; width: 100%; height: 160px; background: #fafafa; touch-action: none; margin-bottom: 10px;}
+    canvas { border: 2px dashed #0d6efd; border-radius: 8px; width: 100%; height: 150px; background: #ffffff; touch-action: none; margin-bottom: 10px; display: block; cursor: crosshair;}
     #areaTandaTangan { display: none; } 
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
     .modal-box { background: white; padding: 20px; border-radius: 12px; width: 85%; max-width: 350px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);}
@@ -152,7 +152,8 @@
         <div id="wadahRekapSelisih"></div>
 
         <label>Paraf / Tanda Tangan Bukti Opname:</label>
-        <canvas id="kanvasTtd"></canvas>
+        <!-- Resolusi kanvas dikunci langsung 200x75 piksel agar tajam dan tidak pernah ter-reset oleh setTimeout -->
+        <canvas id="kanvasTtd" width="200" height="75"></canvas>
         <div class="wadah-flex">
           <button class="btn-merah" onclick="hapusTtd()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">Hapus TTD</button>
           <button class="btn-abu" onclick="tutupTandaTangan()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">⬅️ Lanjut Cek Barang</button>
@@ -236,6 +237,7 @@
     function tutupModal() { document.getElementById('modalAlert').style.display = 'none'; }
 
     document.addEventListener("DOMContentLoaded", function() {
+      hapusTtd();
       try {
         var sesiTersimpan = sessionStorage.getItem(KEY_SESI_USER);
         if (sesiTersimpan && sesiTersimpan !== "") {
@@ -646,10 +648,13 @@
       
       renderRekapSelisih();
 
+      if (!adaCoretanTtd) {
+        hapusTtd();
+      }
+
       document.getElementById('areaTandaTangan').style.display = 'block'; 
       document.getElementById('btnSelesai').style.display = 'none'; 
       document.getElementById('areaDraftBar').style.display = 'none';
-      setTimeout(function(){ canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }, 100); 
       window.scrollTo({ top: document.getElementById('areaTandaTangan').offsetTop - 10, behavior: 'smooth' }); 
     }
 
@@ -660,29 +665,71 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // Sistem Kanvas Tanda Tangan Berlatar Putih & Skala Koordinat Presisi
     var canvas = document.getElementById("kanvasTtd"); 
     var ctx = canvas.getContext("2d"); 
     var lagiGambar = false;
-    function mulaiGambar(e) { lagiGambar = true; gambar(e); } 
-    function selesaiGambar() { lagiGambar = false; ctx.beginPath(); }
-    function gambar(e) { 
-      if (!lagiGambar) return; 
-      e.preventDefault(); 
-      var rect = canvas.getBoundingClientRect(); 
-      var x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left; 
-      var y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top; 
-      ctx.lineWidth = 3; ctx.lineCap = "round"; ctx.strokeStyle = "#000"; 
-      ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y); 
+    var adaCoretanTtd = false;
+
+    function ambilKoordinatKanvas(e) {
+      var rect = canvas.getBoundingClientRect();
+      var scaleX = canvas.width / (rect.width || 200);
+      var scaleY = canvas.height / (rect.height || 75);
+      var clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
+      var clientY = (e.touches && e.touches.length > 0) ? e.touches[0].clientY : e.clientY;
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
     }
+
+    function mulaiGambar(e) {
+      e.preventDefault();
+      lagiGambar = true;
+      adaCoretanTtd = true;
+      var pos = ambilKoordinatKanvas(e);
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = "#000000";
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+      ctx.lineTo(pos.x + 0.1, pos.y + 0.1);
+      ctx.stroke();
+    }
+
+    function gambar(e) {
+      if (!lagiGambar) return;
+      e.preventDefault();
+      var pos = ambilKoordinatKanvas(e);
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = "#000000";
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+      adaCoretanTtd = true;
+    }
+
+    function selesaiGambar() {
+      lagiGambar = false;
+    }
+
     if (canvas) { 
       canvas.addEventListener("mousedown", mulaiGambar); 
-      canvas.addEventListener("mouseup", selesaiGambar); 
+      window.addEventListener("mouseup", selesaiGambar); 
       canvas.addEventListener("mousemove", gambar); 
       canvas.addEventListener("touchstart", mulaiGambar, {passive: false}); 
-      canvas.addEventListener("touchend", selesaiGambar); 
+      window.addEventListener("touchend", selesaiGambar); 
       canvas.addEventListener("touchmove", gambar, {passive: false}); 
     }
-    function hapusTtd() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+    function hapusTtd() {
+      adaCoretanTtd = false;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+    }
     
     function resetSistemPenuhLokal() {
        clearTimeout(timerAutoSaveAwan);
@@ -720,6 +767,11 @@
         } else {
           item.remark = "-";
         }
+      }
+
+      if (!adaCoretanTtd) {
+        tampilkanModal("Tanda Tangan Kosong ✍️", "Mohon bubuhkan paraf / tanda tangan pada kotak yang tersedia sebelum menyetor data.");
+        return;
       }
 
       clearTimeout(timerAutoSaveAwan);
