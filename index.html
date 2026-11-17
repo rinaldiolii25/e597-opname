@@ -27,6 +27,7 @@
     .btn-merah { background: #dc3545; }
     .btn-abu { background: #6c757d; }
     .btn-cyan { background: #17a2b8; }
+    .btn-ungu { background: #6f42c1; }
     
     .wadah-logo-login { text-align: center; margin-bottom: 10px; }
     .logo-login { max-height: 55px; max-width: 180px; object-fit: contain; }
@@ -35,6 +36,14 @@
     .logo-utama { max-height: 42px; max-width: 150px; object-fit: contain; margin-bottom: 6px; }
     .btn-logout-atas { position: absolute; top: 0; right: 0; width: auto; padding: 6px 12px; font-size: 12px; font-weight: bold; background-color: #fff; color: #dc3545; border: 1px solid #dc3545; border-radius: 6px; margin-bottom: 0; cursor: pointer; transition: all 0.2s; }
     .btn-logout-atas:hover, .btn-logout-atas:active { background-color: #dc3545; color: #fff; }
+
+    /* Deretan Fitur Baru & Saklar Maintenance Khusus Store Leader */
+    .bar-fitur-atas { display: flex; gap: 8px; margin-bottom: 12px; }
+    .btn-fitur-kecil { flex: 1; padding: 10px 8px; font-size: 12px; border-radius: 8px; margin-bottom: 0; font-weight: bold; }
+    .banner-maintenance-aktif { display: none; background-color: #fff3cd; color: #664d03; border: 1px solid #ffda6a; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; text-align: center; margin-bottom: 12px; }
+    #panelArtikelBaru { display: none; background: #f8f9fa; border: 1px solid #cfe2ff; border-left: 4px solid #0d6efd; border-radius: 10px; padding: 14px; margin-bottom: 15px; }
+    #panelArtikelBaru h4 { margin-top: 0; margin-bottom: 6px; color: #0d6efd; font-size: 14px; }
+    #panelArtikelBaru p { margin-top: 0; margin-bottom: 12px; font-size: 11.5px; color: #555; line-height: 1.4; }
 
     .status-autosave { font-size: 12px; text-align: center; padding: 6px 10px; border-radius: 6px; background: #f8f9fa; color: #6c757d; margin-top: 2px; border: 1px solid #e9ecef; font-weight: 600; }
 
@@ -87,7 +96,7 @@
       <input type="text" id="loginId" placeholder="Masukkan NIK Karyawan">
       <label>Password:</label>
       <input type="password" id="loginPass" placeholder="Masukkan password">
-      <button class="btn-biru" onclick="prosesLogin()" style="margin-top:10px;">Masuk (Login)</button>
+      <button class="btn-biru" id="btnMasukLogin" onclick="prosesLogin()" style="margin-top:10px;">Masuk (Login)</button>
     </div>
 
     <!-- HALAMAN 2: APLIKASI UTAMA -->
@@ -98,6 +107,36 @@
           <img src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-utama" onerror="this.style.display='none'">
           <h2 style="text-align: center; color: #0d6efd; margin: 0;">📱 E597 Opname Accs</h2>
         </div>
+
+        <!-- BANNER INDIKATOR SAAT MAINTENANCE AKTIF -->
+        <div id="bannerMaintenance" class="banner-maintenance-aktif">
+          🚧 MODE MAINTENANCE AKTIF (Hanya Store Leader yang dapat mengakses aplikasi)
+        </div>
+
+        <!-- DERETAN FITUR BARU & TOMBOL MAINTENANCE KHUSUS PAK NALDI -->
+        <div class="bar-fitur-atas">
+          <button type="button" class="btn-ungu btn-fitur-kecil" onclick="togglePanelArtikelBaru()">📦 + Artikel Baru</button>
+          <button type="button" id="btnToggleMaintenance" class="btn-abu btn-fitur-kecil" style="display:none;" onclick="ubahModeMaintenance()">🔧 Maint: OFF (Aktifkan)</button>
+        </div>
+
+        <!-- PANEL INPUT ARTIKEL BARU (STOK SEMENTARA ANTI-BENTROK VLOOKUP) -->
+        <div id="panelArtikelBaru">
+          <h4>📦 Tambah Artikel Baru</h4>
+          <p>Rumus <b>VLOOKUP</b> di <i>ListOpname</i> tetap aman. Jumlah barang disimpan di kolom sementara hingga <i>MasterData</i> SAP diperbarui admin.</p>
+          <label>Kode Artikel Baru:</label>
+          <input type="text" id="kodeBaruInput" placeholder="Contoh: 8100019999">
+          <label>Nama Aksesoris:</label>
+          <input type="text" id="namaBaruInput" placeholder="Contoh: Adapter Charger 25W">
+          <label>Jumlah Barang Sementara:</label>
+          <input type="number" id="qtyBaruInput" placeholder="Masukkan jumlah fisik yang diterima...">
+          <label>Link Foto Barang (Opsional):</label>
+          <input type="text" id="fotoBaruInput" placeholder="Kosongkan jika belum ada foto">
+          <div class="wadah-flex" style="margin-bottom:0;">
+            <button type="button" class="btn-hijau" id="btnSimpanArtikelBaru" onclick="simpanArtikelBaru()" style="padding:10px; font-size:13px; margin-bottom:0;">💾 Simpan ke ListOpname</button>
+            <button type="button" class="btn-abu" onclick="togglePanelArtikelBaru()" style="padding:10px; font-size:13px; margin-bottom:0;">Batal</button>
+          </div>
+        </div>
+
         <label>Waktu (Real-Time):</label>
         <input type="text" id="waktu" readonly style="background-color: #e9ecef; font-weight: bold; text-align: center; color: #495057;">
         <label>Nama Petugas:</label>
@@ -152,7 +191,6 @@
         <div id="wadahRekapSelisih"></div>
 
         <label>Paraf / Tanda Tangan Bukti Opname:</label>
-        <!-- Resolusi kanvas dikunci langsung 200x75 piksel agar tajam dan tidak pernah ter-reset oleh setTimeout -->
         <canvas id="kanvasTtd" width="200" height="75"></canvas>
         <div class="wadah-flex">
           <button class="btn-merah" onclick="hapusTtd()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">Hapus TTD</button>
@@ -175,11 +213,9 @@
   </div>
 
   <script>
-    // =========================================================================
-    // WAJIB DIGANTI: Tempel URL Web App Google Apps Script (/exec) Anda di sini
-    // =========================================================================
     const URL_API_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbx00sdpyQJRDLda3KD9vGbWeZibSY9Z776cOSd4_Mo25T2maRFX2i--YdiuZHrtRReR/exec";
 
+    var ID_STORE_LEADER = "202106477";
     var dbUser = {
       "202106477": { pass: "Tomohon.2026", namaLengkap: "Pak Naldi (Store Leader)" },
       "202408242": { pass: "Tomohon.2026", namaLengkap: "Veidel (ERO)" },
@@ -188,6 +224,8 @@
       "202611324": { pass: "Tomohon.2026", namaLengkap: "Grasia (ERO)" }
     };
     var userAktif = "";
+    var userIdAktif = "";
+    var statusMaintenanceServer = "OFF";
 
     var kunciData = {}; 
     var keranjangOpname = {}; 
@@ -200,6 +238,7 @@
 
     var KEY_LOKAL_DRAFT = "E597_AutoSave_Draft";
     var KEY_SESI_USER = "E597_Sesi_User";
+    var KEY_SESI_ID = "E597_Sesi_Id";
 
     async function panggilServerAPI(payload) {
       var response = await fetch(URL_API_APPS_SCRIPT, {
@@ -236,16 +275,107 @@
     }
     function tutupModal() { document.getElementById('modalAlert').style.display = 'none'; }
 
+    function aturTampilanMaintenance() {
+      var btnMaint = document.getElementById("btnToggleMaintenance");
+      var bannerMaint = document.getElementById("bannerMaintenance");
+
+      // Tombol Saklar Maintenance HANYA muncul untuk Pak Naldi (202106477)
+      if (userIdAktif === ID_STORE_LEADER) {
+        btnMaint.style.display = "block";
+        if (statusMaintenanceServer === "ON") {
+          btnMaint.className = "btn-merah btn-fitur-kecil";
+          btnMaint.innerText = "🚧 Maint: ON (Matikan)";
+          bannerMaint.style.display = "block";
+        } else {
+          btnMaint.className = "btn-abu btn-fitur-kecil";
+          btnMaint.innerText = "🔧 Maint: OFF (Aktifkan)";
+          bannerMaint.style.display = "none";
+        }
+      } else {
+        btnMaint.style.display = "none";
+        bannerMaint.style.display = "none";
+      }
+    }
+
+    function ubahModeMaintenance() {
+      if (userIdAktif !== ID_STORE_LEADER) return;
+      var targetStatus = (statusMaintenanceServer === "ON") ? "OFF" : "ON";
+      var btnMaint = document.getElementById("btnToggleMaintenance");
+      btnMaint.innerText = "⏳ Memproses...";
+      btnMaint.disabled = true;
+
+      panggilServerAPI({ action: "setMaintenance", nilai: targetStatus })
+        .then(function(res) {
+          btnMaint.disabled = false;
+          statusMaintenanceServer = res.maintenance || targetStatus;
+          aturTampilanMaintenance();
+          tampilkanModal("Status Maintenance 🔧", res.pesan);
+        })
+        .catch(function(err) {
+          btnMaint.disabled = false;
+          aturTampilanMaintenance();
+          tampilkanModal("Gagal Mengubah Mode ❌", err.message);
+        });
+    }
+
+    function togglePanelArtikelBaru() {
+      var panel = document.getElementById("panelArtikelBaru");
+      panel.style.display = (panel.style.display === "block") ? "none" : "block";
+    }
+
+    function simpanArtikelBaru() {
+      var kode = document.getElementById("kodeBaruInput").value.trim();
+      var nama = document.getElementById("namaBaruInput").value.trim();
+      var qty = document.getElementById("qtyBaruInput").value.trim();
+      var foto = document.getElementById("fotoBaruInput").value.trim();
+
+      if (!kode || !nama || qty === "") {
+        tampilkanModal("Data Belum Lengkap ⚠️", "Mohon isi Kode Artikel, Nama Aksesoris, dan Jumlah Barang Sementara terlebih dahulu.");
+        return;
+      }
+
+      var btn = document.getElementById("btnSimpanArtikelBaru");
+      btn.innerText = "⏳ Menyimpan...";
+      btn.disabled = true;
+
+      panggilServerAPI({
+        action: "tambahArtikelBaru",
+        itemBaru: { kode: kode, nama: nama, qty: qty, foto: foto }
+      })
+      .then(function(res) {
+        btn.innerText = "💾 Simpan ke ListOpname";
+        btn.disabled = false;
+        if (res.kunciData) {
+          kunciData = res.kunciData;
+          renderDropdown();
+        }
+        document.getElementById("kodeBaruInput").value = "";
+        document.getElementById("namaBaruInput").value = "";
+        document.getElementById("qtyBaruInput").value = "";
+        document.getElementById("fotoBaruInput").value = "";
+        document.getElementById("panelArtikelBaru").style.display = "none";
+        tampilkanModal("Artikel Ditambahkan ✅", res.pesan);
+      })
+      .catch(function(err) {
+        btn.innerText = "💾 Simpan ke ListOpname";
+        btn.disabled = false;
+        tampilkanModal("Gagal Menyimpan ❌", err.message);
+      });
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
       hapusTtd();
       try {
         var sesiTersimpan = sessionStorage.getItem(KEY_SESI_USER);
-        if (sesiTersimpan && sesiTersimpan !== "") {
+        var idTersimpan = sessionStorage.getItem(KEY_SESI_ID);
+        if (sesiTersimpan && idTersimpan) {
           userAktif = sesiTersimpan;
+          userIdAktif = idTersimpan;
           document.getElementById("layarLogin").style.display = "none";
           document.getElementById("layarUtama").style.display = "block";
           var dropPetugas = document.getElementById("petugas");
           dropPetugas.innerHTML = '<option value="' + userAktif + '">' + userAktif + '</option>';
+          aturTampilanMaintenance();
           mulaiAplikasi();
         }
       } catch(e) {}
@@ -257,7 +387,11 @@
       
       if (dbUser[id] && dbUser[id].pass === p) {
          userAktif = dbUser[id].namaLengkap;
-         try { sessionStorage.setItem(KEY_SESI_USER, userAktif); } catch(e) {}
+         userIdAktif = id;
+         try {
+           sessionStorage.setItem(KEY_SESI_USER, userAktif);
+           sessionStorage.setItem(KEY_SESI_ID, userIdAktif);
+         } catch(e) {}
          
          document.getElementById("layarLogin").style.display = "none";
          document.getElementById("layarUtama").style.display = "block";
@@ -265,6 +399,7 @@
          var dropPetugas = document.getElementById("petugas");
          dropPetugas.innerHTML = '<option value="' + userAktif + '">' + userAktif + '</option>';
          
+         aturTampilanMaintenance();
          mulaiAplikasi();
       } else {
          tampilkanModal("Akses Ditolak ❌", "User ID atau Password salah!");
@@ -273,7 +408,10 @@
 
     function logoutMandiri() {
       clearTimeout(timerAutoSaveAwan);
-      try { sessionStorage.removeItem(KEY_SESI_USER); } catch(e) {}
+      try {
+        sessionStorage.removeItem(KEY_SESI_USER);
+        sessionStorage.removeItem(KEY_SESI_ID);
+      } catch(e) {}
 
       if (Object.keys(keranjangOpname).length > 0) {
         var jsonKeranjang = JSON.stringify(keranjangOpname);
@@ -282,9 +420,11 @@
       }
 
       userAktif = "";
+      userIdAktif = "";
       document.getElementById("loginId").value = "";
       document.getElementById("loginPass").value = "";
       resetFormulir();
+      document.getElementById("panelArtikelBaru").style.display = "none";
       document.getElementById("wadahFoto").style.display = "none";
       document.getElementById("areaTandaTangan").style.display = "none";
       document.getElementById("btnSelesai").style.display = "block";
@@ -298,6 +438,19 @@
       jalankanJam(); 
       panggilServerAPI({ action: "init" })
         .then(function(res) {
+          statusMaintenanceServer = res.maintenance || "OFF";
+          aturTampilanMaintenance();
+
+          // Jika Mode Maintenance ON dan yang login BUKAN Pak Naldi, otomatis kembalikan ke layar Login
+          if (statusMaintenanceServer === "ON" && userIdAktif !== ID_STORE_LEADER) {
+            logoutMandiri();
+            tampilkanModal(
+              "🚧 Sistem Sedang Maintenance",
+              "Aplikasi sedang diperbarui sementara oleh Store Leader (Pak Naldi).\n\nSilakan tunggu beberapa saat dan login kembali nanti. Data draft opname Anda tetap aman tersimpan."
+            );
+            return;
+          }
+
           kunciData = res.kunciData || {};
           if (res.linkExcel) linkExcelTersimpan = res.linkExcel;
 
@@ -665,7 +818,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Sistem Kanvas Tanda Tangan Berlatar Putih & Skala Koordinat Presisi
     var canvas = document.getElementById("kanvasTtd"); 
     var ctx = canvas.getContext("2d"); 
     var lagiGambar = false;
