@@ -157,6 +157,82 @@
       transition: width 0.45s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
+    /* Baris Label + Tombol + Tambah Akumulasi Cepat */
+    .baris-label-akumulasi {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .baris-label-akumulasi label {
+      margin-bottom: 0;
+    }
+    .btn-pil-tambah {
+      width: auto;
+      padding: 3px 9px;
+      margin-bottom: 0;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 99px;
+      background-color: #eff6ff;
+      color: #0d6efd;
+      border: 1px solid #bfdbfe;
+      box-shadow: none;
+      gap: 3px;
+    }
+    .btn-pil-tambah:active {
+      background-color: #dbeafe;
+      transform: scale(0.94);
+    }
+    .panel-akumulasi {
+      display: none;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 11px;
+      padding: 9px 10px;
+      margin-top: -8px;
+      margin-bottom: 14px;
+      animation: slideTurun 0.2s ease-out;
+    }
+    .baris-chip-cepat {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 7px;
+    }
+    .btn-chip-angka {
+      flex: 1;
+      padding: 6px 4px;
+      margin-bottom: 0;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #0d6efd;
+      border: 1px solid #93c5fd;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .btn-chip-angka:active {
+      background: #0d6efd;
+      color: #ffffff;
+    }
+    .baris-input-akumulasi {
+      display: flex;
+      gap: 6px;
+    }
+    .baris-input-akumulasi input {
+      margin-bottom: 0;
+      padding: 7px 10px;
+      font-size: 13px;
+      flex: 1;
+    }
+    .baris-input-akumulasi button {
+      width: auto;
+      padding: 7px 12px;
+      margin-bottom: 0;
+      font-size: 12px;
+      border-radius: 9px;
+    }
+
     .wadah-stepper {
       display: flex;
       align-items: stretch;
@@ -229,7 +305,6 @@
     }
     #panelArtikelBaru h4 { margin-top: 0; margin-bottom: 12px; color: #0d6efd; font-size: 14px; display: flex; align-items: center; gap: 6px; }
 
-    /* Kotak Upload Foto Pratinjau Terpisah (Khusus Store Leader 202106477) */
     #wadahUploadFotoLeader {
       display: none;
       background: #f5f3ff;
@@ -284,6 +359,33 @@
     #wadahRemark input { margin-bottom: 0; border: 1.5px solid #fcd34d; background-color: #fff; }
     #wadahRemark input:focus { border-color: #f59e0b; box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15); }
 
+    /* Tab Segmented Control di Tahap Penyelesaian Opname (Audit Semua vs Selisih) */
+    .tab-penyelesaian {
+      display: flex;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 12px;
+      gap: 4px;
+      margin-bottom: 14px;
+    }
+    .btn-tab-selesai {
+      flex: 1;
+      padding: 9px 6px;
+      margin-bottom: 0;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 9px;
+      background: transparent;
+      color: #64748b;
+      box-shadow: none;
+      gap: 5px;
+    }
+    .btn-tab-selesai.aktif {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+    }
+
     .kotak-rekap-selisih { background-color: #fff8f8; border: 1px solid #f5c2c7; border-radius: 12px; padding: 14px; margin-bottom: 18px; }
     .item-selisih-akhir { background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #dc3545; border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
     .item-selisih-akhir:last-child { margin-bottom: 0; }
@@ -291,6 +393,44 @@
     .info-item-selisih { font-size: 12px; color: #dc3545; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
     .input-remark-akhir { margin-bottom: 0 !important; padding: 10px !important; font-size: 13px !important; border: 1.5px solid #dc3545 !important; }
     .input-remark-akhir.terisi { border-color: #198754 !important; background-color: #f8fffb !important; }
+
+    /* Daftar Audit Semua Tercatat */
+    #wadahAuditSemua {
+      display: none;
+      max-height: 310px;
+      overflow-y: auto;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 18px;
+    }
+    .item-audit-row {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 11px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .item-audit-row:last-child { margin-bottom: 0; }
+    .item-audit-row.cocok { border-left: 4px solid #198754; }
+    .item-audit-row.selisih { border-left: 4px solid #dc3545; }
+    .btn-edit-audit {
+      width: auto;
+      padding: 6px 10px;
+      margin-bottom: 0;
+      font-size: 11.5px;
+      border-radius: 8px;
+      background: #eff6ff;
+      color: #0d6efd;
+      border: 1px solid #bfdbfe;
+      box-shadow: none;
+      flex-shrink: 0;
+    }
 
     .wadah-flex { display: flex; gap: 10px; margin-bottom: 10px; } 
     .wadah-filter { display: flex; gap: 5px; margin-bottom: 14px; }
@@ -576,20 +716,52 @@
           <div id="statusUploadPratinjauLeader" class="status-upload-leader"></div>
         </div>
         
-        <!-- INPUT DISPLAY DENGAN STEPPER (- / +) -->
-        <label>Fisik di Display:</label>
+        <!-- INPUT DISPLAY DENGAN STEPPER (- / +) & AKUMULASI CEPAT (+ TAMBAH) -->
+        <div class="baris-label-akumulasi">
+          <label for="display">Fisik di Display:</label>
+          <button type="button" class="btn-pil-tambah" onclick="toggleAkumulasi('display')">+ Tambah</button>
+        </div>
         <div class="wadah-stepper">
           <button type="button" class="btn-step" onclick="ubahAngkaStepper('display', -1)" aria-label="Kurangi Display">−</button>
           <input type="number" id="display" placeholder="0" oninput="cekCocokTotal()">
           <button type="button" class="btn-step" onclick="ubahAngkaStepper('display', 1)" aria-label="Tambah Display">+</button>
         </div>
+        <div id="panelAkumulasi_display" class="panel-akumulasi">
+          <div class="baris-chip-cepat">
+            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 1)">+1</button>
+            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 2)">+2</button>
+            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 5)">+5</button>
+            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 10)">+10</button>
+          </div>
+          <div class="baris-input-akumulasi">
+            <input type="number" id="inputPlus_display" placeholder="Jumlah tambahan...">
+            <button type="button" class="btn-hijau" onclick="terapkanTambahManual('display')">Tambah</button>
+            <button type="button" class="btn-abu" onclick="toggleAkumulasi('display')">Tutup</button>
+          </div>
+        </div>
 
-        <!-- INPUT GUDANG DENGAN STEPPER (- / +) -->
-        <label>Fisik di Gudang:</label>
+        <!-- INPUT GUDANG DENGAN STEPPER (- / +) & AKUMULASI CEPAT (+ TAMBAH) -->
+        <div class="baris-label-akumulasi">
+          <label for="gudang">Fisik di Gudang:</label>
+          <button type="button" class="btn-pil-tambah" onclick="toggleAkumulasi('gudang')">+ Tambah</button>
+        </div>
         <div class="wadah-stepper">
           <button type="button" class="btn-step" onclick="ubahAngkaStepper('gudang', -1)" aria-label="Kurangi Gudang">−</button>
           <input type="number" id="gudang" placeholder="0" oninput="cekCocokTotal()">
           <button type="button" class="btn-step" onclick="ubahAngkaStepper('gudang', 1)" aria-label="Tambah Gudang">+</button>
+        </div>
+        <div id="panelAkumulasi_gudang" class="panel-akumulasi">
+          <div class="baris-chip-cepat">
+            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 1)">+1</button>
+            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 2)">+2</button>
+            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 5)">+5</button>
+            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 10)">+10</button>
+          </div>
+          <div class="baris-input-akumulasi">
+            <input type="number" id="inputPlus_gudang" placeholder="Jumlah tambahan...">
+            <button type="button" class="btn-hijau" onclick="terapkanTambahManual('gudang')">Tambah</button>
+            <button type="button" class="btn-abu" onclick="toggleAkumulasi('gudang')">Tutup</button>
+          </div>
         </div>
         
         <div id="wadahRemark">
@@ -651,7 +823,18 @@
       <div class="kotak" id="areaTandaTangan">
         <h3 style="text-align: center; color: #198754; margin-top: 0; margin-bottom: 12px;">Tahap Penyelesaian Opname</h3>
         
+        <!-- TAB SEGMENTED: WAJIB REMARK SELISIH VS AUDIT SEMUA TERCATAT -->
+        <div class="tab-penyelesaian">
+          <button type="button" id="btnTabSelisihSelesai" class="btn-tab-selesai aktif" onclick="gantiTabPenyelesaian('selisih')">
+            <span id="lblTabSelisihSelesai">Wajib Remark Selisih (0)</span>
+          </button>
+          <button type="button" id="btnTabAuditSelesai" class="btn-tab-selesai" onclick="gantiTabPenyelesaian('audit')">
+            <span id="lblTabAuditSelesai">Audit Semua Tercatat (0)</span>
+          </button>
+        </div>
+
         <div id="wadahRekapSelisih"></div>
+        <div id="wadahAuditSemua"></div>
 
         <label>Paraf / Tanda Tangan Bukti Opname:</label>
         <canvas id="kanvasTtd" width="200" height="75"></canvas>
@@ -692,11 +875,24 @@
     </div>
   </div>
 
+  <!-- MODAL ALERT STANDAR -->
   <div class="modal-overlay" id="modalAlert">
     <div class="modal-box">
       <h3 id="modalTitle">Pemberitahuan</h3>
       <p id="modalMessage">Pesan di sini</p>
       <button class="btn-biru" onclick="tutupModal()">Tutup</button>
+    </div>
+  </div>
+
+  <!-- MODAL PERINGATAN PENGAMAN ARTIKEL BELUM DICEK SEBELUM TTD -->
+  <div class="modal-overlay" id="modalKonfirmasiBelum">
+    <div class="modal-box">
+      <h3 style="color:#b45309;">Masih Ada Barang Belum Dicek</h3>
+      <p id="pesanKonfirmasiBelum">Masih ada artikel yang belum diperiksa.</p>
+      <div class="wadah-flex" style="margin-bottom:0;">
+        <button type="button" class="btn-biru" onclick="filterKeBelumDariModal()" style="padding:11px 8px; font-size:13px;">Cek Barang Belum</button>
+        <button type="button" class="btn-orange" onclick="lanjutBukaTtdPaksa()" style="padding:11px 8px; font-size:13px;">Tetap Buka TTD</button>
+      </div>
     </div>
   </div>
 
@@ -731,6 +927,20 @@
     var timerAutoSaveAwan;
     var timerJam;
     var timerToast;
+    var timerSyncParalel;
+
+    // Pelacakan nilai awal saat artikel dimuat agar merge paralel antar-HP presisi
+    var stateItemDimuat = {
+      kode: "",
+      disp: "",
+      gud: "",
+      remark: "",
+      tsDisp: 0,
+      tsGud: 0,
+      tsRemark: 0,
+      petugasDisp: "",
+      petugasGud: ""
+    };
 
     var KEY_LOKAL_DRAFT = "E597_AutoSave_Draft";
     var KEY_SESI_USER = "E597_Sesi_User";
@@ -794,6 +1004,54 @@
       if (elTeks) elTeks.innerText = "Progres: " + totalDicek + " / " + hitungSemua + " Artikel";
       if (elPersen) elPersen.innerText = persen + "%";
       if (elBar) elBar.style.width = persen + "%";
+    }
+
+    // Fitur #4: Input Akumulasi Cepat (+ Tambah) untuk Stok Tersebar
+    function toggleAkumulasi(target) {
+      var kode = document.getElementById('kodePilihan').value;
+      if (!kode) {
+        getarHalus([20, 35, 20]);
+        tampilkanToast("Pilih aksesoris terlebih dahulu");
+        return;
+      }
+      getarHalus(10);
+      var panel = document.getElementById("panelAkumulasi_" + target);
+      if (!panel) return;
+      var sedangBuka = (panel.style.display === "block");
+      panel.style.display = sedangBuka ? "none" : "block";
+      if (!sedangBuka) {
+        var inp = document.getElementById("inputPlus_" + target);
+        if (inp) {
+          inp.value = "";
+          inp.focus();
+        }
+      }
+    }
+
+    function tambahStokCepat(target, jumlahTambah) {
+      var kode = document.getElementById('kodePilihan').value;
+      if (!kode) return;
+      var el = document.getElementById(target);
+      var sekarang = (el.value === "" || isNaN(parseInt(el.value, 10))) ? 0 : parseInt(el.value, 10);
+      var hasil = sekarang + jumlahTambah;
+      if (hasil < 0) hasil = 0;
+      el.value = hasil;
+      getarHalus(12);
+      cekCocokTotal();
+      var labelLokasi = (target === "display") ? "Display" : "Gudang";
+      tampilkanToast(labelLokasi + ": " + sekarang + " + " + jumlahTambah + " = " + hasil + " pcs");
+    }
+
+    function terapkanTambahManual(target) {
+      var inp = document.getElementById("inputPlus_" + target);
+      var nilaiPlus = parseInt(inp.value, 10);
+      if (isNaN(nilaiPlus) || nilaiPlus === 0) {
+        tampilkanToast("Masukkan angka tambahan terlebih dahulu");
+        return;
+      }
+      tambahStokCepat(target, nilaiPlus);
+      inp.value = "";
+      document.getElementById("panelAkumulasi_" + target).style.display = "none";
     }
 
     function ubahAngkaStepper(idInput, delta) {
@@ -940,7 +1198,6 @@
       });
     }
 
-    // Upload Foto Pratinjau via Kamera Langsung atau Galeri/File (Khusus Store Leader 202106477)
     function prosesUploadFotoPratinjauLeader(input) {
       if (userIdAktif !== ID_STORE_LEADER) return;
       if (!input.files || !input.files[0]) return;
@@ -1100,6 +1357,7 @@
     function logoutMandiri() {
       getarHalus(15);
       clearTimeout(timerAutoSaveAwan);
+      clearInterval(timerSyncParalel);
       try {
         sessionStorage.removeItem(KEY_SESI_USER);
         sessionStorage.removeItem(KEY_SESI_ID);
@@ -1126,6 +1384,32 @@
       document.getElementById("layarUtama").style.display = "none";
       document.getElementById("layarLogin").style.display = "block";
       window.scrollTo(0, 0);
+    }
+
+    // Sinkronisasi latar belakang setiap 15 detik agar kerja paralel 2 HP (Display vs Gudang) tetap terbarui
+    function jalankanSyncParalelBerkala() {
+      if (timerSyncParalel) clearInterval(timerSyncParalel);
+      timerSyncParalel = setInterval(function() {
+        if (!userAktif || !navigator.onLine) return;
+        panggilServerAPI({ action: "simpanDraft", jsonString: JSON.stringify(keranjangOpname) })
+          .then(function(res) {
+            if (res && res.draftJson) {
+              var teksLama = JSON.stringify(keranjangOpname);
+              if (res.draftJson !== teksLama) {
+                try {
+                  keranjangOpname = JSON.parse(res.draftJson);
+                  localStorage.setItem(KEY_LOKAL_DRAFT, res.draftJson);
+                  renderDropdown();
+                  if (document.getElementById('areaTandaTangan').style.display === 'block') {
+                    renderRekapSelisih();
+                    renderAuditSemua();
+                  }
+                } catch(e) {}
+              }
+            }
+          })
+          .catch(function(){});
+      }, 15000);
     }
 
     function mulaiAplikasi() {
@@ -1168,6 +1452,7 @@
             tampilkanModal("Auto-Save Dipulihkan", "Selamat bekerja " + userAktif + "!\n\nSebanyak " + jmlTersimpan + " artikel yang sudah dicatat berhasil dipulihkan otomatis. Silakan lanjutkan opname.");
           }
           renderDropdown();
+          jalankanSyncParalelBerkala();
         })
         .catch(function(err) {
           if (dd) dd.classList.remove('shimmer-loading');
@@ -1195,13 +1480,22 @@
       clearTimeout(timerAutoSaveAwan);
       timerAutoSaveAwan = setTimeout(function() {
         panggilServerAPI({ action: "simpanDraft", jsonString: jsonKeranjang })
-          .then(function() {
+          .then(function(res) {
+            // Terima hasil merge dari server agar data paralel antar-HP langsung sinkron
+            if (res && res.draftJson) {
+              try {
+                keranjangOpname = JSON.parse(res.draftJson);
+                localStorage.setItem(KEY_LOKAL_DRAFT, res.draftJson);
+                totalItem = Object.keys(keranjangOpname).length;
+                renderDropdown();
+              } catch(e) {}
+            }
             if (elStatus && elTeks) {
               var jamSimpan = new Date().toLocaleTimeString('id-ID');
               elStatus.style.color = "#0f5132";
               elStatus.style.backgroundColor = "#d1e7dd";
               elStatus.style.borderColor = "#badbcc";
-              elTeks.innerText = "Auto-Save Awan & HP (" + totalItem + " brg) - " + jamSimpan;
+              elTeks.innerText = "Auto-Save & Merge Awan (" + totalItem + " brg) - " + jamSimpan;
             }
           })
           .catch(function() {
@@ -1212,7 +1506,7 @@
               elTeks.innerText = "Tersimpan aman di HP (" + totalItem + " brg). Menunggu sinkron Awan...";
             }
           });
-      }, 3000);
+      }, 2500);
     }
 
     window.addEventListener('online', function() {
@@ -1260,11 +1554,14 @@
       try { localStorage.setItem(KEY_LOKAL_DRAFT, jsonKeranjang); } catch(e) {}
       
       panggilServerAPI({ action: "simpanDraft", jsonString: jsonKeranjang })
-        .then(function() {
+        .then(function(res) {
+          if (res && res.draftJson) {
+            try { localStorage.setItem(KEY_LOKAL_DRAFT, res.draftJson); } catch(e) {}
+          }
           btn.innerHTML = SVG_SAVE + '<span>Simpan & Log Out</span>';
           btn.disabled = false;
           logoutMandiri();
-          tampilkanModal("Berhasil Log Out", "Draft telah disimpan di Awan. Silakan login kembali untuk shift berikutnya.");
+          tampilkanModal("Berhasil Log Out", "Draft telah disimpan & digabung di Awan. Silakan login kembali untuk shift berikutnya.");
         })
         .catch(function() {
           btn.innerHTML = SVG_SAVE + '<span>Simpan & Log Out</span>';
@@ -1352,7 +1649,16 @@
       document.getElementById('gudang').value = ''; 
       document.getElementById('remark').value = '';
       document.getElementById('wadahRemark').style.display = 'none';
+      var pDisp = document.getElementById('panelAkumulasi_display');
+      var pGud = document.getElementById('panelAkumulasi_gudang');
+      if (pDisp) pDisp.style.display = 'none';
+      if (pGud) pGud.style.display = 'none';
       statusTotalSaatIni = "Kosong"; 
+      stateItemDimuat = {
+        kode: "", disp: "", gud: "", remark: "",
+        tsDisp: 0, tsGud: 0, tsRemark: 0,
+        petugasDisp: "", petugasGud: ""
+      };
     }
 
     function muatUlangData() {
@@ -1379,11 +1685,27 @@
       }
       
       if (keranjangOpname[kode]) { 
-        document.getElementById('display').value = keranjangOpname[kode].display; 
-        document.getElementById('gudang').value = keranjangOpname[kode].gudang; 
-        if (keranjangOpname[kode].remark && keranjangOpname[kode].remark !== "-") {
-          document.getElementById('remark').value = keranjangOpname[kode].remark;
-        }
+        var item = keranjangOpname[kode];
+        // Tampilkan angka yang sudah diisi; jika salah satu sisi belum pernah diisi (ts === 0), biarkan kosong agar mudah dilihat
+        var nilaiDispTampil = (item.tsDisp === 0 && String(item.display) === "0") ? "" : String(item.display);
+        var nilaiGudTampil = (item.tsGud === 0 && String(item.gudang) === "0") ? "" : String(item.gudang);
+
+        document.getElementById('display').value = nilaiDispTampil; 
+        document.getElementById('gudang').value = nilaiGudTampil; 
+        var nilaiRemTampil = (item.remark && item.remark !== "-") ? item.remark : "";
+        document.getElementById('remark').value = nilaiRemTampil;
+
+        stateItemDimuat = {
+          kode: kode,
+          disp: nilaiDispTampil,
+          gud: nilaiGudTampil,
+          remark: nilaiRemTampil,
+          tsDisp: Number(item.tsDisp) || (nilaiDispTampil !== "" ? 1 : 0),
+          tsGud: Number(item.tsGud) || (nilaiGudTampil !== "" ? 1 : 0),
+          tsRemark: Number(item.tsRemark) || (nilaiRemTampil !== "" ? 1 : 0),
+          petugasDisp: item.petugasDisp || "",
+          petugasGud: item.petugasGud || ""
+        };
         cekCocokTotal(); 
       }
     }
@@ -1455,25 +1777,77 @@
         getarHalus([25, 45, 25]);
       }
 
-      var isiRemark = document.getElementById('remark').value.trim();
-      if (isiRemark === "" && keranjangOpname[kode] && keranjangOpname[kode].remark && keranjangOpname[kode].remark !== "-") {
-        isiRemark = keranjangOpname[kode].remark;
+      var now = Date.now();
+      var existing = keranjangOpname[kode] || {};
+
+      // Tentukan stempel waktu per kolom agar merge paralel Display vs Gudang tidak saling menimpa
+      var finalDisp = valDisp === "" ? (existing.display || "0") : valDisp;
+      var finalTsDisp = Number(existing.tsDisp) || 0;
+      var finalPetugasDisp = existing.petugasDisp || "";
+      if (valDisp !== "") {
+        if (stateItemDimuat.kode === kode && valDisp === stateItemDimuat.disp && stateItemDimuat.tsDisp > 0) {
+          finalTsDisp = stateItemDimuat.tsDisp;
+          finalPetugasDisp = stateItemDimuat.petugasDisp || userAktif;
+        } else {
+          finalTsDisp = now;
+          finalPetugasDisp = userAktif;
+        }
       }
+
+      var finalGud = valGud === "" ? (existing.gudang || "0") : valGud;
+      var finalTsGud = Number(existing.tsGud) || 0;
+      var finalPetugasGud = existing.petugasGud || "";
+      if (valGud !== "") {
+        if (stateItemDimuat.kode === kode && valGud === stateItemDimuat.gud && stateItemDimuat.tsGud > 0) {
+          finalTsGud = stateItemDimuat.tsGud;
+          finalPetugasGud = stateItemDimuat.petugasGud || userAktif;
+        } else {
+          finalTsGud = now;
+          finalPetugasGud = userAktif;
+        }
+      }
+
+      var isiRemark = document.getElementById('remark').value.trim();
+      var finalTsRemark = Number(existing.tsRemark) || 0;
+      if (isiRemark === "" && existing.remark && existing.remark !== "-") {
+        isiRemark = existing.remark;
+      } else if (isiRemark !== "") {
+        if (stateItemDimuat.kode === kode && isiRemark === stateItemDimuat.remark && stateItemDimuat.tsRemark > 0) {
+          finalTsRemark = stateItemDimuat.tsRemark;
+        } else {
+          finalTsRemark = now;
+        }
+      }
+
+      var daftarPetugas = [];
+      [finalPetugasDisp, finalPetugasGud, existing.petugasCek, userAktif].forEach(function(p) {
+        if (!p) return;
+        String(p).split("&").forEach(function(bag) {
+          var nm = bag.trim();
+          if (nm && daftarPetugas.indexOf(nm) === -1) daftarPetugas.push(nm);
+        });
+      });
 
       keranjangOpname[kode] = { 
         kodeArtikel: kode, 
         namaBarang: kunciData[kode].nama, 
-        display: valDisp === "" ? "0" : valDisp, 
-        gudang: valGud === "" ? "0" : valGud, 
+        display: finalDisp, 
+        gudang: finalGud, 
+        tsDisp: finalTsDisp,
+        tsGud: finalTsGud,
+        tsRemark: finalTsRemark,
+        petugasDisp: finalPetugasDisp,
+        petugasGud: finalPetugasGud,
         statusTotal: statusTotalSaatIni,
         remark: statusTotalSaatIni === "Cocok" ? "-" : isiRemark,
-        petugasCek: userAktif
+        petugasCek: daftarPetugas.join(" & ")
       };
       
       autoSimpanKeAwan();
 
       if (document.getElementById('areaTandaTangan').style.display === 'block') {
         renderRekapSelisih();
+        renderAuditSemua();
       }
 
       var labelToast = (statusTotalSaatIni === "Cocok")
@@ -1488,15 +1862,89 @@
       resetFormulir();
     }
 
+    // Fitur #5: Tab Penyelesaian (Wajib Remark Selisih vs Audit Semua Tercatat)
+    function gantiTabPenyelesaian(tab) {
+      getarHalus(10);
+      var btnSelisih = document.getElementById("btnTabSelisihSelesai");
+      var btnAudit = document.getElementById("btnTabAuditSelesai");
+      var boxSelisih = document.getElementById("wadahRekapSelisih");
+      var boxAudit = document.getElementById("wadahAuditSemua");
+
+      if (tab === "audit") {
+        btnSelisih.classList.remove("aktif");
+        btnAudit.classList.add("aktif");
+        boxSelisih.style.display = "none";
+        boxAudit.style.display = "block";
+        renderAuditSemua();
+      } else {
+        btnAudit.classList.remove("aktif");
+        btnSelisih.classList.add("aktif");
+        boxAudit.style.display = "none";
+        boxSelisih.style.display = "block";
+        renderRekapSelisih();
+      }
+    }
+
+    function renderAuditSemua() {
+      var wadah = document.getElementById("wadahAuditSemua");
+      var keys = Object.keys(keranjangOpname);
+      var lblTab = document.getElementById("lblTabAuditSelesai");
+      if (lblTab) lblTab.innerText = "Audit Semua Tercatat (" + keys.length + ")";
+
+      if (keys.length === 0) {
+        wadah.innerHTML = '<div style="text-align:center; font-size:12.5px; color:#64748b; padding:12px;">Belum ada artikel yang dicatat.</div>';
+        return;
+      }
+
+      var html = "";
+      for (var i = 0; i < keys.length; i++) {
+        var kode = keys[i];
+        var item = keranjangOpname[kode];
+        var isCocok = (item.statusTotal === "Cocok");
+        var d = parseInt(item.display, 10) || 0;
+        var g = parseInt(item.gudang, 10) || 0;
+        var tot = d + g;
+        var mTot = (kunciData[kode]) ? (parseInt(kunciData[kode].totalMaster, 10) || 0) : 0;
+
+        html += '<div class="item-audit-row ' + (isCocok ? 'cocok' : 'selisih') + '">';
+        html += '<div style="flex:1; min-width:0;">';
+        html += '<div style="font-weight:700; font-size:12.5px; color:#1e293b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">[' + kode + '] ' + item.namaBarang + '</div>';
+        html += '<div style="font-size:11.5px; color:#475569; margin-top:2px;">Disp: <b>' + d + '</b> | Gud: <b>' + g + '</b> | Total: <b>' + tot + '</b> (Master: ' + mTot + ')</div>';
+        html += '<div style="font-size:11px; color:' + (isCocok ? '#15803d' : '#b91c1c') + '; font-weight:600; margin-top:2px;">' + (isCocok ? '🟢 Cocok' : '🔴 ' + item.statusTotal) + ' &bull; ' + (item.petugasCek || '-') + '</div>';
+        html += '</div>';
+        html += '<button type="button" class="btn-edit-audit" onclick="editItemDariAudit(\'' + kode + '\')">Ubah</button>';
+        html += '</div>';
+      }
+      wadah.innerHTML = html;
+    }
+
+    function editItemDariAudit(kode) {
+      getarHalus(12);
+      tutupTandaTangan();
+      setFilter('semua');
+      var dd = document.getElementById('kodePilihan');
+      if (dd) {
+        dd.value = kode;
+        muatUlangData();
+      }
+      tampilkanToast("Silakan koreksi angka untuk [" + kode + "]");
+    }
+
     function renderRekapSelisih() {
       var wadah = document.getElementById('wadahRekapSelisih');
       var daftarSelisih = [];
+      var totalTercatat = Object.keys(keranjangOpname).length;
 
       for (var kode in keranjangOpname) {
         if (keranjangOpname[kode].statusTotal !== "Cocok") {
           daftarSelisih.push(keranjangOpname[kode]);
         }
       }
+
+      var lblSel = document.getElementById("lblTabSelisihSelesai");
+      var lblAud = document.getElementById("lblTabAuditSelesai");
+      if (lblSel) lblSel.innerText = "Wajib Remark Selisih (" + daftarSelisih.length + ")";
+      if (lblAud) lblAud.innerText = "Audit Semua Tercatat (" + totalTercatat + ")";
 
       if (daftarSelisih.length === 0) {
         wadah.innerHTML = '<div style="background:#d1e7dd; color:#0f5132; padding:12px; border-radius:10px; margin-bottom:15px; font-size:13px; font-weight:bold; text-align:center;">Seluruh barang yang dicatat 100% Sesuai (0 Selisih). Silakan langsung tanda tangan di bawah.</div>';
@@ -1527,6 +1975,7 @@
       if (!keranjangOpname[kode]) return;
       var teks = elInput.value.trim();
       keranjangOpname[kode].remark = teks;
+      keranjangOpname[kode].tsRemark = Date.now();
       if (teks !== "") {
         elInput.className = "input-remark-akhir terisi";
       } else {
@@ -1535,12 +1984,42 @@
       autoSimpanKeAwan();
     }
     
+    // Fitur #2: Peringatan Pengaman Jika Masih Ada Artikel "Belum Dicek" Sebelum TTD
     function bukaTandaTangan() {
       if (!document.getElementById('petugas').value) { tampilkanModal("Perhatian", "Anda belum login!"); return; }
       if (Object.keys(keranjangOpname).length === 0) { getarHalus([25, 40, 25]); tampilkanModal("Perhatian", "Keranjang kosong!"); return; }
-      
+
+      var jumlahBelum = 0;
+      for (var k in kunciData) {
+        if (getStatusKeranjang(k) === 'belum') {
+          jumlahBelum++;
+        }
+      }
+
+      if (jumlahBelum > 0) {
+        getarHalus([20, 40, 20]);
+        document.getElementById('pesanKonfirmasiBelum').innerText =
+          "Masih ada " + jumlahBelum + " artikel yang berstatus BELUM dicek.\n\nJika fisik barang di rak dan gudang kosong (0), sebaiknya tetap dicatat angka 0 agar terdata di berita acara.\n\nApakah Anda ingin memeriksa sisa barang tersebut dulu?";
+        document.getElementById('modalKonfirmasiBelum').style.display = 'flex';
+        return;
+      }
+
+      lanjutBukaTtdPaksa();
+    }
+
+    function filterKeBelumDariModal() {
+      getarHalus(12);
+      document.getElementById('modalKonfirmasiBelum').style.display = 'none';
+      setFilter('belum');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      tampilkanToast("Menampilkan artikel yang belum dicek");
+    }
+
+    function lanjutBukaTtdPaksa() {
+      document.getElementById('modalKonfirmasiBelum').style.display = 'none';
       getarHalus(15);
-      renderRekapSelisih();
+      gantiTabPenyelesaian('selisih');
+      renderAuditSemua();
 
       if (!adaCoretanTtd) {
         hapusTtd();
@@ -1632,6 +2111,7 @@
        renderDropdown(); 
        hapusTtd(); 
        document.getElementById('wadahRekapSelisih').innerHTML = '';
+       document.getElementById('wadahAuditSemua').innerHTML = '';
        document.getElementById('areaTandaTangan').style.display = 'none';
        document.getElementById('btnSelesai').style.display = 'inline-flex';
        document.getElementById('areaDraftBar').style.display = 'flex';
@@ -1654,6 +2134,7 @@
           var r = (item.remark || "").trim();
           if (r === "" || r === "-") {
             getarHalus([30, 50, 30]);
+            gantiTabPenyelesaian('selisih');
             tampilkanModal("Remark Belum Lengkap", "Mohon isi alasan selisih terlebih dahulu untuk artikel:\n\n[" + item.kodeArtikel + "] " + item.namaBarang);
             var inputEl = document.getElementById('remark_akhir_' + item.kodeArtikel);
             if (inputEl) {
