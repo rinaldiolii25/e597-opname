@@ -14,8 +14,8 @@
     html { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
     body { 
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-      padding: 15px; 
-      background-color: #f0f3f8; 
+      padding: 14px; 
+      background-color: #eef2f7; 
       margin: 0; 
       overscroll-behavior-y: none; 
       display: flex; 
@@ -26,11 +26,11 @@
     
     .kotak { 
       background: #ffffff; 
-      padding: 20px; 
-      border-radius: 16px; 
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04); 
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      margin-bottom: 15px;
+      padding: 18px; 
+      border-radius: 18px; 
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04); 
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      margin-bottom: 14px;
       animation: munculHalus 0.35s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
@@ -39,9 +39,9 @@
     input, select { 
       width: 100%; 
       padding: 12px 14px; 
-      margin-bottom: 15px; 
+      margin-bottom: 14px; 
       border: 1.5px solid #cbd5e1; 
-      border-radius: 10px; 
+      border-radius: 11px; 
       box-sizing: border-box; 
       font-size: 14px; 
       background-color: #fff; 
@@ -53,12 +53,24 @@
       outline: none; 
     }
 
+    .shimmer-loading {
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      animation: shimmerAnim 1.3s infinite linear;
+      color: #475569;
+      font-weight: 600;
+    }
+    @keyframes shimmerAnim {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
     button { 
       color: white; 
       padding: 15px; 
       width: 100%; 
       border: none; 
-      border-radius: 12px; 
+      border-radius: 13px; 
       font-weight: 700; 
       font-size: 15.5px; 
       margin-bottom: 10px; 
@@ -70,13 +82,8 @@
       transition: transform 0.16s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
       user-select: none;
     }
-    button:hover:not(:disabled) {
-      filter: brightness(1.03);
-    }
-    button:active:not(:disabled) { 
-      transform: scale(0.965); 
-      opacity: 0.92;
-    }
+    button:hover:not(:disabled) { filter: brightness(1.03); }
+    button:active:not(:disabled) { transform: scale(0.965); opacity: 0.92; }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
     
     .btn-biru { background: linear-gradient(180deg, #1a75ff 0%, #0d6efd 100%); box-shadow: 0 4px 12px rgba(13, 110, 253, 0.22); }
@@ -87,22 +94,129 @@
     .btn-cyan { background: linear-gradient(180deg, #1cb3cc 0%, #17a2b8 100%); box-shadow: 0 4px 12px rgba(23, 162, 184, 0.22); }
     .btn-ungu { background: linear-gradient(180deg, #7d4fd1 0%, #6f42c1 100%); box-shadow: 0 4px 12px rgba(111, 66, 193, 0.22); }
 
-    .svg-inline { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
-    .svg-icon { flex-shrink: 0; vertical-align: middle; }
-    
     .wadah-logo-login { text-align: center; margin-bottom: 10px; }
     .logo-login { max-height: 55px; max-width: 180px; object-fit: contain; }
     
-    .header-utama { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; border-bottom: 1.5px solid #f1f5f9; padding-top: 8px; padding-bottom: 14px; margin-bottom: 15px; }
-    .logo-utama { max-height: 42px; max-width: 150px; object-fit: contain; margin-bottom: 6px; }
+    .header-utama { 
+      position: sticky; 
+      top: 0; 
+      z-index: 50;
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1.5px solid #f1f5f9; 
+      padding-top: 8px; 
+      padding-bottom: 12px; 
+      margin: -10px -10px 14px -10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 14px 14px 0 0;
+    }
+    .logo-utama { max-height: 38px; max-width: 140px; object-fit: contain; margin-bottom: 4px; }
     .btn-logout-atas { 
-      position: absolute; top: 0; right: 0; width: auto; padding: 6px 11px; font-size: 12px; font-weight: bold; 
-      background-color: #fff; color: #dc3545; border: 1.5px solid #dc3545; border-radius: 8px; margin-bottom: 0; 
+      position: absolute; top: 8px; right: 10px; width: auto; padding: 6px 10px; font-size: 11.5px; font-weight: bold; 
+      background-color: #fff; color: #dc3545; border: 1.5px solid #dc3545; border-radius: 9px; margin-bottom: 0; 
       cursor: pointer; transition: all 0.22s cubic-bezier(0.25, 1, 0.5, 1); display: inline-flex; align-items: center; gap: 5px;
       box-shadow: 0 2px 6px rgba(220, 53, 69, 0.08);
     }
     .btn-logout-atas:hover, .btn-logout-atas:active { background-color: #dc3545; color: #fff; }
     .btn-ikon-flex { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+
+    .kartu-progres {
+      background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+      border: 1px solid #dbeafe;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+    }
+    .baris-teks-progres {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 6px;
+    }
+    .jalur-progres {
+      width: 100%;
+      height: 7px;
+      background-color: #dbeafe;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .isi-progres {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0d6efd 0%, #198754 100%);
+      border-radius: 99px;
+      transition: width 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .wadah-stepper {
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .wadah-stepper input {
+      margin-bottom: 0;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      flex: 1;
+    }
+    .btn-step {
+      width: 46px;
+      min-width: 46px;
+      padding: 0;
+      margin-bottom: 0;
+      border-radius: 11px;
+      background-color: #f1f5f9;
+      color: #0f172a;
+      border: 1.5px solid #cbd5e1;
+      font-size: 20px;
+      font-weight: 800;
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+    }
+    .btn-step:active:not(:disabled) {
+      background-color: #e2e8f0;
+      transform: scale(0.92);
+    }
+
+    .dynamic-toast {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-90px);
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      z-index: 2000;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      max-width: 90%;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
+    }
+    .dynamic-toast.tampil {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
 
     .bar-fitur-atas { display: flex; gap: 8px; margin-bottom: 12px; }
     .btn-fitur-kecil { flex: 1; padding: 10px 8px; font-size: 12px; border-radius: 10px; margin-bottom: 0; font-weight: bold; gap: 6px; }
@@ -122,7 +236,7 @@
     }
 
     #wadahRemark { 
-      display: none; background-color: #fffbeb; padding: 12px; border-radius: 10px; border: 1px solid #fde68a; margin-bottom: 15px; 
+      display: none; background-color: #fffbeb; padding: 12px; border-radius: 10px; border: 1px solid #fde68a; margin-bottom: 14px; 
       animation: slideTurun 0.24s cubic-bezier(0.25, 1, 0.5, 1);
     }
     #wadahRemark label { color: #92400e; margin-bottom: 6px; font-size: 13px; display: flex; align-items: center; gap: 6px; }
@@ -138,10 +252,11 @@
     .input-remark-akhir.terisi { border-color: #198754 !important; background-color: #f8fffb !important; }
 
     .wadah-flex { display: flex; gap: 10px; margin-bottom: 10px; } 
-    .wadah-filter { display: flex; gap: 6px; margin-bottom: 15px; }
+    .wadah-filter { display: flex; gap: 5px; margin-bottom: 14px; }
     .btn-filter { 
-      flex: 1; padding: 8px 4px; font-size: 12px; font-weight: 700; border-radius: 20px; 
+      flex: 1; padding: 8px 3px; font-size: 11px; font-weight: 700; border-radius: 20px; 
       border: 1.5px solid #cbd5e1; background: #fff; color: #64748b; margin-bottom: 0; gap: 4px; 
+      white-space: nowrap;
       transition: all 0.22s cubic-bezier(0.25, 1, 0.5, 1);
     }
     .btn-filter.aktif-semua { background: #0d6efd; color: white; border-color: #0d6efd; box-shadow: 0 3px 10px rgba(13, 110, 253, 0.28); }
@@ -149,7 +264,7 @@
     .btn-filter.aktif-selisih { background: #dc3545; color: white; border-color: #dc3545; box-shadow: 0 3px 10px rgba(220, 53, 69, 0.28); }
     .btn-filter.aktif-cocok { background: #198754; color: white; border-color: #198754; box-shadow: 0 3px 10px rgba(25, 135, 84, 0.28); }
 
-    .dot-status { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .dot-status { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
     .dot-belum { background-color: #94a3b8; border: 1px solid #64748b; }
     .dot-selisih { background-color: #dc3545; }
     .dot-cocok { background-color: #198754; }
@@ -158,9 +273,16 @@
     .btn-filter.aktif-cocok .dot-cocok { background-color: #ffffff; border-color: #ffffff; }
 
     .wadah-cari-svg { position: relative; margin-bottom: 6px; }
-    .wadah-cari-svg svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #0d6efd; pointer-events: none; }
-    .wadah-cari-svg input { padding-left: 36px; margin-bottom: 0; border-color: #93c5fd; background-color: #f8fafc; }
+    .wadah-cari-svg .ikon-cari { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #0d6efd; pointer-events: none; }
+    .wadah-cari-svg input { padding-left: 36px; padding-right: 36px; margin-bottom: 0; border-color: #93c5fd; background-color: #f8fafc; }
     .wadah-cari-svg input:focus { background-color: #ffffff; border-color: #0d6efd; }
+    .btn-clear-cari {
+      position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+      width: 24px; height: 24px; min-width: 24px; padding: 0; margin: 0;
+      border-radius: 50%; background: #e2e8f0; color: #475569; font-size: 13px; font-weight: bold;
+      display: none; align-items: center; justify-content: center;
+    }
+    .btn-clear-cari:active { background: #cbd5e1; transform: translateY(-50%) scale(0.9); }
     
     .benar { background-color: #d1e7dd !important; border-color: #198754 !important; color: #0f5132; transition: background-color 0.25s ease, border-color 0.25s ease; }
     .salah { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029; animation: goyang 0.38s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
@@ -170,7 +292,7 @@
     @keyframes munculHalus { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes popModal { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
 
-    #wadahFoto { display: none; text-align: center; margin-bottom: 15px; padding: 10px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; animation: slideTurun 0.25s ease-out; }
+    #wadahFoto { display: none; text-align: center; margin-bottom: 14px; padding: 10px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; animation: slideTurun 0.25s ease-out; }
     #fotoPreview { max-width: 100%; max-height: 200px; border-radius: 8px; object-fit: contain; }
     canvas { border: 2px dashed #0d6efd; border-radius: 12px; width: 100%; height: 150px; background: #ffffff; touch-action: none; margin-bottom: 10px; display: block; cursor: crosshair; }
     #areaTandaTangan { display: none; } 
@@ -200,6 +322,14 @@
 </head>
 <body>
 
+  <!-- DYNAMIC PILL TOAST -->
+  <div id="dynamicToast" class="dynamic-toast" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="dynamicToastText">Tersimpan</span>
+  </div>
+
   <div class="container-utama">
     <!-- HALAMAN 1: LAYAR LOGIN -->
     <div id="layarLogin" class="kotak" style="margin-top: 30px;">
@@ -217,7 +347,7 @@
       <label>User ID:</label>
       <input type="text" id="loginId" placeholder="Masukkan NIK Karyawan">
       <label>Password:</label>
-      <input type="password" id="loginPass" placeholder="Masukkan password">
+      <input type="password" id="loginPass" placeholder="Masukkan password" onkeydown="if(event.key==='Enter') prosesLogin()">
       <button class="btn-biru" id="btnMasukLogin" onclick="prosesLogin()" style="margin-top:10px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
@@ -231,6 +361,7 @@
     <!-- HALAMAN 2: APLIKASI UTAMA -->
     <div id="layarUtama" style="display:none;">
       <div class="kotak">
+        <!-- LIQUID GLASS STICKY HEADER -->
         <div class="header-utama">
           <button type="button" class="btn-logout-atas" onclick="logoutMandiri()" title="Keluar dari akun">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -243,14 +374,25 @@
             <span>Log Out</span>
           </button>
           <img src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-utama" onerror="this.style.display='none'">
-          <h2 style="text-align: center; color: #0d6efd; margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <h2 style="text-align: center; color: #0d6efd; margin: 0; font-size: 19px; display: flex; align-items: center; justify-content: center; gap: 7px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
               <rect x="9" y="3" width="6" height="4" rx="1"></rect>
               <path d="M9 14l2 2 4-4"></path>
             </svg>
             <span>E597 Opname Accs</span>
           </h2>
+        </div>
+
+        <!-- LIVE PROGRESS BAR -->
+        <div class="kartu-progres">
+          <div class="baris-teks-progres">
+            <span id="teksJumlahProgres">Progres: 0 / 0 Artikel</span>
+            <span id="teksPersenProgres">0%</span>
+          </div>
+          <div class="jalur-progres">
+            <div id="isiBarProgres" class="isi-progres"></div>
+          </div>
         </div>
 
         <!-- BANNER INDIKATOR SAAT MAINTENANCE AKTIF -->
@@ -335,23 +477,25 @@
           <option value="">-- Siapa yang melakukan Stock Opname? --</option>
         </select>
 
+        <!-- FILTER STATUS DENGAN ANGKA JUMLAH BARANG -->
         <label>Filter Status Aksesoris:</label>
         <div class="wadah-filter">
-          <button class="btn-filter aktif-semua" id="btnSemua" onclick="setFilter('semua')">Semua</button>
-          <button class="btn-filter" id="btnBelum" onclick="setFilter('belum')"><span class="dot-status dot-belum"></span><span>Belum</span></button>
-          <button class="btn-filter" id="btnSelisih" onclick="setFilter('selisih')"><span class="dot-status dot-selisih"></span><span>Selisih</span></button>
-          <button class="btn-filter" id="btnCocok" onclick="setFilter('cocok')"><span class="dot-status dot-cocok"></span><span>Cocok</span></button>
+          <button class="btn-filter aktif-semua" id="btnSemua" onclick="setFilter('semua')"><span id="lblSemua">Semua (0)</span></button>
+          <button class="btn-filter" id="btnBelum" onclick="setFilter('belum')"><span class="dot-status dot-belum"></span><span id="lblBelum">Belum (0)</span></button>
+          <button class="btn-filter" id="btnSelisih" onclick="setFilter('selisih')"><span class="dot-status dot-selisih"></span><span id="lblSelisih">Selisih (0)</span></button>
+          <button class="btn-filter" id="btnCocok" onclick="setFilter('cocok')"><span class="dot-status dot-cocok"></span><span id="lblCocok">Cocok (0)</span></button>
         </div>
         
         <div class="wadah-cari-svg">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="ikon-cari" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input type="text" id="kolomCari" placeholder="Ketik nama barang atau kode di sini..." oninput="pencarianTertunda()">
+          <button type="button" id="btnClearCari" class="btn-clear-cari" onclick="hapusPencarian()" title="Hapus pencarian">✕</button>
         </div>
         
-        <select id="kodePilihan" onchange="muatUlangData()">
+        <select id="kodePilihan" class="shimmer-loading" onchange="muatUlangData()">
           <option value="">-- Menyiapkan data dari server... --</option>
         </select>
         
@@ -360,10 +504,21 @@
           <img id="fotoPreview" src="" alt="Foto Aksesoris">
         </div>
         
+        <!-- INPUT DISPLAY DENGAN STEPPER (- / +) -->
         <label>Fisik di Display:</label>
-        <input type="number" id="display" placeholder="Ketik jumlah display (isi 0 jika kosong)..." oninput="cekCocokTotal()">
+        <div class="wadah-stepper">
+          <button type="button" class="btn-step" onclick="ubahAngkaStepper('display', -1)" aria-label="Kurangi Display">−</button>
+          <input type="number" id="display" placeholder="0" oninput="cekCocokTotal()">
+          <button type="button" class="btn-step" onclick="ubahAngkaStepper('display', 1)" aria-label="Tambah Display">+</button>
+        </div>
+
+        <!-- INPUT GUDANG DENGAN STEPPER (- / +) -->
         <label>Fisik di Gudang:</label>
-        <input type="number" id="gudang" placeholder="Ketik jumlah gudang (isi 0 jika kosong)..." oninput="cekCocokTotal()">
+        <div class="wadah-stepper">
+          <button type="button" class="btn-step" onclick="ubahAngkaStepper('gudang', -1)" aria-label="Kurangi Gudang">−</button>
+          <input type="number" id="gudang" placeholder="0" oninput="cekCocokTotal()">
+          <button type="button" class="btn-step" onclick="ubahAngkaStepper('gudang', 1)" aria-label="Tambah Gudang">+</button>
+        </div>
         
         <div id="wadahRemark">
           <label>
@@ -503,6 +658,7 @@
     var timerCari;
     var timerAutoSaveAwan;
     var timerJam;
+    var timerToast;
 
     var KEY_LOKAL_DRAFT = "E597_AutoSave_Draft";
     var KEY_SESI_USER = "E597_Sesi_User";
@@ -514,6 +670,84 @@
           navigator.vibrate(pola);
         }
       } catch (e) {}
+    }
+
+    function tampilkanToast(pesan) {
+      var elToast = document.getElementById("dynamicToast");
+      var elTeks = document.getElementById("dynamicToastText");
+      if (!elToast || !elTeks) return;
+      elTeks.innerText = pesan;
+      elToast.classList.add("tampil");
+      clearTimeout(timerToast);
+      timerToast = setTimeout(function() {
+        elToast.classList.remove("tampil");
+      }, 1800);
+    }
+
+    // Perbarui Live Progress Bar & Angka Jumlah di Masing-Masing Tombol Filter
+    function perbaruiBarProgres() {
+      var hitungSemua = 0;
+      var hitungBelum = 0;
+      var hitungSelisih = 0;
+      var hitungCocok = 0;
+
+      for (var k in kunciData) {
+        hitungSemua++;
+        var st = getStatusKeranjang(k);
+        if (st === 'cocok') {
+          hitungCocok++;
+        } else if (st === 'selisih') {
+          hitungSelisih++;
+        } else {
+          hitungBelum++;
+        }
+      }
+
+      var elLblSemua = document.getElementById("lblSemua");
+      var elLblBelum = document.getElementById("lblBelum");
+      var elLblSelisih = document.getElementById("lblSelisih");
+      var elLblCocok = document.getElementById("lblCocok");
+
+      if (elLblSemua) elLblSemua.innerText = "Semua (" + hitungSemua + ")";
+      if (elLblBelum) elLblBelum.innerText = "Belum (" + hitungBelum + ")";
+      if (elLblSelisih) elLblSelisih.innerText = "Selisih (" + hitungSelisih + ")";
+      if (elLblCocok) elLblCocok.innerText = "Cocok (" + hitungCocok + ")";
+
+      var totalDicek = hitungCocok + hitungSelisih;
+      var persen = hitungSemua > 0 ? Math.round((totalDicek / hitungSemua) * 100) : 0;
+      if (persen > 100) persen = 100;
+
+      var elTeks = document.getElementById("teksJumlahProgres");
+      var elPersen = document.getElementById("teksPersenProgres");
+      var elBar = document.getElementById("isiBarProgres");
+      if (elTeks) elTeks.innerText = "Progres: " + totalDicek + " / " + hitungSemua + " Artikel";
+      if (elPersen) elPersen.innerText = persen + "%";
+      if (elBar) elBar.style.width = persen + "%";
+    }
+
+    function ubahAngkaStepper(idInput, delta) {
+      var kode = document.getElementById('kodePilihan').value;
+      if (!kode) {
+        getarHalus([20, 35, 20]);
+        tampilkanToast("Pilih aksesoris terlebih dahulu");
+        return;
+      }
+      var el = document.getElementById(idInput);
+      var nilaiSaatIni = (el.value === "" || isNaN(parseInt(el.value, 10))) ? 0 : parseInt(el.value, 10);
+      var nilaiBaru = nilaiSaatIni + delta;
+      if (nilaiBaru < 0) nilaiBaru = 0;
+      el.value = nilaiBaru;
+      getarHalus(10);
+      cekCocokTotal();
+    }
+
+    function hapusPencarian() {
+      var elCari = document.getElementById('kolomCari');
+      elCari.value = "";
+      document.getElementById('btnClearCari').style.display = "none";
+      getarHalus(10);
+      renderDropdown();
+      elCari.focus();
     }
 
     async function panggilServerAPI(payload) {
@@ -760,8 +994,12 @@
 
     function mulaiAplikasi() {
       jalankanJam(); 
+      var dd = document.getElementById('kodePilihan');
+      if (dd) dd.classList.add('shimmer-loading');
+
       panggilServerAPI({ action: "init" })
         .then(function(res) {
+          if (dd) dd.classList.remove('shimmer-loading');
           statusMaintenanceServer = res.maintenance || "OFF";
           aturTampilanMaintenance();
 
@@ -796,6 +1034,7 @@
           renderDropdown();
         })
         .catch(function(err) {
+          if (dd) dd.classList.remove('shimmer-loading');
           tampilkanModal("Gagal Terhubung", "Pastikan URL_API_APPS_SCRIPT sudah benar dan jaringan internet Anda aktif.");
         });
     }
@@ -900,9 +1139,14 @@
     }
 
     function pencarianTertunda() { 
+      var elCari = document.getElementById('kolomCari');
+      var btnClear = document.getElementById('btnClearCari');
+      if (btnClear) {
+        btnClear.style.display = (elCari.value.length > 0) ? "inline-flex" : "none";
+      }
       clearTimeout(timerCari); 
       document.getElementById('kodePilihan').innerHTML = '<option value="">Menyaring data...</option>'; 
-      timerCari = setTimeout(function() { renderDropdown(); }, 400); 
+      timerCari = setTimeout(function() { renderDropdown(); }, 300); 
     }
 
     function renderDropdown() {
@@ -939,6 +1183,8 @@
         document.getElementById('wadahFoto').style.display = 'none'; 
         resetFormulir(); 
       }
+
+      perbaruiBarProgres();
     }
 
     function getStatusKeranjang(kode) { 
@@ -1084,7 +1330,11 @@
         renderRekapSelisih();
       }
 
-      tampilkanModal("Berhasil & Auto-Saved", "Barang dicatat dan otomatis diamankan.\nLanjut ke barang berikutnya."); 
+      var labelToast = (statusTotalSaatIni === "Cocok")
+        ? "Cocok & Tersimpan • Lanjut barang berikutnya"
+        : "Tersimpan (" + statusTotalSaatIni.split("(")[0].trim() + ")";
+      tampilkanToast(labelToast);
+
       renderDropdown(); 
       document.getElementById('kodePilihan').value = ''; 
       document.getElementById('wadahFoto').style.display = 'none'; 
