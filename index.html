@@ -18,7 +18,7 @@
     label { font-weight: 600; color: #333; font-size: 14px; display: block; margin-bottom: 5px; }
     input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ced4da; border-radius: 8px; box-sizing: border-box; font-size: 14px; background-color: #fff; transition: border-color 0.3s;}
     input:focus, select:focus { border-color: #0d6efd; outline: none; }
-    button { color: white; padding: 15px; width: 100%; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; margin-bottom: 10px; cursor: pointer; transition: opacity 0.2s;}
+    button { color: white; padding: 15px; width: 100%; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; margin-bottom: 10px; cursor: pointer; transition: opacity 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
     button:active { opacity: 0.8; }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-biru { background: #0d6efd; }
@@ -28,6 +28,10 @@
     .btn-abu { background: #6c757d; }
     .btn-cyan { background: #17a2b8; }
     .btn-ungu { background: #6f42c1; }
+
+    /* Helper alignment untuk ikon SVG */
+    .svg-inline { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+    .svg-icon { flex-shrink: 0; vertical-align: middle; }
     
     .wadah-logo-login { text-align: center; margin-bottom: 10px; }
     .logo-login { max-height: 55px; max-width: 180px; object-fit: contain; }
@@ -40,32 +44,45 @@
 
     /* Deretan Fitur Baru & Saklar Maintenance Khusus Store Leader */
     .bar-fitur-atas { display: flex; gap: 8px; margin-bottom: 12px; }
-    .btn-fitur-kecil { flex: 1; padding: 10px 8px; font-size: 12px; border-radius: 8px; margin-bottom: 0; font-weight: bold; }
-    .banner-maintenance-aktif { display: none; background-color: #fff3cd; color: #664d03; border: 1px solid #ffda6a; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; text-align: center; margin-bottom: 12px; }
+    .btn-fitur-kecil { flex: 1; padding: 10px 8px; font-size: 12px; border-radius: 8px; margin-bottom: 0; font-weight: bold; gap: 6px; }
+    .banner-maintenance-aktif { display: none; background-color: #fff3cd; color: #664d03; border: 1px solid #ffda6a; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; text-align: center; margin-bottom: 12px; align-items: center; justify-content: center; gap: 6px; }
     #panelArtikelBaru { display: none; background: #f8f9fa; border: 1px solid #cfe2ff; border-left: 4px solid #0d6efd; border-radius: 10px; padding: 14px; margin-bottom: 15px; }
-    #panelArtikelBaru h4 { margin-top: 0; margin-bottom: 12px; color: #0d6efd; font-size: 14px; }
+    #panelArtikelBaru h4 { margin-top: 0; margin-bottom: 12px; color: #0d6efd; font-size: 14px; display: flex; align-items: center; gap: 6px; }
 
-    .status-autosave { font-size: 12px; text-align: center; padding: 6px 10px; border-radius: 6px; background: #f8f9fa; color: #6c757d; margin-top: 2px; border: 1px solid #e9ecef; font-weight: 600; }
+    .status-autosave { font-size: 12px; text-align: center; padding: 7px 10px; border-radius: 6px; background: #f8f9fa; color: #6c757d; margin-top: 2px; border: 1px solid #e9ecef; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
     #wadahRemark { display: none; background-color: #fff3cd; padding: 12px; border-radius: 8px; border: 1px solid #ffecb5; margin-bottom: 15px; }
-    #wadahRemark label { color: #664d03; margin-bottom: 6px; font-size: 13px; }
+    #wadahRemark label { color: #664d03; margin-bottom: 6px; font-size: 13px; display: flex; align-items: center; gap: 6px; }
     #wadahRemark input { margin-bottom: 0; border: 1px solid #ffda6a; background-color: #fff; }
 
     .kotak-rekap-selisih { background-color: #fff8f8; border: 1px solid #f5c2c7; border-radius: 10px; padding: 14px; margin-bottom: 18px; }
     .item-selisih-akhir { background: #ffffff; border: 1px solid #dee2e6; border-left: 4px solid #dc3545; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; }
     .item-selisih-akhir:last-child { margin-bottom: 0; }
     .judul-item-selisih { font-weight: bold; font-size: 13px; color: #212529; margin-bottom: 3px; }
-    .info-item-selisih { font-size: 12px; color: #dc3545; font-weight: 600; margin-bottom: 8px; }
+    .info-item-selisih { font-size: 12px; color: #dc3545; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
     .input-remark-akhir { margin-bottom: 0 !important; padding: 10px !important; font-size: 13px !important; border: 1px solid #dc3545 !important; }
     .input-remark-akhir.terisi { border-color: #198754 !important; background-color: #f8fffb !important; }
 
     .wadah-flex { display: flex; gap: 10px; margin-bottom: 10px; } 
     .wadah-filter { display: flex; gap: 5px; margin-bottom: 15px; }
-    .btn-filter { flex: 1; padding: 8px 2px; font-size: 12px; font-weight: bold; border-radius: 20px; border: 1px solid #ced4da; background: #fff; color: #6c757d; margin-bottom: 0; }
+    .btn-filter { flex: 1; padding: 8px 4px; font-size: 12px; font-weight: bold; border-radius: 20px; border: 1px solid #ced4da; background: #fff; color: #6c757d; margin-bottom: 0; gap: 4px; }
     .btn-filter.aktif-semua { background: #0d6efd; color: white; border-color: #0d6efd; }
     .btn-filter.aktif-belum { background: #6c757d; color: white; border-color: #6c757d; }
     .btn-filter.aktif-selisih { background: #dc3545; color: white; border-color: #dc3545; }
     .btn-filter.aktif-cocok { background: #198754; color: white; border-color: #198754; }
+
+    .dot-status { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .dot-belum { background-color: #adb5bd; border: 1px solid #6c757d; }
+    .dot-selisih { background-color: #dc3545; }
+    .dot-cocok { background-color: #198754; }
+    .btn-filter.aktif-belum .dot-belum,
+    .btn-filter.aktif-selisih .dot-selisih,
+    .btn-filter.aktif-cocok .dot-cocok { background-color: #ffffff; border-color: #ffffff; }
+
+    /* Kolom pencarian dengan ikon kaca pembesar SVG */
+    .wadah-cari-svg { position: relative; margin-bottom: 5px; }
+    .wadah-cari-svg svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #0d6efd; pointer-events: none; }
+    .wadah-cari-svg input { padding-left: 36px; margin-bottom: 0; border-color: #0d6efd; background-color: #f8f9fa; }
     
     .benar { background-color: #d1e7dd !important; border-color: #198754 !important; color: #0f5132; transition: background-color 0.3s; }
     .salah { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029; animation: goyang 0.4s; }
@@ -90,20 +107,34 @@
       <div class="wadah-logo-login">
         <img src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-login" onerror="this.style.display='none'">
       </div>
-      <h2 style="text-align: center; color: #0d6efd; margin-top: 0; margin-bottom: 5px;">🔐 Login Sistem</h2>
+      <h2 style="text-align: center; color: #0d6efd; margin-top: 0; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <!-- SVG Gembok Login -->
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span>Login Sistem</span>
+      </h2>
       <p style="text-align: center; color: gray; font-size: 13px; margin-top: 0;">E597 Opname Accs</p>
       <label>User ID:</label>
       <input type="text" id="loginId" placeholder="Masukkan NIK Karyawan">
       <label>Password:</label>
       <input type="password" id="loginPass" placeholder="Masukkan password">
-      <button class="btn-biru" id="btnMasukLogin" onclick="prosesLogin()" style="margin-top:10px;">Masuk (Login)</button>
+      <button class="btn-biru" id="btnMasukLogin" onclick="prosesLogin()" style="margin-top:10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+          <polyline points="10 17 15 12 10 7"></polyline>
+          <line x1="15" y1="12" x2="3" y2="12"></line>
+        </svg>
+        <span>Masuk (Login)</span>
+      </button>
     </div>
 
     <!-- HALAMAN 2: APLIKASI UTAMA -->
     <div id="layarUtama" style="display:none;">
       <div class="kotak">
         <div class="header-utama">
-          <!-- TOMBOL LOG OUT DENGAN IKON PINTU & PANAH KELUAR -->
+          <!-- TOMBOL LOG OUT DENGAN SVG PINTU & PANAH KELUAR -->
           <button type="button" class="btn-logout-atas" onclick="logoutMandiri()" title="Keluar dari akun">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M3 5.5C3 4.3 3.9 3.2 5.1 3L10.2 2.1C11.2 1.9 12 2.7 12 3.7V20.3C12 21.3 11.2 22.1 10.2 21.9L5.1 21C3.9 20.8 3 19.7 3 18.5V5.5Z" fill="currentColor"/>
@@ -115,23 +146,53 @@
             <span>Log Out</span>
           </button>
           <img src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-utama" onerror="this.style.display='none'">
-          <h2 style="text-align: center; color: #0d6efd; margin: 0;">📱 E597 Opname Accs</h2>
+          <h2 style="text-align: center; color: #0d6efd; margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <!-- SVG Clipboard Checklist Opname -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
+              <rect x="9" y="3" width="6" height="4" rx="1"></rect>
+              <path d="M9 14l2 2 4-4"></path>
+            </svg>
+            <span>E597 Opname Accs</span>
+          </h2>
         </div>
 
         <!-- BANNER INDIKATOR SAAT MAINTENANCE AKTIF -->
         <div id="bannerMaintenance" class="banner-maintenance-aktif">
-          🚧 MODE MAINTENANCE AKTIF (Hanya Store Leader yang dapat mengakses aplikasi)
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <span>MODE MAINTENANCE AKTIF (Hanya Store Leader yang dapat mengakses aplikasi)</span>
         </div>
 
         <!-- DERETAN FITUR BARU & TOMBOL MAINTENANCE KHUSUS PAK NALDI -->
         <div class="bar-fitur-atas">
-          <button type="button" class="btn-ungu btn-fitur-kecil" onclick="togglePanelArtikelBaru()">📦 + Artikel Baru</button>
-          <button type="button" id="btnToggleMaintenance" class="btn-abu btn-fitur-kecil" style="display:none;" onclick="ubahModeMaintenance()">🔧 Maint: OFF (Aktifkan)</button>
+          <button type="button" class="btn-ungu btn-fitur-kecil" onclick="togglePanelArtikelBaru()">
+            <!-- SVG Paket / Box Tambah -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            <span>+ Artikel Baru</span>
+          </button>
+          <button type="button" id="btnToggleMaintenance" class="btn-abu btn-fitur-kecil" style="display:none;" onclick="ubahModeMaintenance()">
+            <!-- Diisi otomatis via JS dengan ikon SVG -->
+          </button>
         </div>
 
         <!-- PANEL INPUT ARTIKEL BARU + KAMERA LANGSUNG -->
         <div id="panelArtikelBaru">
-          <h4>📦 Tambah Artikel Baru</h4>
+          <h4>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            <span>Tambah Artikel Baru</span>
+          </h4>
           <label>Kode Artikel Baru:</label>
           <input type="text" id="kodeBaruInput" placeholder="Contoh: 8100019999">
           <label>Nama Aksesoris:</label>
@@ -142,17 +203,37 @@
           <label>Foto Fisik Barang (Opsional):</label>
           <input type="file" id="inputKameraBaru" accept="image/*" capture="environment" style="display:none;" onchange="prosesFotoKamera(this)">
           <button type="button" class="btn-cyan" onclick="document.getElementById('inputKameraBaru').click()" style="padding:11px; font-size:13px; margin-bottom:10px;">
-            📷 Ambil Foto dari Kamera / Galeri
+            <!-- SVG Kamera -->
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            <span>Ambil Foto dari Kamera / Galeri</span>
           </button>
           <div id="wadahPreviewBaru" style="display:none; text-align:center; margin-bottom:12px; background:#fff; padding:8px; border-radius:8px; border:1px solid #dee2e6;">
             <img id="previewFotoBaru" src="" style="max-height:130px; max-width:100%; border-radius:6px; object-fit:contain;">
             <div style="margin-top:6px;">
-              <button type="button" class="btn-merah" onclick="hapusFotoBaru()" style="width:auto; padding:4px 10px; font-size:11px; margin-bottom:0;">🗑️ Hapus Foto</button>
+              <button type="button" class="btn-merah" onclick="hapusFotoBaru()" style="width:auto; padding:5px 10px; font-size:11px; margin-bottom:0;">
+                <!-- SVG Tempat Sampah -->
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+                <span>Hapus Foto</span>
+              </button>
             </div>
           </div>
 
           <div class="wadah-flex" style="margin-bottom:0;">
-            <button type="button" class="btn-hijau" id="btnSimpanArtikelBaru" onclick="simpanArtikelBaru()" style="padding:10px; font-size:13px; margin-bottom:0;">💾 Simpan ke ListOpname</button>
+            <button type="button" class="btn-hijau" id="btnSimpanArtikelBaru" onclick="simpanArtikelBaru()" style="padding:10px; font-size:13px; margin-bottom:0;">
+              <!-- SVG Simpan Floppy -->
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              <span>Simpan ke ListOpname</span>
+            </button>
             <button type="button" class="btn-abu" onclick="togglePanelArtikelBaru()" style="padding:10px; font-size:13px; margin-bottom:0;">Batal</button>
           </div>
         </div>
@@ -167,12 +248,19 @@
         <label>Filter Status Aksesoris:</label>
         <div class="wadah-filter">
           <button class="btn-filter aktif-semua" id="btnSemua" onclick="setFilter('semua')">Semua</button>
-          <button class="btn-filter" id="btnBelum" onclick="setFilter('belum')">⚪ Belum</button>
-          <button class="btn-filter" id="btnSelisih" onclick="setFilter('selisih')">🔴 Selisih</button>
-          <button class="btn-filter" id="btnCocok" onclick="setFilter('cocok')">🟢 Cocok</button>
+          <button class="btn-filter" id="btnBelum" onclick="setFilter('belum')"><span class="dot-status dot-belum"></span><span>Belum</span></button>
+          <button class="btn-filter" id="btnSelisih" onclick="setFilter('selisih')"><span class="dot-status dot-selisih"></span><span>Selisih</span></button>
+          <button class="btn-filter" id="btnCocok" onclick="setFilter('cocok')"><span class="dot-status dot-cocok"></span><span>Cocok</span></button>
         </div>
         
-        <input type="text" id="kolomCari" placeholder="🔍 Ketik nama barang atau kode di sini..." oninput="pencarianTertunda()" style="margin-bottom: 5px; border-color: #0d6efd; background-color: #f8f9fa;">
+        <div class="wadah-cari-svg">
+          <!-- SVG Kaca Pembesar Cari -->
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="kolomCari" placeholder="Ketik nama barang atau kode di sini..." oninput="pencarianTertunda()">
+        </div>
         
         <select id="kodePilihan" onchange="muatUlangData()">
           <option value="">-- Menyiapkan data dari server... --</option>
@@ -189,18 +277,48 @@
         <input type="number" id="gudang" placeholder="Ketik jumlah gudang (isi 0 jika kosong)..." oninput="cekCocokTotal()">
         
         <div id="wadahRemark">
-          <label>📝 Remark / Alasan Selisih (Bisa diisi sekarang atau nanti saat Selesai):</label>
+          <label>
+            <!-- SVG Pensil / Catatan Remark -->
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+            <span>Remark / Alasan Selisih (Bisa diisi sekarang atau nanti saat Selesai):</span>
+          </label>
           <input type="text" id="remark" placeholder="Opsional: Kosongkan dulu jika masih lanjut cek gudang/display...">
         </div>
 
-        <button class="btn-biru" onclick="catatKeKeranjang()">📌 Catat Barang Ini</button>
+        <button class="btn-biru" onclick="catatKeKeranjang()">
+          <!-- SVG Tambah ke Daftar -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
+          <span>Catat Barang Ini</span>
+        </button>
         
-        <div id="statusAutoSave" class="status-autosave">🛡️ Auto-Save Aktif (Aman dari putus jaringan / refresh)</div>
+        <div id="statusAutoSave" class="status-autosave">
+          <!-- SVG Perisai Auto-Save -->
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M9 12l2 2 4-4"></path>
+          </svg>
+          <span id="teksAutoSave">Auto-Save Aktif (Aman dari putus jaringan / refresh)</span>
+        </div>
       </div>
 
       <div class="wadah-flex" id="areaDraftBar">
-        <button class="btn-cyan" id="btnDraft" onclick="simpanDraftAwan()" style="flex: 2; margin-bottom: 0; padding: 12px; font-size: 14px;">💾 Simpan & Log Out</button>
-        <!-- TOMBOL RESET DATA DENGAN IKON PANAH MELINGKAR RESET -->
+        <button class="btn-cyan" id="btnDraft" onclick="simpanDraftAwan()" style="flex: 2; margin-bottom: 0; padding: 12px; font-size: 14px;">
+          <!-- SVG Simpan Disket -->
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          <span>Simpan & Log Out</span>
+        </button>
+        <!-- TOMBOL RESET DATA DENGAN SVG PANAH MELINGKAR RESET -->
         <button class="btn-merah btn-ikon-flex" onclick="resetDraftTotal()" style="flex: 1.15; margin-bottom: 0; padding: 12px 8px; font-size: 13px;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 4.5C16.14 4.5 19.5 7.86 19.5 12C19.5 16.14 16.14 19.5 12 19.5C7.86 19.5 4.5 16.14 4.5 12C4.5 9.93 5.34 8.06 6.7 6.7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
@@ -211,7 +329,14 @@
         </button>
       </div>
       
-      <button class="btn-orange" id="btnSelesai" onclick="bukaTandaTangan()" style="margin-top: 10px;">✅ Selesai Cek & Buka TTD</button>
+      <button class="btn-orange" id="btnSelesai" onclick="bukaTandaTangan()" style="margin-top: 10px;">
+        <!-- SVG Centang Lingkaran Selesai -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>Selesai Cek & Buka TTD</span>
+      </button>
 
       <div class="kotak" id="areaTandaTangan">
         <h3 style="text-align: center; color: #198754; margin-top: 0; margin-bottom: 12px;">Tahap Penyelesaian Opname</h3>
@@ -221,14 +346,41 @@
         <label>Paraf / Tanda Tangan Bukti Opname:</label>
         <canvas id="kanvasTtd" width="200" height="75"></canvas>
         <div class="wadah-flex">
-          <button class="btn-merah" onclick="hapusTtd()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">Hapus TTD</button>
-          <button class="btn-abu" onclick="tutupTandaTangan()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">⬅️ Lanjut Cek Barang</button>
+          <button class="btn-merah" onclick="hapusTtd()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            <span>Hapus TTD</span>
+          </button>
+          <button class="btn-abu" onclick="tutupTandaTangan()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Lanjut Cek Barang</span>
+          </button>
         </div>
         <hr style="border: 0; border-top: 1px solid #eee; margin: 18px 0;">
-        <button class="btn-hijau" id="btnKirimAkhir" onclick="kirimSemuaKeRobot()">🚀 Setor ke Lemari Data</button>
+        <button class="btn-hijau" id="btnKirimAkhir" onclick="kirimSemuaKeRobot()">
+          <!-- SVG Kirim / Upload ke Server -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+          <span>Setor ke Lemari Data</span>
+        </button>
       </div>
       
-      <button class="btn-abu" id="btnExcel" onclick="downloadExcel()" style="margin-top:10px; display:none;">⬇️ Download Laporan Excel</button>
+      <button class="btn-abu" id="btnExcel" onclick="downloadExcel()" style="margin-top:10px; display:none;">
+        <!-- SVG Unduh File Excel -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>Download Laporan Excel</span>
+      </button>
     </div>
   </div>
 
@@ -242,6 +394,13 @@
 
   <script>
     const URL_API_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbx00sdpyQJRDLda3KD9vGbWeZibSY9Z776cOSd4_Mo25T2maRFX2i--YdiuZHrtRReR/exec";
+
+    // Kumpulan SVG Vektor untuk elemen dinamis JavaScript
+    const SVG_GEAR = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>';
+    const SVG_WARN = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
+    const SVG_SAVE = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>';
+    const SVG_SEND = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+    const SVG_DOWNLOAD = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>';
 
     var ID_STORE_LEADER = "202106477";
     var dbUser = {
@@ -309,14 +468,14 @@
       var bannerMaint = document.getElementById("bannerMaintenance");
 
       if (userIdAktif === ID_STORE_LEADER) {
-        btnMaint.style.display = "block";
+        btnMaint.style.display = "inline-flex";
         if (statusMaintenanceServer === "ON") {
           btnMaint.className = "btn-merah btn-fitur-kecil";
-          btnMaint.innerText = "🚧 Maint: ON (Matikan)";
-          bannerMaint.style.display = "block";
+          btnMaint.innerHTML = SVG_WARN + '<span>Maint: ON (Matikan)</span>';
+          bannerMaint.style.display = "flex";
         } else {
           btnMaint.className = "btn-abu btn-fitur-kecil";
-          btnMaint.innerText = "🔧 Maint: OFF (Aktifkan)";
+          btnMaint.innerHTML = SVG_GEAR + '<span>Maint: OFF (Aktifkan)</span>';
           bannerMaint.style.display = "none";
         }
       } else {
@@ -329,7 +488,7 @@
       if (userIdAktif !== ID_STORE_LEADER) return;
       var targetStatus = (statusMaintenanceServer === "ON") ? "OFF" : "ON";
       var btnMaint = document.getElementById("btnToggleMaintenance");
-      btnMaint.innerText = "⏳ Memproses...";
+      btnMaint.innerHTML = '<span>Memproses...</span>';
       btnMaint.disabled = true;
 
       panggilServerAPI({ action: "setMaintenance", nilai: targetStatus })
@@ -337,12 +496,12 @@
           btnMaint.disabled = false;
           statusMaintenanceServer = res.maintenance || targetStatus;
           aturTampilanMaintenance();
-          tampilkanModal("Status Maintenance 🔧", res.pesan);
+          tampilkanModal("Status Maintenance", res.pesan);
         })
         .catch(function(err) {
           btnMaint.disabled = false;
           aturTampilanMaintenance();
-          tampilkanModal("Gagal Mengubah Mode ❌", err.message);
+          tampilkanModal("Gagal Mengubah Mode", err.message);
         });
     }
 
@@ -393,12 +552,12 @@
       var qty = document.getElementById("qtyBaruInput").value.trim();
 
       if (!kode || !nama || qty === "") {
-        tampilkanModal("Data Belum Lengkap ⚠️", "Mohon isi Kode Artikel, Nama Aksesoris, dan Jumlah Barang Masuk terlebih dahulu.");
+        tampilkanModal("Data Belum Lengkap", "Mohon isi Kode Artikel, Nama Aksesoris, dan Jumlah Barang Masuk terlebih dahulu.");
         return;
       }
 
       var btn = document.getElementById("btnSimpanArtikelBaru");
-      btn.innerText = fotoBaruBase64 ? "⏳ Mengunggah Foto & Menyimpan..." : "⏳ Menyimpan...";
+      btn.innerHTML = '<span>' + (fotoBaruBase64 ? "Mengunggah Foto & Menyimpan..." : "Menyimpan...") + '</span>';
       btn.disabled = true;
 
       panggilServerAPI({
@@ -406,7 +565,7 @@
         itemBaru: { kode: kode, nama: nama, qty: qty, fotoBase64: fotoBaruBase64 }
       })
       .then(function(res) {
-        btn.innerText = "💾 Simpan ke ListOpname";
+        btn.innerHTML = SVG_SAVE + '<span>Simpan ke ListOpname</span>';
         btn.disabled = false;
         if (res.kunciData) {
           kunciData = res.kunciData;
@@ -417,12 +576,12 @@
         document.getElementById("qtyBaruInput").value = "";
         hapusFotoBaru();
         document.getElementById("panelArtikelBaru").style.display = "none";
-        tampilkanModal("Artikel Ditambahkan ✅", res.pesan);
+        tampilkanModal("Artikel Ditambahkan", res.pesan);
       })
       .catch(function(err) {
-        btn.innerText = "💾 Simpan ke ListOpname";
+        btn.innerHTML = SVG_SAVE + '<span>Simpan ke ListOpname</span>';
         btn.disabled = false;
-        tampilkanModal("Gagal Menyimpan ❌", err.message);
+        tampilkanModal("Gagal Menyimpan", err.message);
       });
     }
 
@@ -465,7 +624,7 @@
          aturTampilanMaintenance();
          mulaiAplikasi();
       } else {
-         tampilkanModal("Akses Ditolak ❌", "User ID atau Password salah!");
+         tampilkanModal("Akses Ditolak", "User ID atau Password salah!");
       }
     }
 
@@ -491,7 +650,7 @@
       document.getElementById("panelArtikelBaru").style.display = "none";
       document.getElementById("wadahFoto").style.display = "none";
       document.getElementById("areaTandaTangan").style.display = "none";
-      document.getElementById("btnSelesai").style.display = "block";
+      document.getElementById("btnSelesai").style.display = "inline-flex";
       document.getElementById("areaDraftBar").style.display = "flex";
       document.getElementById("layarUtama").style.display = "none";
       document.getElementById("layarLogin").style.display = "block";
@@ -508,7 +667,7 @@
           if (statusMaintenanceServer === "ON" && userIdAktif !== ID_STORE_LEADER) {
             logoutMandiri();
             tampilkanModal(
-              "🚧 Sistem Sedang Maintenance",
+              "Sistem Sedang Maintenance",
               "Aplikasi sedang diperbarui sementara oleh Store Leader (Pak Naldi).\n\nSilakan tunggu beberapa saat dan login kembali nanti. Data draft opname Anda tetap aman tersimpan."
             );
             return;
@@ -531,17 +690,18 @@
             keranjangOpname = gabunganDraft; 
             var jmlTersimpan = Object.keys(keranjangOpname).length;
             autoSimpanKeAwan();
-            tampilkanModal("Auto-Save Dipulihkan ☁️", "Selamat bekerja " + userAktif + "!\n\nSebanyak " + jmlTersimpan + " artikel yang sudah dicatat berhasil dipulihkan otomatis. Silakan lanjutkan opname.");
+            tampilkanModal("Auto-Save Dipulihkan", "Selamat bekerja " + userAktif + "!\n\nSebanyak " + jmlTersimpan + " artikel yang sudah dicatat berhasil dipulihkan otomatis. Silakan lanjutkan opname.");
           }
           renderDropdown();
         })
         .catch(function(err) {
-          tampilkanModal("Gagal Terhubung ❌", "Pastikan URL_API_APPS_SCRIPT sudah benar dan jaringan internet Anda aktif.");
+          tampilkanModal("Gagal Terhubung", "Pastikan URL_API_APPS_SCRIPT sudah benar dan jaringan internet Anda aktif.");
         });
     }
 
     function autoSimpanKeAwan() {
       var elStatus = document.getElementById('statusAutoSave');
+      var elTeks = document.getElementById('teksAutoSave');
       var jsonKeranjang = JSON.stringify(keranjangOpname);
       var totalItem = Object.keys(keranjangOpname).length;
 
@@ -549,28 +709,28 @@
         localStorage.setItem(KEY_LOKAL_DRAFT, jsonKeranjang);
       } catch(e) {}
 
-      if (elStatus) {
+      if (elStatus && elTeks) {
         elStatus.style.color = "#0d6efd";
         elStatus.style.backgroundColor = "#e7f1ff";
-        elStatus.innerText = "💾 Tersimpan di HP (" + totalItem + " brg). Sinkron ke Awan...";
+        elTeks.innerText = "Tersimpan di HP (" + totalItem + " brg). Sinkron ke Awan...";
       }
 
       clearTimeout(timerAutoSaveAwan);
       timerAutoSaveAwan = setTimeout(function() {
         panggilServerAPI({ action: "simpanDraft", jsonString: jsonKeranjang })
           .then(function() {
-            if (elStatus) {
+            if (elStatus && elTeks) {
               var jamSimpan = new Date().toLocaleTimeString('id-ID');
               elStatus.style.color = "#0f5132";
               elStatus.style.backgroundColor = "#d1e7dd";
-              elStatus.innerText = "✅ Auto-Save Awan & HP (" + totalItem + " brg) - " + jamSimpan;
+              elTeks.innerText = "Auto-Save Awan & HP (" + totalItem + " brg) - " + jamSimpan;
             }
           })
           .catch(function() {
-            if (elStatus) {
+            if (elStatus && elTeks) {
               elStatus.style.color = "#842029";
               elStatus.style.backgroundColor = "#fff3cd";
-              elStatus.innerText = "📶 Tersimpan aman di HP (" + totalItem + " brg). Menunggu sinkron Awan...";
+              elTeks.innerText = "Tersimpan aman di HP (" + totalItem + " brg). Menunggu sinkron Awan...";
             }
           });
       }, 3000);
@@ -589,13 +749,14 @@
         try { localStorage.removeItem(KEY_LOKAL_DRAFT); } catch(e) {}
         panggilServerAPI({ action: "hapusDraft" })
           .then(function(res) {
-            tampilkanModal("Data Direset 🗑️", res.pesan);
+            tampilkanModal("Data Direset", res.pesan);
             renderDropdown();
             var elStatus = document.getElementById('statusAutoSave');
-            if (elStatus) {
+            var elTeks = document.getElementById('teksAutoSave');
+            if (elStatus && elTeks) {
               elStatus.style.color = "#6c757d";
               elStatus.style.backgroundColor = "#f8f9fa";
-              elStatus.innerText = "🛡️ Auto-Save Aktif (Aman dari putus jaringan / refresh)";
+              elTeks.innerText = "Auto-Save Aktif (Aman dari putus jaringan / refresh)";
             }
           })
           .catch(function() {
@@ -610,26 +771,30 @@
         return; 
       }
       clearTimeout(timerAutoSaveAwan);
-      var btn = document.getElementById('btnDraft'); btn.innerText = "⏳ Mengunggah..."; btn.disabled = true;
+      var btn = document.getElementById('btnDraft');
+      btn.innerHTML = '<span>Mengunggah...</span>';
+      btn.disabled = true;
       var jsonKeranjang = JSON.stringify(keranjangOpname);
       try { localStorage.setItem(KEY_LOKAL_DRAFT, jsonKeranjang); } catch(e) {}
       
       panggilServerAPI({ action: "simpanDraft", jsonString: jsonKeranjang })
         .then(function() {
-          btn.innerText = "💾 Simpan & Log Out"; btn.disabled = false;
+          btn.innerHTML = SVG_SAVE + '<span>Simpan & Log Out</span>';
+          btn.disabled = false;
           logoutMandiri();
-          tampilkanModal("Berhasil Log Out ☁️", "Draft telah disimpan di Awan. Silakan login kembali untuk shift berikutnya.");
+          tampilkanModal("Berhasil Log Out", "Draft telah disimpan di Awan. Silakan login kembali untuk shift berikutnya.");
         })
         .catch(function() {
-          btn.innerText = "💾 Simpan & Log Out"; btn.disabled = false;
+          btn.innerHTML = SVG_SAVE + '<span>Simpan & Log Out</span>';
+          btn.disabled = false;
           logoutMandiri();
-          tampilkanModal("Tersimpan di HP 📱", "Data telah diamankan di memori HP Anda dan Anda berhasil Log Out.");
+          tampilkanModal("Tersimpan di HP", "Data telah diamankan di memori HP Anda dan Anda berhasil Log Out.");
         });
     }
 
     function pencarianTertunda() { 
       clearTimeout(timerCari); 
-      document.getElementById('kodePilihan').innerHTML = '<option value="">🔍 Menyaring...</option>'; 
+      document.getElementById('kodePilihan').innerHTML = '<option value="">Menyaring data...</option>'; 
       timerCari = setTimeout(function() { renderDropdown(); }, 400); 
     }
 
@@ -649,11 +814,11 @@
         if (cocokFilter && cocokCari) {
           jumlahTampil++;
           if (stat === 'cocok') { 
-            htmlOpsi += '<option value="' + kode + '" style="background-color:#d1e7dd; color:#0f5132;">🟢 ' + namaFull + '</option>'; 
+            htmlOpsi += '<option value="' + kode + '" style="background-color:#d1e7dd; color:#0f5132;">[COCOK] ' + namaFull + '</option>'; 
           } else if (stat === 'selisih') { 
-            htmlOpsi += '<option value="' + kode + '" style="background-color:#f8d7da; color:#842029;">🔴 ' + namaFull + '</option>'; 
+            htmlOpsi += '<option value="' + kode + '" style="background-color:#f8d7da; color:#842029;">[SELISIH] ' + namaFull + '</option>'; 
           } else { 
-            htmlOpsi += '<option value="' + kode + '">⚪ ' + namaFull + '</option>'; 
+            htmlOpsi += '<option value="' + kode + '">' + namaFull + '</option>'; 
           }
         }
       }
@@ -804,7 +969,7 @@
         renderRekapSelisih();
       }
 
-      tampilkanModal("Berhasil & Auto-Saved ✅", "Barang dicatat dan otomatis diamankan.\nLanjut ke barang berikutnya."); 
+      tampilkanModal("Berhasil & Auto-Saved", "Barang dicatat dan otomatis diamankan.\nLanjut ke barang berikutnya."); 
       renderDropdown(); 
       document.getElementById('kodePilihan').value = ''; 
       document.getElementById('wadahFoto').style.display = 'none'; 
@@ -822,12 +987,12 @@
       }
 
       if (daftarSelisih.length === 0) {
-        wadah.innerHTML = '<div style="background:#d1e7dd; color:#0f5132; padding:12px; border-radius:8px; margin-bottom:15px; font-size:13px; font-weight:bold; text-align:center;">🎉 Seluruh barang yang dicatat 100% Sesuai (0 Selisih). Silakan langsung tanda tangan di bawah.</div>';
+        wadah.innerHTML = '<div style="background:#d1e7dd; color:#0f5132; padding:12px; border-radius:8px; margin-bottom:15px; font-size:13px; font-weight:bold; text-align:center;">Seluruh barang yang dicatat 100% Sesuai (0 Selisih). Silakan langsung tanda tangan di bawah.</div>';
         return;
       }
 
       var html = '<div class="kotak-rekap-selisih">';
-      html += '<div style="font-weight:bold; color:#842029; font-size:14px; margin-bottom:6px;">⚠️ Daftar Barang Selisih (' + daftarSelisih.length + ' Artikel)</div>';
+      html += '<div style="font-weight:bold; color:#842029; font-size:14px; margin-bottom:6px; display:flex; align-items:center; gap:6px;">' + SVG_WARN + '<span>Daftar Barang Selisih (' + daftarSelisih.length + ' Artikel)</span></div>';
       html += '<p style="font-size:12px; color:#666; margin-top:0; margin-bottom:12px;">Silakan lengkapi alasan selisih (No. Faktur / Rotasi / Keterangan) untuk setiap artikel di bawah ini sebelum menyetor laporan:</p>';
 
       for (var i = 0; i < daftarSelisih.length; i++) {
@@ -837,7 +1002,7 @@
 
         html += '<div class="item-selisih-akhir">';
         html += '<div class="judul-item-selisih">[' + item.kodeArtikel + '] ' + item.namaBarang + '</div>';
-        html += '<div class="info-item-selisih">🔴 ' + item.statusTotal + ' &bull; (Disp: ' + item.display + ' | Gud: ' + item.gudang + ')</div>';
+        html += '<div class="info-item-selisih"><span class="dot-status dot-selisih"></span><span>' + item.statusTotal + ' &bull; (Disp: ' + item.display + ' | Gud: ' + item.gudang + ')</span></div>';
         html += '<input type="text" id="remark_akhir_' + item.kodeArtikel + '" class="' + kelasInput + '" value="' + nilaiRemark + '" placeholder="Wajib isi alasan selisih / No. Faktur..." oninput="simpanRemarkAkhir(\'' + item.kodeArtikel + '\', this)">';
         html += '</div>';
       }
@@ -876,7 +1041,7 @@
 
     function tutupTandaTangan() {
       document.getElementById('areaTandaTangan').style.display = 'none'; 
-      document.getElementById('btnSelesai').style.display = 'block'; 
+      document.getElementById('btnSelesai').style.display = 'inline-flex'; 
       document.getElementById('areaDraftBar').style.display = 'flex';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -954,14 +1119,15 @@
        hapusTtd(); 
        document.getElementById('wadahRekapSelisih').innerHTML = '';
        document.getElementById('areaTandaTangan').style.display = 'none';
-       document.getElementById('btnSelesai').style.display = 'block';
+       document.getElementById('btnSelesai').style.display = 'inline-flex';
        document.getElementById('areaDraftBar').style.display = 'flex';
-       document.getElementById('btnExcel').style.display = 'block';
+       document.getElementById('btnExcel').style.display = 'inline-flex';
        var elStatus = document.getElementById('statusAutoSave');
-       if (elStatus) {
+       var elTeks = document.getElementById('teksAutoSave');
+       if (elStatus && elTeks) {
          elStatus.style.color = "#6c757d";
          elStatus.style.backgroundColor = "#f8f9fa";
-         elStatus.innerText = "🛡️ Auto-Save Aktif (Data telah disetor ke Lemari)";
+         elTeks.innerText = "Auto-Save Aktif (Data telah disetor ke Lemari)";
        }
        window.scrollTo(0,0);
     }
@@ -972,7 +1138,7 @@
         if (item.statusTotal !== "Cocok") {
           var r = (item.remark || "").trim();
           if (r === "" || r === "-") {
-            tampilkanModal("Remark Belum Lengkap 📝", "Mohon isi alasan selisih terlebih dahulu untuk artikel:\n\n[" + item.kodeArtikel + "] " + item.namaBarang);
+            tampilkanModal("Remark Belum Lengkap", "Mohon isi alasan selisih terlebih dahulu untuk artikel:\n\n[" + item.kodeArtikel + "] " + item.namaBarang);
             var inputEl = document.getElementById('remark_akhir_' + item.kodeArtikel);
             if (inputEl) {
               inputEl.focus();
@@ -985,7 +1151,7 @@
       }
 
       if (!adaCoretanTtd) {
-        tampilkanModal("Tanda Tangan Kosong ✍️", "Mohon bubuhkan paraf / tanda tangan pada kotak yang tersedia sebelum menyetor data.");
+        tampilkanModal("Tanda Tangan Kosong", "Mohon bubuhkan paraf / tanda tangan pada kotak yang tersedia sebelum menyetor data.");
         return;
       }
 
@@ -995,27 +1161,27 @@
       for (var key in keranjangOpname) { daftarBerurut.push(keranjangOpname[key]); }
       var paketKirim = { petugasUtama: userAktif, ttdBase64: ttdBase64, isiKeranjang: daftarBerurut };
       var tombolKirim = document.getElementById('btnKirimAkhir'); 
-      tombolKirim.innerText = "⏳ Sedang Menyetor Data..."; 
+      tombolKirim.innerHTML = '<span>Sedang Menyetor Data...</span>'; 
       tombolKirim.disabled = true;
       
       panggilServerAPI({ action: "simpanKeranjang", paketKirim: paketKirim })
         .then(function(res) {
           if (res.linkExcel) linkExcelTersimpan = res.linkExcel;
-          tampilkanModal("Sukses Besar! 🎉", res.pesan + "\n\nSilakan klik 'Download Laporan Excel' di layar bawah."); 
-          tombolKirim.innerText = "🚀 Setor ke Lemari Data"; 
+          tampilkanModal("Sukses Besar!", res.pesan + "\n\nSilakan klik 'Download Laporan Excel' di layar bawah."); 
+          tombolKirim.innerHTML = SVG_SEND + '<span>Setor ke Lemari Data</span>'; 
           tombolKirim.disabled = false;
           resetSistemPenuhLokal();
         })
         .catch(function(err) {
-          tombolKirim.innerText = "🚀 Setor ke Lemari Data"; 
+          tombolKirim.innerHTML = SVG_SEND + '<span>Setor ke Lemari Data</span>'; 
           tombolKirim.disabled = false;
-          tampilkanModal("Gagal Menyetor ❌", "Terjadi kendala saat menyetor ke Google Sheets:\n" + err.message);
+          tampilkanModal("Gagal Menyetor", "Terjadi kendala saat menyetor ke Google Sheets:\n" + err.message);
         });
     }
     
     function downloadExcel() { 
       var btn = document.getElementById('btnExcel');
-      btn.innerText = "⏳ Menyiapkan File Excel...";
+      btn.innerHTML = '<span>Menyiapkan File Excel...</span>';
       btn.disabled = true;
 
       panggilServerAPI({ action: "downloadExcel" })
@@ -1039,16 +1205,16 @@
           document.body.removeChild(linkDownload);
           setTimeout(function() { URL.revokeObjectURL(urlBlob); }, 5000);
 
-          btn.innerText = "⬇️ Download Laporan Excel";
+          btn.innerHTML = SVG_DOWNLOAD + '<span>Download Laporan Excel</span>';
           btn.disabled = false;
         })
         .catch(function(err) {
-          btn.innerText = "⬇️ Download Laporan Excel";
+          btn.innerHTML = SVG_DOWNLOAD + '<span>Download Laporan Excel</span>';
           btn.disabled = false;
           if (linkExcelTersimpan !== "") {
             window.open(linkExcelTersimpan, '_blank');
           } else {
-            tampilkanModal("Gagal Mengunduh ❌", err.message);
+            tampilkanModal("Gagal Mengunduh", err.message);
           }
         });
     }
