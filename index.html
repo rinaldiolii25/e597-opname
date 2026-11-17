@@ -229,6 +229,28 @@
     }
     #panelArtikelBaru h4 { margin-top: 0; margin-bottom: 12px; color: #0d6efd; font-size: 14px; display: flex; align-items: center; gap: 6px; }
 
+    /* Kotak Upload Foto Pratinjau Terpisah (Khusus Store Leader 202106477) */
+    #wadahUploadFotoLeader {
+      display: none;
+      background: #f5f3ff;
+      border: 1.5px dashed #8b5cf6;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 14px;
+      text-align: center;
+      animation: slideTurun 0.25s ease-out;
+    }
+    .label-leader-foto {
+      font-size: 12px;
+      font-weight: 700;
+      color: #5b21b6;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
     .status-autosave { 
       font-size: 12px; text-align: center; padding: 8px 10px; border-radius: 10px; background: #f8fafc; color: #64748b; 
       margin-top: 4px; border: 1px solid #e2e8f0; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; 
@@ -503,6 +525,26 @@
           <p style="margin-top:0; font-size:12px; color:#64748b; font-weight:bold;">Pratinjau Fisik Barang:</p>
           <img id="fotoPreview" src="" alt="Foto Aksesoris">
         </div>
+
+        <!-- OPSI UPLOAD FOTO PRATINJAU TERPISAH (KHUSUS AKUN 202106477 JIKA ARTIKEL BELUM PUNYA FOTO) -->
+        <div id="wadahUploadFotoLeader">
+          <div class="label-leader-foto">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            <span>Artikel ini belum memiliki foto pratinjau</span>
+          </div>
+          <input type="file" id="inputKameraPratinjauLeader" accept="image/*" capture="environment" style="display:none;" onchange="prosesUploadFotoPratinjauLeader(this)">
+          <button type="button" id="btnUploadFotoPratinjauLeader" class="btn-ungu" onclick="document.getElementById('inputKameraPratinjauLeader').click()" style="padding:10px 12px; font-size:13px; margin-bottom:0;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span>Upload Foto Pratinjau ke imgBB</span>
+          </button>
+        </div>
         
         <!-- INPUT DISPLAY DENGAN STEPPER (- / +) -->
         <label>Fisik di Display:</label>
@@ -636,6 +678,7 @@
     const SVG_SAVE = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>';
     const SVG_SEND = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
     const SVG_DOWNLOAD = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>';
+    const SVG_UPLOAD = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>';
 
     var ID_STORE_LEADER = "202106477";
     var dbUser = {
@@ -684,7 +727,6 @@
       }, 1800);
     }
 
-    // Perbarui Live Progress Bar & Angka Jumlah di Masing-Masing Tombol Filter
     function perbaruiBarProgres() {
       var hitungSemua = 0;
       var hitungBelum = 0;
@@ -837,11 +879,9 @@
       panel.style.display = (panel.style.display === "block") ? "none" : "block";
     }
 
-    function prosesFotoKamera(input) {
-      if (!input.files || !input.files[0]) return;
-      var file = input.files[0];
+    // Fungsi Kompresi Gambar Umum untuk Kamera/Galeri
+    function kompresGambarFile(file, callback) {
       var reader = new FileReader();
-
       reader.onload = function(e) {
         var img = new Image();
         img.onload = function() {
@@ -854,14 +894,72 @@
           var ctxKompres = canvasKompres.getContext("2d");
           ctxKompres.drawImage(img, 0, 0, canvasKompres.width, canvasKompres.height);
 
-          fotoBaruBase64 = canvasKompres.toDataURL("image/jpeg", 0.7);
-          document.getElementById("previewFotoBaru").src = fotoBaruBase64;
-          document.getElementById("wadahPreviewBaru").style.display = "block";
-          getarHalus(15);
+          var hasilBase64 = canvasKompres.toDataURL("image/jpeg", 0.7);
+          callback(hasilBase64);
         };
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
+    }
+
+    function prosesFotoKamera(input) {
+      if (!input.files || !input.files[0]) return;
+      kompresGambarFile(input.files[0], function(hasilBase64) {
+        fotoBaruBase64 = hasilBase64;
+        document.getElementById("previewFotoBaru").src = fotoBaruBase64;
+        document.getElementById("wadahPreviewBaru").style.display = "block";
+        getarHalus(15);
+      });
+    }
+
+    // Upload Foto Pratinjau Terpisah untuk Artikel Eksisting Tanpa Foto (Khusus Store Leader 202106477)
+    function prosesUploadFotoPratinjauLeader(input) {
+      if (userIdAktif !== ID_STORE_LEADER) return;
+      if (!input.files || !input.files[0]) return;
+      var kode = document.getElementById('kodePilihan').value;
+      if (!kode) {
+        tampilkanModal("Perhatian", "Pilih artikel terlebih dahulu.");
+        return;
+      }
+
+      var btn = document.getElementById("btnUploadFotoPratinjauLeader");
+      btn.innerHTML = '<span>Mengompres & Mengunggah ke imgBB...</span>';
+      btn.disabled = true;
+      getarHalus(15);
+
+      kompresGambarFile(input.files[0], function(hasilBase64) {
+        panggilServerAPI({
+          action: "uploadFotoPratinjau",
+          kodeArtikel: kode,
+          fotoBase64: hasilBase64
+        })
+        .then(function(res) {
+          btn.innerHTML = SVG_UPLOAD + '<span>Upload Foto Pratinjau ke imgBB</span>';
+          btn.disabled = false;
+          input.value = "";
+
+          if (res.kunciData) {
+            kunciData = res.kunciData;
+          } else if (kunciData[kode]) {
+            kunciData[kode].foto = hasilBase64;
+          }
+
+          document.getElementById("wadahUploadFotoLeader").style.display = "none";
+          if (kunciData[kode] && kunciData[kode].foto) {
+            document.getElementById("fotoPreview").src = kunciData[kode].foto;
+            document.getElementById("wadahFoto").style.display = "block";
+          }
+          getarHalus([15, 30, 15]);
+          tampilkanToast("Foto berhasil diunggah ke imgBB");
+        })
+        .catch(function(err) {
+          btn.innerHTML = SVG_UPLOAD + '<span>Upload Foto Pratinjau ke imgBB</span>';
+          btn.disabled = false;
+          input.value = "";
+          getarHalus([30, 50, 30]);
+          tampilkanModal("Gagal Upload Foto", err.message);
+        });
+      });
     }
 
     function hapusFotoBaru() {
@@ -984,6 +1082,7 @@
       hapusFotoBaru();
       document.getElementById("panelArtikelBaru").style.display = "none";
       document.getElementById("wadahFoto").style.display = "none";
+      document.getElementById("wadahUploadFotoLeader").style.display = "none";
       document.getElementById("areaTandaTangan").style.display = "none";
       document.getElementById("btnSelesai").style.display = "inline-flex";
       document.getElementById("areaDraftBar").style.display = "flex";
@@ -1181,6 +1280,7 @@
       } else { 
         dropdown.value = ''; 
         document.getElementById('wadahFoto').style.display = 'none'; 
+        document.getElementById('wadahUploadFotoLeader').style.display = 'none';
         resetFormulir(); 
       }
 
@@ -1223,13 +1323,21 @@
       resetFormulir();
       var wadah = document.getElementById('wadahFoto'); 
       var img = document.getElementById('fotoPreview');
+      var wadahUploadLeader = document.getElementById('wadahUploadFotoLeader');
       
       if (kode !== "" && kunciData[kode] && kunciData[kode].foto !== "") { 
         img.src = kunciData[kode].foto; 
         wadah.style.display = 'block'; 
+        if (wadahUploadLeader) wadahUploadLeader.style.display = 'none';
       } else { 
         img.src = ""; 
         wadah.style.display = 'none'; 
+        // Tampilkan opsi upload foto terpisah HANYA untuk userid 202106477 jika artikel belum punya foto
+        if (kode !== "" && userIdAktif === ID_STORE_LEADER && wadahUploadLeader) {
+          wadahUploadLeader.style.display = 'block';
+        } else if (wadahUploadLeader) {
+          wadahUploadLeader.style.display = 'none';
+        }
       }
       
       if (keranjangOpname[kode]) { 
@@ -1338,6 +1446,7 @@
       renderDropdown(); 
       document.getElementById('kodePilihan').value = ''; 
       document.getElementById('wadahFoto').style.display = 'none'; 
+      document.getElementById('wadahUploadFotoLeader').style.display = 'none';
       resetFormulir();
     }
 
