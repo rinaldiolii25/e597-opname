@@ -34,8 +34,9 @@
     
     .header-utama { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; border-bottom: 2px solid #f0f2f5; padding-top: 8px; padding-bottom: 12px; margin-bottom: 15px; }
     .logo-utama { max-height: 42px; max-width: 150px; object-fit: contain; margin-bottom: 6px; }
-    .btn-logout-atas { position: absolute; top: 0; right: 0; width: auto; padding: 6px 12px; font-size: 12px; font-weight: bold; background-color: #fff; color: #dc3545; border: 1px solid #dc3545; border-radius: 6px; margin-bottom: 0; cursor: pointer; transition: all 0.2s; }
+    .btn-logout-atas { position: absolute; top: 0; right: 0; width: auto; padding: 6px 11px; font-size: 12px; font-weight: bold; background-color: #fff; color: #dc3545; border: 1px solid #dc3545; border-radius: 6px; margin-bottom: 0; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 5px; }
     .btn-logout-atas:hover, .btn-logout-atas:active { background-color: #dc3545; color: #fff; }
+    .btn-ikon-flex { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 
     /* Deretan Fitur Baru & Saklar Maintenance Khusus Store Leader */
     .bar-fitur-atas { display: flex; gap: 8px; margin-bottom: 12px; }
@@ -102,7 +103,17 @@
     <div id="layarUtama" style="display:none;">
       <div class="kotak">
         <div class="header-utama">
-          <button type="button" class="btn-logout-atas" onclick="logoutMandiri()">🚪 Log Out</button>
+          <!-- TOMBOL LOG OUT DENGAN IKON PINTU & PANAH KELUAR -->
+          <button type="button" class="btn-logout-atas" onclick="logoutMandiri()" title="Keluar dari akun">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3 5.5C3 4.3 3.9 3.2 5.1 3L10.2 2.1C11.2 1.9 12 2.7 12 3.7V20.3C12 21.3 11.2 22.1 10.2 21.9L5.1 21C3.9 20.8 3 19.7 3 18.5V5.5Z" fill="currentColor"/>
+              <circle cx="9.2" cy="12" r="1.1" fill="#ffffff"/>
+              <path d="M12 4.5H16.5V7.5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+              <path d="M12 19.5H16.5V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+              <path d="M14 10.7H18.5V8.3L22.5 12L18.5 15.7V13.3H14V10.7Z" fill="currentColor"/>
+            </svg>
+            <span>Log Out</span>
+          </button>
           <img src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-utama" onerror="this.style.display='none'">
           <h2 style="text-align: center; color: #0d6efd; margin: 0;">📱 E597 Opname Accs</h2>
         </div>
@@ -189,7 +200,15 @@
 
       <div class="wadah-flex" id="areaDraftBar">
         <button class="btn-cyan" id="btnDraft" onclick="simpanDraftAwan()" style="flex: 2; margin-bottom: 0; padding: 12px; font-size: 14px;">💾 Simpan & Log Out</button>
-        <button class="btn-merah" onclick="resetDraftTotal()" style="flex: 1; margin-bottom: 0; padding: 12px; font-size: 14px;">🗑️ Reset Data</button>
+        <!-- TOMBOL RESET DATA DENGAN IKON PANAH MELINGKAR RESET -->
+        <button class="btn-merah btn-ikon-flex" onclick="resetDraftTotal()" style="flex: 1.15; margin-bottom: 0; padding: 12px 8px; font-size: 13px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 4.5C16.14 4.5 19.5 7.86 19.5 12C19.5 16.14 16.14 19.5 12 19.5C7.86 19.5 4.5 16.14 4.5 12C4.5 9.93 5.34 8.06 6.7 6.7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M12 2L9.2 4.5L12 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 7.2C14.65 7.2 16.8 9.35 16.8 12C16.8 14.65 14.65 16.8 12 16.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
+          </svg>
+          <span>Reset Data</span>
+        </button>
       </div>
       
       <button class="btn-orange" id="btnSelesai" onclick="bukaTandaTangan()" style="margin-top: 10px;">✅ Selesai Cek & Buka TTD</button>
@@ -597,12 +616,12 @@
       
       panggilServerAPI({ action: "simpanDraft", jsonString: jsonKeranjang })
         .then(function() {
-          btn.innerText = "☁️ Simpan & Log Out"; btn.disabled = false;
+          btn.innerText = "💾 Simpan & Log Out"; btn.disabled = false;
           logoutMandiri();
           tampilkanModal("Berhasil Log Out ☁️", "Draft telah disimpan di Awan. Silakan login kembali untuk shift berikutnya.");
         })
         .catch(function() {
-          btn.innerText = "☁️ Simpan & Log Out"; btn.disabled = false;
+          btn.innerText = "💾 Simpan & Log Out"; btn.disabled = false;
           logoutMandiri();
           tampilkanModal("Tersimpan di HP 📱", "Data telah diamankan di memori HP Anda dan Anda berhasil Log Out.");
         });
