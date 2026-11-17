@@ -125,7 +125,7 @@
           <input type="text" id="kodeBaruInput" placeholder="Contoh: 8100019999">
           <label>Nama Aksesoris:</label>
           <input type="text" id="namaBaruInput" placeholder="Contoh: Adapter Charger 25W">
-          <label>Jumlah Barang Sementara:</label>
+          <label>Jumlah Barang Masuk:</label>
           <input type="number" id="qtyBaruInput" placeholder="Masukkan jumlah fisik yang diterima...">
           
           <label>Foto Fisik Barang (Opsional):</label>
@@ -188,7 +188,7 @@
       </div>
 
       <div class="wadah-flex" id="areaDraftBar">
-        <button class="btn-cyan" id="btnDraft" onclick="simpanDraftAwan()" style="flex: 2; margin-bottom: 0; padding: 12px; font-size: 14px;">☁️ Simpan & Log Out</button>
+        <button class="btn-cyan" id="btnDraft" onclick="simpanDraftAwan()" style="flex: 2; margin-bottom: 0; padding: 12px; font-size: 14px;">💾 Simpan & Log Out</button>
         <button class="btn-merah" onclick="resetDraftTotal()" style="flex: 1; margin-bottom: 0; padding: 12px; font-size: 14px;">🗑️ Reset Data</button>
       </div>
       
@@ -374,7 +374,7 @@
       var qty = document.getElementById("qtyBaruInput").value.trim();
 
       if (!kode || !nama || qty === "") {
-        tampilkanModal("Data Belum Lengkap ⚠️", "Mohon isi Kode Artikel, Nama Aksesoris, dan Jumlah Barang Sementara terlebih dahulu.");
+        tampilkanModal("Data Belum Lengkap ⚠️", "Mohon isi Kode Artikel, Nama Aksesoris, dan Jumlah Barang Masuk terlebih dahulu.");
         return;
       }
 
