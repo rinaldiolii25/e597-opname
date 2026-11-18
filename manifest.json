@@ -1,1 +1,38 @@
-
+{
+  "name": "E597 Opname Accs - Erafone",
+  "short_name": "E597 Opname",
+  "description": "Sistem Stock Opname & Audit Fisik Gudang Real-Time",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef2f7",
+  "theme_color": "#0d6efd",
+  "icons": [
+    {
+      "src": "https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
