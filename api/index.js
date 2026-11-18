@@ -1,18 +1,16 @@
 // ============================================================================
-// FILE: api/index.js (VERCEL SERVERLESS BRAIN - CLOSED SOURCE IP PROTECTION)
-// Menyimpan seluruh logika bisnis, proteksi Paket LITE vs PRO, Merge Paralel,
-// Audit Trail Per-Staf, Strict Blind Opname, Valuasi Rupiah, & Koneksi imgBB.
+// FILE: api/index.js (VERCEL SERVERLESS BRAIN - DUAL SPREADSHEET ISOLATION)
+// Memisahkan akses DataUser & Pengaturan (Sheet Privat Owner) dengan
+// MasterData, HasilOpname, & Template_Print (Sheet Operasional Toko).
 // ============================================================================
 
 const MASTER_GAS_URL = process.env.MASTER_GAS_URL || "https://script.google.com/macros/s/AKfycbx00sdpyQJRDLda3KD9vGbWeZibSY9Z776cOSd4_Mo25T2maRFX2i--YdiuZHrtRReR/exec";
 const SECRET_COURIER_TOKEN = process.env.SECRET_COURIER_TOKEN || "E597_VERCEL_SHIELD_2026_KEY";
-const DEFAULT_IMGBB_KEY = process.env.IMGBB_API_KEY || "";
+const DEFAULT_IMGBB_KEY = process.env.IMGBB_API_KEY || "57780ed2a4e113c899e0f88b9c38b434";
 
-// Cache memori sementara di Vercel agar verifikasi lisensi super cepat (<10ms)
 const licenseCache = new Map();
-const CACHE_TTL_MS = 3 * 60 * 1000; // 3 Menit
+const CACHE_TTL_MS = 3 * 60 * 1000;
 
-// Akun Cadangan Darurat (Jika Sheet DataUser belum dibuat)
 const FALLBACK_USERS = {
   "202106477": { pass: "Erafone2026", namaLengkap: "Pak Naldi (Store Leader)", role: "ADMIN" },
   "202408242": { pass: "Erafone2026", namaLengkap: "Veidel (ERO)", role: "STAFF" },
@@ -21,7 +19,6 @@ const FALLBACK_USERS = {
   "202611324": { pass: "Erafone2026", namaLengkap: "Grasia (ERO)", role: "STAFF" }
 };
 
-// Fungsi panggil Kurir Kode.gs dengan Token Rahasia
 async function callGasCourier(targetUrl, payload) {
   const endpoint = targetUrl && targetUrl !== "INTERNAL" ? targetUrl : MASTER_GAS_URL;
   const bodyData = Object.assign({}, payload, {
@@ -49,7 +46,6 @@ async function callGasCourier(targetUrl, payload) {
   return json;
 }
 
-// Fungsi Unggah Foto Langsung dari Server Vercel ke imgBB
 async function uploadToImgBB(base64Str, apiKey, namaFile) {
   if (!base64Str || !apiKey) return "";
   const cleanBase64 = String(base64Str).replace(/^data:image\/\w+;base64,/, "");
@@ -69,7 +65,6 @@ async function uploadToImgBB(base64Str, apiKey, namaFile) {
   throw new Error("Gagal mengunggah foto ke server imgBB.");
 }
 
-// Fungsi Cek & Validasi Lisensi Multi-Tenant (Beserta Paket LITE vs PRO)
 async function resolveTenantLicense(kodeTokoInput) {
   const kode = String(kodeTokoInput || "E597").toUpperCase().trim();
   const now = Date.now();
@@ -93,39 +88,39 @@ async function resolveTenantLicense(kodeTokoInput) {
     expiredDate: "2099-12-31",
     urlApiTarget: "INTERNAL",
     paket: "PRO",
-    spreadsheetId: "INTERNAL"
+    spreadsheetId: "INTERNAL",
+    ownerSpreadsheetId: "INTERNAL"
   };
 
   if (String(lic.status).toUpperCase() === "SUSPEND") {
-    throw new Error("🔒 Lisensi toko [" + kode + "] sedang di-SUSPEND sementara. Silakan hubungi Administrator.");
+    throw new Error("Lisensi toko [" + kode + "] sedang di-SUSPEND sementara. Silakan hubungi Administrator.");
   }
 
   if (lic.expiredDate) {
     const expTime = new Date(lic.expiredDate + "T23:59:59").getTime();
     if (!isNaN(expTime) && now > expTime) {
-      throw new Error("⏳ Masa aktif langganan toko [" + kode + "] telah berakhir pada " + lic.expiredDate + ". Silakan perpanjang langganan.");
+      throw new Error("Masa aktif langganan toko [" + kode + "] telah berakhir pada " + lic.expiredDate + ". Silakan perpanjang langganan.");
     }
   }
 
   lic.paket = String(lic.paket || "PRO").toUpperCase().trim() === "LITE" ? "LITE" : "PRO";
+  lic.spreadsheetId = lic.spreadsheetId || "INTERNAL";
+  lic.ownerSpreadsheetId = lic.ownerSpreadsheetId || lic.spreadsheetId;
   licenseCache.set(kode, { ts: now, data: lic });
   return lic;
 }
 
-// Algoritma Inti: Parallel Merge Multi-HP + Item-Level Audit Trail (Khusus PRO)
 function mergeDraftKeranjang(draftAwanStr, draftKlienStr, hapusKode, paketLisensi) {
   let awan = {};
   let klien = {};
   try { awan = JSON.parse(draftAwanStr || "{}"); } catch (e) {}
   try { klien = JSON.parse(draftKlienStr || "{}"); } catch (e) {}
 
-  // Jika Paket LITE: Tidak ada penggabungan paralel multi-HP (langsung gunakan kiriman terakhir)
   if (paketLisensi === "LITE") {
     if (hapusKode && klien[hapusKode]) delete klien[hapusKode];
     return JSON.stringify(klien);
   }
 
-  // Jika Paket PRO: Gabungkan per-lokasi (Display vs Gudang) berdasarkan timestamp terbaru + rekam Audit Trail
   const gabungan = Object.assign({}, awan);
 
   for (const kode in klien) {
@@ -162,7 +157,6 @@ function mergeDraftKeranjang(draftAwanStr, draftKlienStr, hapusKode, paketLisens
         hasil.tsRemark = tsRemK;
       }
 
-      // Gabungkan nama petugas
       const setPetugas = [];
       [hasil.petugasDisp, hasil.petugasGud, itemA.petugasCek, itemK.petugasCek].forEach((p) => {
         if (!p) return;
@@ -173,7 +167,6 @@ function mergeDraftKeranjang(draftAwanStr, draftKlienStr, hapusKode, paketLisens
       });
       hasil.petugasCek = setPetugas.join(" & ");
 
-      // Gabungkan Log Riwayat Perubahan Per-Staf (Maksimal 5 jejak terakhir per SKU agar ringan)
       const logGabung = [];
       const sumberLog = [].concat(Array.isArray(itemA.log) ? itemA.log : [], Array.isArray(itemK.log) ? itemK.log : []);
       sumberLog.forEach((entri) => {
@@ -181,7 +174,6 @@ function mergeDraftKeranjang(draftAwanStr, draftKlienStr, hapusKode, paketLisens
       });
       hasil.log = logGabung.slice(-5);
 
-      // Ambil statusTotal dari perhitungan terbaru klien
       if (itemK.statusTotal) hasil.statusTotal = itemK.statusTotal;
       if (hasil.statusTotal === "Cocok") hasil.remark = "-";
 
@@ -196,7 +188,6 @@ function mergeDraftKeranjang(draftAwanStr, draftKlienStr, hapusKode, paketLisens
   return JSON.stringify(gabungan);
 }
 
-// Handler Utama Vercel Serverless
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -206,7 +197,7 @@ module.exports = async function handler(req, res) {
     return res.status(200).end();
   }
   if (req.method !== "POST") {
-    return res.status(200).json({ status: "ok", pesan: "E597 Vercel Security Shield Active." });
+    return res.status(200).json({ status: "ok", pesan: "E597 Vercel Security Shield Active (Dual-Sheet Mode)." });
   }
 
   try {
@@ -214,7 +205,6 @@ module.exports = async function handler(req, res) {
     const action = body.action || "";
     const kodeToko = String(body.kodeToko || "E597").toUpperCase().trim();
 
-    // 1. CEK LISENSI TOKO
     if (action === "cekLisensiToko") {
       const lic = await resolveTenantLicense(kodeToko);
       return res.status(200).json({
@@ -228,17 +218,17 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // Ambil lisensi & rute kurir untuk semua aksi operasional
     const tenant = await resolveTenantLicense(kodeToko);
     const targetGas = tenant.urlApiTarget;
-    const ssId = tenant.spreadsheetId || "INTERNAL";
-    const paketAktif = tenant.paket; // "LITE" atau "PRO"
+    const ssId = tenant.spreadsheetId;
+    const ownerSsId = tenant.ownerSpreadsheetId;
+    const paketAktif = tenant.paket;
 
-    // 2. CEK MAINTENANCE (DI LAYAR LOGIN)
     if (action === "cekMaintenance") {
       const raw = await callGasCourier(targetGas, {
         rawAction: "raw_readBundle",
         spreadsheetId: ssId,
+        ownerSpreadsheetId: ownerSsId,
         includeMaster: false,
         includeUsers: false
       });
@@ -252,7 +242,6 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 3. LOGIN USER (DENGAN PROTEKSI BATAS 2 AKUN UNTUK PAKET LITE)
     if (action === "loginUser") {
       const idInput = String(body.userId || "").trim();
       const passInput = String(body.password || "").trim();
@@ -260,6 +249,7 @@ module.exports = async function handler(req, res) {
       const raw = await callGasCourier(targetGas, {
         rawAction: "raw_readBundle",
         spreadsheetId: ssId,
+        ownerSpreadsheetId: ownerSsId,
         includeMaster: false,
         includeUsers: true
       });
@@ -287,18 +277,17 @@ module.exports = async function handler(req, res) {
       const foundUser = userAktifList[idxUser];
       const roleUser = String(foundUser.role || "STAFF").toUpperCase() === "ADMIN" ? "ADMIN" : "STAFF";
 
-      // Batasan Paket LITE: Maksimal 2 Akun Pertama di Sheet DataUser
       if (paketAktif === "LITE" && idxUser >= 2 && roleUser !== "ADMIN") {
         return res.status(200).json({
           status: "error",
-          pesan: "🔒 Paket LITE dibatasi maksimal 2 Akun (1 Admin + 1 Staff). Silakan hubungi Owner untuk Upgrade ke Paket PRO (Unlimited Akun)."
+          pesan: "Paket LITE dibatasi maksimal 2 Akun (1 Admin + 1 Staff). Hubungi Owner untuk Upgrade ke Paket PRO."
         });
       }
 
       if (statusMaint === "ON" && roleUser !== "ADMIN") {
         return res.status(200).json({
           status: "error",
-          pesan: "🚧 Sistem sedang dalam Mode Maintenance oleh Store Leader / Admin."
+          pesan: "Sistem sedang dalam Mode Maintenance oleh Store Leader / Admin."
         });
       }
 
@@ -316,11 +305,11 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 4. INIT DATA APLIKASI UTAMA (MASTER DATA + HPP RUPIAH + DRAFT)
     if (action === "init") {
       const raw = await callGasCourier(targetGas, {
         rawAction: "raw_readBundle",
         spreadsheetId: ssId,
+        ownerSpreadsheetId: ownerSsId,
         includeMaster: true,
         includeUsers: false
       });
@@ -328,7 +317,6 @@ module.exports = async function handler(req, res) {
       const kunciData = raw.kunciData || {};
       const blindMode = paketAktif === "PRO" ? (raw.props.MODE_BLIND_OPNAME || raw.configPublik.modeBlindOpname || "OFF") : "OFF";
 
-      // Jika Paket LITE: Sembunyikan Harga_Modal agar valuasi Rupiah eksklusif di Paket PRO
       if (paketAktif === "LITE") {
         for (const k in kunciData) {
           kunciData[k].hargaModal = 0;
@@ -348,11 +336,11 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 5. SIMPAN & MERGE DRAFT KE AWAN
     if (action === "simpanDraft" || action === "hapusItemDraft") {
       const raw = await callGasCourier(targetGas, {
         rawAction: "raw_readBundle",
         spreadsheetId: ssId,
+        ownerSpreadsheetId: ownerSsId,
         includeMaster: false,
         includeUsers: false
       });
@@ -372,6 +360,7 @@ module.exports = async function handler(req, res) {
         await callGasCourier(targetGas, {
           rawAction: "raw_writeProps",
           spreadsheetId: ssId,
+          ownerSpreadsheetId: ownerSsId,
           propsToUpdate: {
             DRAFT_KERANJANG: jsonBaru,
             RESET_TIMESTAMP: String(newTs)
@@ -385,7 +374,6 @@ module.exports = async function handler(req, res) {
         });
       }
 
-      // Jika client tertinggal dari reset terakhir di server, kembalikan data server
       if (clientResetTs > 0 && serverResetTs > clientResetTs) {
         return res.status(200).json({
           status: "sukses",
@@ -404,6 +392,7 @@ module.exports = async function handler(req, res) {
       await callGasCourier(targetGas, {
         rawAction: "raw_writeProps",
         spreadsheetId: ssId,
+        ownerSpreadsheetId: ownerSsId,
         propsToUpdate: {
           DRAFT_KERANJANG: hasilMergeJson
         }
@@ -416,12 +405,12 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 6. RESET DRAFT TOTAL
     if (action === "hapusDraft") {
       const newResetTs = Date.now();
       await callGasCourier(targetGas, {
         rawAction: "raw_writeProps",
         spreadsheetId: ssId,
+        ownerSpreadsheetId: ownerSsId,
         propsToUpdate: {
           DRAFT_KERANJANG: "{}",
           RESET_TIMESTAMP: String(newResetTs)
@@ -434,35 +423,35 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 7. SAKLAR MODE MAINTENANCE
     if (action === "setMaintenance") {
       const nilaiBaru = body.nilai === "ON" ? "ON" : "OFF";
       await callGasCourier(targetGas, {
         rawAction: "raw_writeProps",
         spreadsheetId: ssId,
+        ownerSpreadsheetId: ownerSsId,
         propsToUpdate: { STATUS_MAINTENANCE: nilaiBaru }
       });
       return res.status(200).json({
         status: "sukses",
         maintenance: nilaiBaru,
         pesan: nilaiBaru === "ON"
-          ? "🚧 Mode Maintenance DIAKTIFKAN. Hanya Admin/Owner yang dapat mengakses aplikasi."
-          : "✅ Mode Maintenance DIMATIKAN. Seluruh staf dapat login kembali."
+          ? "Mode Maintenance DIAKTIFKAN. Hanya Admin/Owner yang dapat mengakses aplikasi."
+          : "Mode Maintenance DIMATIKAN. Seluruh staf dapat login kembali."
       });
     }
 
-    // 8. SAKLAR STRICT BLIND OPNAME (KHUSUS PAKET PRO & ROLE ADMIN)
     if (action === "setBlindOpname") {
       if (paketAktif !== "PRO") {
         return res.status(200).json({
           status: "error",
-          pesan: "🔒 Fitur Saklar Strict Blind Opname (Anti-Tebak Angka) hanya tersedia pada Paket PRO."
+          pesan: "Fitur Saklar Strict Blind Opname (Anti-Tebak Angka) hanya tersedia pada Paket PRO."
         });
       }
       const nilaiBlind = body.nilai === "ON" ? "ON" : "OFF";
       await callGasCourier(targetGas, {
         rawAction: "raw_writeProps",
         spreadsheetId: ssId,
+        ownerSpreadsheetId: ownerSsId,
         propsToUpdate: { MODE_BLIND_OPNAME: nilaiBlind },
         updateSettingKey: "Mode_Blind_Opname",
         updateSettingVal: nilaiBlind
@@ -471,12 +460,11 @@ module.exports = async function handler(req, res) {
         status: "sukses",
         blindOpname: nilaiBlind,
         pesan: nilaiBlind === "ON"
-          ? "🕶️ Strict Blind Opname AKTIF: Indikator warna hijau/merah & angka stok Master disembunyikan dari layar Staff agar tidak bisa menebak angka."
-          : "👁️ Strict Blind Opname NONAKTIF: Indikator warna langsung (Hijau/Merah) kembali ditampilkan."
+          ? "Strict Blind Opname AKTIF: Indikator warna hijau/merah & angka stok Master disembunyikan dari layar Staff."
+          : "Strict Blind Opname NONAKTIF: Indikator warna langsung (Hijau/Merah) kembali ditampilkan."
       });
     }
 
-    // 9. TAMBAH ARTIKEL BARU (+ UPLOAD FOTO IMGBB SESUAI HAK PAKET)
     if (action === "tambahArtikelBaru") {
       const item = body.itemBaru || {};
       const rolePengirim = String(body.userRole || "STAFF").toUpperCase();
@@ -486,12 +474,13 @@ module.exports = async function handler(req, res) {
         if (paketAktif === "LITE" && rolePengirim !== "ADMIN") {
           return res.status(200).json({
             status: "error",
-            pesan: "🔒 Pada Paket LITE, unggah foto ke server imgBB hanya dapat dilakukan oleh akun Admin/Owner. Upgrade ke Paket PRO untuk membuka akses kamera bagi seluruh Staff."
+            pesan: "Pada Paket LITE, unggah foto ke imgBB hanya dapat dilakukan oleh akun Admin/Owner."
           });
         }
         const rawKey = await callGasCourier(targetGas, {
           rawAction: "raw_readBundle",
           spreadsheetId: ssId,
+          ownerSpreadsheetId: ownerSsId,
           includeMaster: false,
           includeUsers: false
         });
@@ -518,13 +507,12 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 10. UPLOAD FOTO PRATINJAU BARANG (LITE: HANYA ADMIN | PRO: ADMIN + SEMUA STAFF)
     if (action === "uploadFotoPratinjau") {
       const rolePengirim = String(body.userRole || "STAFF").toUpperCase();
       if (paketAktif === "LITE" && rolePengirim !== "ADMIN") {
         return res.status(200).json({
           status: "error",
-          pesan: "🔒 Pada Paket LITE, fitur Upload Foto Pratinjau hanya tersedia untuk Admin/Owner. Upgrade ke Paket PRO agar seluruh Staff dapat mengunggah foto barang."
+          pesan: "Pada Paket LITE, fitur Upload Foto Pratinjau hanya tersedia untuk Admin/Owner."
         });
       }
 
@@ -537,12 +525,13 @@ module.exports = async function handler(req, res) {
       const rawKey = await callGasCourier(targetGas, {
         rawAction: "raw_readBundle",
         spreadsheetId: ssId,
+        ownerSpreadsheetId: ownerSsId,
         includeMaster: false,
         includeUsers: false
       });
       const imgbbKey = DEFAULT_IMGBB_KEY || rawKey.imgbbApiKey || "";
       if (!imgbbKey) {
-        throw new Error("IMGBB_API_KEY belum diisi pada Sheet Pengaturan.");
+        throw new Error("IMGBB_API_KEY belum diisi pada Sheet Pengaturan Owner.");
       }
 
       const urlFotoImgbb = await uploadToImgBB(fotoBase64, imgbbKey, "SKU_" + kodeArtikel);
@@ -560,7 +549,6 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 11. SETOR KERANJANG AKHIR + VALUASI RUPIAH + AUTO-ARCHIVING
     if (action === "simpanKeranjang") {
       const paketKirim = body.paketKirim || {};
       const isiKeranjang = Array.isArray(paketKirim.isiKeranjang) ? paketKirim.isiKeranjang : [];
@@ -568,6 +556,7 @@ module.exports = async function handler(req, res) {
       const rawMaster = await callGasCourier(targetGas, {
         rawAction: "raw_readBundle",
         spreadsheetId: ssId,
+        ownerSpreadsheetId: ownerSsId,
         includeMaster: true,
         includeUsers: false
       });
@@ -647,7 +636,6 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 12. DOWNLOAD EXCEL (.XLSX)
     if (action === "downloadExcel") {
       const resExcel = await callGasCourier(targetGas, {
         rawAction: "raw_exportXlsx",
