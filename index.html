@@ -11,61 +11,68 @@
   <link rel="manifest" href="manifest.json" />
   <style>
     :root {
-      --primary: #0d6efd;
-      --primary-dark: #0a58ca;
-      --bg-page: #f1f5f9;
-      --card-bg: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border-soft: #e2e8f0;
-      --success: #16a34a;
-      --success-bg: #dcfce7;
-      --danger: #dc2626;
-      --danger-bg: #fee2e2;
-      --warning: #d97706;
-      --warning-bg: #fef3c7;
-      --pro-grad: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+      --primary: #0066cc;
+      --primary-hover: #0055b3;
+      --bg-page: #f5f7fa;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-solid: #ffffff;
+      --text-main: #1d1d1f;
+      --text-muted: #86868b;
+      --border-soft: rgba(0, 0, 0, 0.08);
+      --success: #28a745;
+      --success-bg: #e8f5e9;
+      --danger: #dc3545;
+      --danger-bg: #ffebee;
+      --warning: #ffc107;
+      --warning-bg: #fff8e1;
+      --pro-grad: linear-gradient(135deg, #0066cc 0%, #5856d6 100%);
+      --glass-blur: blur(20px);
+      --radius-ios: 20px;
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
       background: var(--bg-page);
       color: var(--text-main);
-      line-height: 1.45;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
     .hidden { display: none !important; }
 
-    /* ================= LOGIN SCREEN (WIDESCREEN SPLIT + MOBILE) ================= */
+    /* ================= LOGIN SCREEN (MODERN GLASSMORPHISM) ================= */
     .login-wrapper {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      background: radial-gradient(circle at top left, #dbeafe 0%, #f1f5f9 55%, #e2e8f0 100%);
+      padding: 24px;
+      background: radial-gradient(circle at 10% 20%, rgba(0, 102, 204, 0.08) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(88, 86, 214, 0.08) 0%, transparent 40%), #f5f7fa;
     }
     .login-shell {
       width: 100%;
-      max-width: 960px;
-      background: #ffffff;
-      border-radius: 24px;
-      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.14);
+      max-width: 980px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
       overflow: hidden;
       display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      border: 1px solid rgba(226, 232, 240, 0.9);
+      grid-template-columns: 1.1fr 1fr;
+      border: 1px solid var(--border-soft);
     }
-    @media (max-width: 820px) {
+    @media (max-width: 860px) {
       .login-shell { grid-template-columns: 1fr; max-width: 440px; }
       .login-hero { display: none; }
     }
     .login-hero {
-      background: linear-gradient(155deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+      background: linear-gradient(145deg, #1d1d1f 0%, #000000 100%);
       color: #ffffff;
-      padding: 40px 36px;
+      padding: 44px 38px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -74,302 +81,309 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 6px 14px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 500;
+      letter-spacing: 0.3px;
       width: fit-content;
     }
-    .hero-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; }
-    .login-hero h1 { font-size: 28px; margin: 18px 0 12px; line-height: 1.25; }
-    .login-hero p { font-size: 13.5px; color: #cbd5e1; margin: 0 0 24px; }
-    .hero-feature-list { display: flex; flex-direction: column; gap: 12px; }
+    .hero-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: #34c759; }
+    .login-hero h1 { font-size: 30px; font-weight: 700; margin: 20px 0 12px; line-height: 1.2; letter-spacing: -0.5px; }
+    .login-hero p { font-size: 14px; color: #86868b; margin: 0 0 28px; }
+    .hero-feature-list { display: flex; flex-direction: column; gap: 14px; }
     .hero-feat {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 14px;
-      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
       display: flex;
-      gap: 12px;
+      gap: 14px;
       align-items: flex-start;
     }
     .hero-feat-icon {
-      width: 30px; height: 30px; border-radius: 8px;
-      background: rgba(59, 130, 246, 0.35);
+      width: 32px; height: 32px; border-radius: 10px;
+      background: rgba(0, 102, 204, 0.25);
       display: flex; align-items: center; justify-content: center;
-      font-size: 15px; flex-shrink: 0;
+      font-size: 16px; flex-shrink: 0;
     }
-    .hero-feat strong { display: block; font-size: 13px; color: #ffffff; }
-    .hero-feat span { font-size: 11.5px; color: #cbd5e1; }
+    .hero-feat strong { display: block; font-size: 13.5px; color: #ffffff; margin-bottom: 2px; }
+    .hero-feat span { font-size: 12px; color: #86868b; }
     .hero-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      padding-top: 14px;
-      margin-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 16px;
+      margin-top: 28px;
       display: flex;
       justify-content: space-between;
-      font-size: 11.5px;
-      color: #93c5fd;
+      font-size: 12px;
+      color: #86868b;
     }
 
-    .login-form-pane { padding: 34px 32px; display: flex; flex-direction: column; justify-content: center; }
-    .top-badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .login-form-pane { padding: 40px 36px; display: flex; flex-direction: column; justify-content: center; }
+    .top-badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
     .pill-status {
-      font-size: 11px; font-weight: 700; padding: 5px 11px; border-radius: 999px;
-      background: #fef9c3; color: #854d0e; border: 1px solid #fde047;
+      font-size: 11.5px; font-weight: 600; padding: 5px 12px; border-radius: 999px;
+      background: #fff8e1; color: #b78103; border: 1px solid #ffe082;
     }
-    .pill-status.maint-on { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+    .pill-status.maint-on { background: #ffebee; color: #c62828; border-color: #ef9a9a; }
     .pill-screen {
-      font-size: 11px; font-weight: 600; padding: 5px 11px; border-radius: 999px;
-      background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1;
+      font-size: 11.5px; font-weight: 600; padding: 5px 12px; border-radius: 999px;
+      background: #f1f3f5; color: #495057; border: 1px solid #dee2e6;
     }
-    .brand-logo-box { text-align: center; margin-bottom: 18px; }
-    .brand-logo-box img { max-height: 44px; object-fit: contain; margin-bottom: 6px; }
-    .brand-logo-box h2 { margin: 0; font-size: 20px; color: #0f172a; }
-    .brand-logo-box small { color: var(--text-muted); font-size: 12.5px; }
+    .brand-logo-box { text-align: center; margin-bottom: 22px; }
+    .brand-logo-box img { max-height: 48px; object-fit: contain; margin-bottom: 8px; }
+    .brand-logo-box h2 { margin: 0; font-size: 22px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.4px; }
+    .brand-logo-box small { color: var(--text-muted); font-size: 13px; }
 
-    .field-group { margin-bottom: 14px; }
+    .field-group { margin-bottom: 16px; }
     .field-group label {
       display: flex; justify-content: space-between; align-items: center;
-      font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 6px;
+      font-size: 13px; font-weight: 600; color: #495057; margin-bottom: 6px;
     }
-    .input-box {
-      position: relative; display: flex; align-items: center;
-    }
+    .input-box { position: relative; display: flex; align-items: center; }
     .input-box input {
-      width: 100%; padding: 11px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px;
-      font-size: 14px; font-weight: 600; color: #0f172a; outline: none; transition: 0.2s;
+      width: 100%; padding: 12px 16px; border: 1px solid #d2d2d7; border-radius: 14px;
+      font-size: 15px; font-weight: 500; color: #1d1d1f; background: #fafafa; outline: none; transition: all 0.2s;
     }
-    .input-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.14); }
+    .input-box input:focus { border-color: var(--primary); background: #ffffff; box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.12); }
     .btn-eye {
-      position: absolute; right: 10px; background: none; border: none;
-      cursor: pointer; font-size: 16px; color: #64748b; padding: 4px;
+      position: absolute; right: 12px; background: none; border: none;
+      cursor: pointer; font-size: 16px; color: #86868b; padding: 4px;
     }
     .quick-fill-bar {
-      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px;
-      padding: 7px 11px; margin-bottom: 12px; display: flex; justify-content: space-between;
-      align-items: center; font-size: 12px; color: #1e40af;
+      background: #eef6ff; border: 1px solid #d0e1fd; border-radius: 12px;
+      padding: 8px 14px; margin-bottom: 14px; display: flex; justify-content: space-between;
+      align-items: center; font-size: 12.5px; color: #004085;
     }
     .quick-fill-bar button {
-      background: none; border: none; color: #0d6efd; font-weight: 700;
-      text-decoration: underline; cursor: pointer; font-size: 12px;
+      background: none; border: none; color: var(--primary); font-weight: 600;
+      text-decoration: underline; cursor: pointer; font-size: 12.5px;
     }
     .alert-box {
-      padding: 10px 12px; border-radius: 12px; font-size: 12.5px; font-weight: 600;
-      margin-bottom: 14px; text-align: center;
+      padding: 12px 14px; border-radius: 14px; font-size: 13px; font-weight: 500;
+      margin-bottom: 16px; text-align: center;
     }
-    .alert-error { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
-    .alert-info { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+    .alert-error { background: var(--danger-bg); color: var(--danger); border: 1px solid #ffcdd2; }
+    .alert-info { background: #e3f2fd; color: #0d47a1; border: 1px solid #bbdefb; }
 
     .btn-primary {
-      width: 100%; padding: 13px; border: none; border-radius: 12px;
-      background: var(--primary); color: #ffffff; font-size: 15px; font-weight: 700;
-      cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 14px; border: none; border-radius: 14px;
+      background: var(--primary); color: #ffffff; font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.25);
     }
-    .btn-primary:hover { background: var(--primary-dark); }
-    .btn-primary:disabled { opacity: 0.65; cursor: not-allowed; }
-    .login-ver { text-align: center; font-size: 11px; color: #94a3b8; margin-top: 14px; }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+    .login-ver { text-align: center; font-size: 11.5px; color: var(--text-muted); margin-top: 16px; }
 
-    /* ================= MAIN WORKSPACE (MOBILE + WIDESCREEN BENTO) ================= */
+    /* ================= MAIN WORKSPACE (IOS/ANDROID WIDESCREEN BENTO) ================= */
     .topbar {
       position: sticky; top: 0; z-index: 40;
-      background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.85); backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       border-bottom: 1px solid var(--border-soft);
-      padding: 10px 18px;
+      padding: 12px 20px;
       display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
     }
-    .topbar-left { display: flex; align-items: center; gap: 12px; }
-    .topbar-left img { height: 32px; object-fit: contain; }
-    .topbar-title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .topbar-title strong { font-size: 16px; color: #0f172a; }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .topbar-left img { height: 34px; object-fit: contain; }
+    .topbar-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .topbar-title strong { font-size: 17px; font-weight: 600; color: #1d1d1f; letter-spacing: -0.3px; }
     .badge-tier {
-      font-size: 10.5px; font-weight: 800; padding: 3px 9px; border-radius: 999px; letter-spacing: 0.4px;
+      font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.5px;
     }
-    .badge-tier.pro { background: var(--pro-grad); color: #ffffff; }
-    .badge-tier.lite { background: #e2e8f0; color: #334155; }
+    .badge-tier.pro { background: var(--pro-grad); color: #ffffff; box-shadow: 0 2px 6px rgba(0,102,204,0.3); }
+    .badge-tier.lite { background: #e9ecef; color: #495057; }
     .badge-sync {
-      font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
-      background: #dcfce7; color: #166534;
+      font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+      background: var(--success-bg); color: var(--success);
     }
-    .badge-sync.offline { background: #fef3c7; color: #92400e; }
-    .badge-sync.syncing { background: #dbeafe; color: #1e40af; }
+    .badge-sync.offline { background: var(--warning-bg); color: #856404; }
+    .badge-sync.syncing { background: #e3f2fd; color: #0d47a1; }
 
-    .topbar-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .topbar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .user-chip {
-      font-size: 12px; font-weight: 700; background: #f8fafc; border: 1px solid #cbd5e1;
-      padding: 6px 12px; border-radius: 999px; color: #1e293b;
+      font-size: 13px; font-weight: 500; background: #f1f3f5; border: 1px solid #dee2e6;
+      padding: 6px 14px; border-radius: 999px; color: #212529;
     }
     .btn-sm {
-      padding: 7px 12px; border-radius: 10px; border: 1px solid #cbd5e1;
-      background: #ffffff; font-size: 12px; font-weight: 700; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 5px; transition: 0.15s;
+      padding: 7px 14px; border-radius: 12px; border: 1px solid #d2d2d7;
+      background: #ffffff; font-size: 13px; font-weight: 500; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s;
+      color: #1d1d1f;
     }
-    .btn-sm:hover { background: #f8fafc; }
-    .btn-sm.active-on { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
-    .btn-sm.blind-on { background: #eef2ff; border-color: #a5b4fc; color: #3730a3; }
-    .btn-sm.danger { background: #fee2e2; border-color: #fca5a5; color: #b91c1c; }
+    .btn-sm:hover { background: #f5f5f7; border-color: #86868b; }
+    .btn-sm.active-on { background: var(--danger-bg); border-color: #ffcdd2; color: var(--danger); }
+    .btn-sm.blind-on { background: #ede7f6; border-color: #d1c4e9; color: #512da8; }
+    .btn-sm.danger { background: var(--danger-bg); border-color: #ffcdd2; color: var(--danger); }
 
     .bento-container {
-      max-width: 1360px; margin: 0 auto; padding: 16px;
-      display: grid; grid-template-columns: 1.05fr 1fr; gap: 18px; align-items: start;
+      max-width: 1400px; margin: 0 auto; padding: 20px;
+      display: grid; grid-template-columns: 1.05fr 1fr; gap: 20px; align-items: start;
     }
     @media (max-width: 980px) {
-      .bento-container { grid-template-columns: 1fr; padding: 12px; }
+      .bento-container { grid-template-columns: 1fr; padding: 14px; }
     }
 
     .card {
-      background: var(--card-bg); border-radius: 18px; border: 1px solid var(--border-soft);
-      padding: 18px; box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04); margin-bottom: 16px;
+      background: var(--card-bg); backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: var(--radius-ios); border: 1px solid var(--border-soft);
+      padding: 22px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); margin-bottom: 18px;
     }
-    .card.glow-cocok { border: 2px solid #22c55e; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12); }
-    .card.glow-selisih { border: 2px solid #ef4444; box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12); }
+    .card.glow-cocok { border: 2px solid var(--success); box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.15); }
+    .card.glow-selisih { border: 2px solid var(--danger); box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15); }
 
     .card-header {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 8px;
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 10px;
     }
-    .card-header h3 { margin: 0; font-size: 15.5px; color: #0f172a; display: flex; align-items: center; gap: 7px; }
+    .card-header h3 { margin: 0; font-size: 16.5px; font-weight: 600; color: #1d1d1f; display: flex; align-items: center; gap: 8px; }
 
     /* SEARCH & BARCODE BAR */
-    .search-row { display: flex; gap: 8px; margin-bottom: 10px; }
+    .search-row { display: flex; gap: 10px; margin-bottom: 12px; }
     .search-row input {
-      flex: 1; padding: 11px 14px; border-radius: 12px; border: 1.5px solid #cbd5e1;
-      font-size: 14px; font-weight: 600; outline: none;
+      flex: 1; padding: 12px 16px; border-radius: 14px; border: 1px solid #d2d2d7;
+      font-size: 15px; font-weight: 500; outline: none; background: #fafafa; transition: all 0.2s;
     }
-    .search-row input:focus { border-color: var(--primary); }
+    .search-row input:focus { border-color: var(--primary); background: #ffffff; box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.12); }
     .btn-scan {
-      padding: 0 14px; border-radius: 12px; border: none;
-      background: var(--pro-grad); color: #ffffff; font-weight: 700; font-size: 13px;
-      cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+      padding: 0 18px; border-radius: 14px; border: none;
+      background: var(--pro-grad); color: #ffffff; font-weight: 600; font-size: 13.5px;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.25);
     }
-    .btn-scan.locked { background: #64748b; }
+    .btn-scan.locked { background: #86868b; box-shadow: none; }
 
     .search-results {
-      max-height: 210px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 12px;
-      background: #ffffff; margin-bottom: 12px;
+      max-height: 220px; overflow-y: auto; border: 1px solid #d2d2d7; border-radius: 14px;
+      background: #ffffff; margin-bottom: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     }
     .search-item {
-      padding: 10px 12px; border-bottom: 1px solid #f1f5f9; cursor: pointer;
-      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      padding: 12px 16px; border-bottom: 1px solid #f1f3f5; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
     }
-    .search-item:hover { background: #eff6ff; }
+    .search-item:hover { background: #f0f7ff; }
     .search-item:last-child { border-bottom: none; }
-    .search-item strong { font-size: 13px; display: block; color: #0f172a; }
-    .search-item span { font-size: 11.5px; color: #64748b; }
+    .search-item strong { font-size: 13.5px; display: block; color: #1d1d1f; }
+    .search-item span { font-size: 12px; color: var(--text-muted); }
 
     /* SELECTED PRODUCT VISUAL CONFIRMATION CARD */
     .selected-box {
-      background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 14px;
-      padding: 12px; margin-bottom: 14px; display: flex; gap: 12px; align-items: center;
+      background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 16px;
+      padding: 14px; margin-bottom: 16px; display: flex; gap: 14px; align-items: center;
     }
     .thumb-box {
-      width: 66px; height: 66px; border-radius: 12px; background: #e2e8f0;
+      width: 72px; height: 72px; border-radius: 14px; background: #e9ecef;
       overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-      position: relative; cursor: pointer;
+      position: relative; cursor: pointer; border: 1px solid #dee2e6;
     }
     .thumb-box img { width: 100%; height: 100%; object-fit: cover; }
     .selected-meta { flex: 1; min-width: 0; }
     .selected-meta .sku-tag {
-      font-size: 11.5px; font-weight: 800; color: #0d6efd; background: #dbeafe;
-      padding: 2px 8px; border-radius: 6px; display: inline-block; margin-bottom: 4px;
+      font-size: 12px; font-weight: 700; color: var(--primary); background: #e3f2fd;
+      padding: 3px 9px; border-radius: 6px; display: inline-block; margin-bottom: 4px;
     }
-    .selected-meta h4 { margin: 0 0 4px; font-size: 14px; color: #0f172a; }
-    .selected-meta .master-info { font-size: 12px; font-weight: 700; color: #475569; }
+    .selected-meta h4 { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: #1d1d1f; }
+    .selected-meta .master-info { font-size: 12.5px; font-weight: 500; color: #495057; }
 
     /* QTY INPUT GRID + QUICK ACCUMULATOR */
-    .qty-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .qty-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
     .qty-panel {
-      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 10px;
+      background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 16px; padding: 12px;
     }
-    .qty-panel label { display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px; }
+    .qty-panel label { display: block; font-size: 12.5px; font-weight: 600; color: #495057; margin-bottom: 6px; }
     .qty-panel input {
-      width: 100%; padding: 10px; font-size: 20px; font-weight: 800; text-align: center;
-      border-radius: 10px; border: 1.5px solid #cbd5e1; background: #ffffff; outline: none;
+      width: 100%; padding: 10px; font-size: 22px; font-weight: 700; text-align: center;
+      border-radius: 12px; border: 1px solid #d2d2d7; background: #ffffff; outline: none;
     }
-    .qty-panel input.input-cocok { border-color: #22c55e; background: #f0fdf4; color: #15803d; }
-    .qty-panel input.input-selisih { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
+    .qty-panel input.input-cocok { border-color: var(--success); background: var(--success-bg); color: var(--success); }
+    .qty-panel input.input-selisih { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
 
-    .quick-plus { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 7px; }
+    .quick-plus { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
     .quick-plus button {
-      padding: 6px 0; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff;
-      font-size: 11.5px; font-weight: 800; color: #0d6efd; cursor: pointer;
+      padding: 7px 0; border-radius: 10px; border: 1px solid #d2d2d7; background: #ffffff;
+      font-size: 12px; font-weight: 600; color: var(--primary); cursor: pointer; transition: 0.1s;
     }
-    .quick-plus button:active { background: #dbeafe; }
+    .quick-plus button:active { background: #e3f2fd; }
 
     .status-live-bar {
-      padding: 10px 12px; border-radius: 12px; font-size: 12.5px; font-weight: 700;
-      text-align: center; margin-bottom: 12px; background: #f1f5f9; color: #334155;
+      padding: 12px 14px; border-radius: 14px; font-size: 13px; font-weight: 600;
+      text-align: center; margin-bottom: 14px; background: #f1f3f5; color: #495057;
     }
     .status-live-bar.cocok { background: var(--success-bg); color: var(--success); }
     .status-live-bar.selisih { background: var(--danger-bg); color: var(--danger); }
-    .status-live-bar.blind { background: #eef2ff; color: #3730a3; }
+    .status-live-bar.blind { background: #ede7f6; color: #512da8; }
 
     /* REMARK CHIPS */
-    .remark-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+    .remark-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
     .chip-btn {
-      font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 999px;
-      border: 1px solid #cbd5e1; background: #f8fafc; color: #334155; cursor: pointer;
+      font-size: 11.5px; font-weight: 500; padding: 6px 10px; border-radius: 999px;
+      border: 1px solid #d2d2d7; background: #f8f9fa; color: #495057; cursor: pointer; transition: 0.15s;
     }
-    .chip-btn:hover { background: #e0f2fe; border-color: #7dd3fc; }
+    .chip-btn:hover { background: #e3f2fd; border-color: #90caf9; color: var(--primary); }
     .remark-input {
-      width: 100%; padding: 10px 12px; border-radius: 10px; border: 1.5px solid #cbd5e1;
-      font-size: 13px; margin-bottom: 12px; outline: none;
+      width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid #d2d2d7;
+      font-size: 14px; margin-bottom: 14px; outline: none; background: #fafafa;
     }
 
     /* METRICS & AUDIT LIST */
     .metrics-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;
     }
     @media (max-width: 540px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
     .metric-box {
-      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px; text-align: center;
+      background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 14px; padding: 12px 8px; text-align: center;
     }
-    .metric-box small { display: block; font-size: 11px; color: #64748b; font-weight: 600; }
-    .metric-box strong { font-size: 17px; color: #0f172a; }
+    .metric-box small { display: block; font-size: 11.5px; color: var(--text-muted); font-weight: 500; margin-bottom: 2px; }
+    .metric-box strong { font-size: 18px; font-weight: 700; color: #1d1d1f; }
 
-    .tabs-bar { display: flex; gap: 6px; margin-bottom: 12px; }
+    .tabs-bar { display: flex; gap: 8px; margin-bottom: 14px; }
     .tab-btn {
-      flex: 1; padding: 9px; border-radius: 10px; border: 1px solid #cbd5e1;
-      background: #f8fafc; font-size: 12px; font-weight: 700; color: #475569; cursor: pointer;
+      flex: 1; padding: 10px; border-radius: 12px; border: 1px solid #d2d2d7;
+      background: #f8f9fa; font-size: 12.5px; font-weight: 600; color: #495057; cursor: pointer; transition: 0.15s;
     }
-    .tab-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); }
+    .tab-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); box-shadow: 0 2px 8px rgba(0,102,204,0.25); }
 
-    .audit-list { max-height: 360px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    .audit-list { max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
     .audit-item {
-      border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px 12px; background: #ffffff;
+      border: 1px solid #dee2e6; border-radius: 14px; padding: 12px 14px; background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
-    .audit-item.selisih { border-left: 4px solid #ef4444; background: #fffafa; }
-    .audit-item.cocok { border-left: 4px solid #22c55e; }
-    .audit-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .audit-top strong { font-size: 13px; color: #0f172a; }
-    .audit-sub { font-size: 11.5px; color: #475569; margin-top: 4px; }
+    .audit-item.selisih { border-left: 4px solid var(--danger); background: #fffcfc; }
+    .audit-item.cocok { border-left: 4px solid var(--success); }
+    .audit-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .audit-top strong { font-size: 13.5px; font-weight: 600; color: #1d1d1f; }
+    .audit-sub { font-size: 12px; color: #495057; margin-top: 4px; }
     .audit-log-pill {
-      margin-top: 6px; font-size: 10.5px; color: #334155; background: #f1f5f9;
+      margin-top: 6px; font-size: 11px; color: #495057; background: #f1f3f5;
       padding: 4px 8px; border-radius: 6px; display: inline-block;
     }
 
     /* SIGNATURE CANVAS */
     .sig-box {
-      border: 1.5px dashed #94a3b8; border-radius: 12px; background: #f8fafc;
-      position: relative; margin-bottom: 12px; overflow: hidden;
+      border: 1.5px dashed #adb5bd; border-radius: 14px; background: #f8f9fa;
+      position: relative; margin-bottom: 14px; overflow: hidden;
     }
-    #kanvasTTD { width: 100%; height: 125px; display: block; touch-action: none; cursor: crosshair; }
+    #kanvasTTD { width: 100%; height: 130px; display: block; touch-action: none; cursor: crosshair; }
     .btn-clear-ttd {
-      position: absolute; top: 8px; right: 8px; font-size: 11px; font-weight: 700;
-      padding: 4px 9px; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; cursor: pointer;
+      position: absolute; top: 10px; right: 10px; font-size: 11.5px; font-weight: 600;
+      padding: 5px 10px; border-radius: 8px; border: 1px solid #dee2e6; background: #ffffff; cursor: pointer;
     }
 
     /* MODAL OVERLAY */
     .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); z-index: 90;
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px); z-index: 90;
       display: flex; align-items: center; justify-content: center; padding: 16px;
     }
     .modal-card {
-      background: #ffffff; border-radius: 20px; max-width: 440px; width: 100%;
-      padding: 22px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+      background: #ffffff; border-radius: 24px; max-width: 440px; width: 100%;
+      padding: 24px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
     }
-    .modal-card h3 { margin: 0 0 8px; font-size: 17px; }
-    #readerBarcode { width: 100%; border-radius: 12px; overflow: hidden; background: #000; margin: 12px 0; }
+    .modal-card h3 { margin: 0 0 10px; font-size: 18px; font-weight: 600; color: #1d1d1f; }
+    #readerBarcode { width: 100%; border-radius: 14px; overflow: hidden; background: #000; margin: 12px 0; }
   </style>
 </head>
 <body>
@@ -381,7 +395,7 @@
       <div>
         <div class="hero-pill"><span class="dot"></span> Enterprise Cloud Inventory SaaS</div>
         <h1 id="heroJudul">E597 Opname Accs — Cloud Inventory</h1>
-        <p>Sistem audit stok fisik multi-perangkat dengan sinkronisasi awan <em>real-time</em>, penggabungan otomatis Display vs Gudang, dan pencetakan Berita Acara instan.</p>
+        <p>Sistem audit stok fisik multi-perangkat dengan sinkronisasi awan real-time, penggabungan otomatis Display vs Gudang, dan pencetakan Berita Acara instan.</p>
 
         <div class="hero-feature-list">
           <div class="hero-feat">
@@ -410,14 +424,14 @@
 
       <div class="hero-footer">
         <div>WAKTU SERVER REAL-TIME<br><strong id="jamServerLogin" style="color:#fff;font-size:13px;">--/--/----, --.--.--</strong></div>
-        <div style="text-align:right;">MODE LAYAR<br><strong style="color:#fff;font-size:13px;">🖥️ Widescreen Pro</strong></div>
+        <div style="text-align:right;">MODE LAYAR<br><strong style="color:#fff;font-size:13px;">🖥️ iOS/Android Bento Pro</strong></div>
       </div>
     </div>
 
     <div class="login-form-pane">
       <div class="top-badges">
         <span id="badgeMaintLogin" class="pill-status">● Memeriksa Status Server...</span>
-        <span class="pill-screen">📱 Mode Full-Screen Aktif</span>
+        <span class="pill-screen">📱 iOS 26 / Android 17 UI</span>
       </div>
 
       <div class="brand-logo-box">
@@ -459,7 +473,7 @@
         ➡️ Masuk (Login)
       </button>
 
-      <div class="login-ver">E597 Inventory Engine • v4.0 Vercel Security Shield PWA</div>
+      <div class="login-ver">E597 Inventory Engine • v4.1 Modern iOS/Android PWA</div>
     </div>
   </div>
 </div>
@@ -511,7 +525,7 @@
             <h4 id="lblNamaTerpilih">-</h4>
             <div class="master-info" id="lblStokMasterTerpilih">Stok Sistem (Master): 0 pcs</div>
             <div style="margin-top:6px;display:flex;gap:6px;">
-              <button type="button" id="btnUploadFoto" class="btn-sm" style="padding:4px 8px;font-size:11px;" onclick="picuKameraUpload()">📸 Upload Foto</button>
+              <button type="button" id="btnUploadFoto" class="btn-sm" style="padding:4px 10px;font-size:11.5px;" onclick="picuKameraUpload()">📸 Upload Foto</button>
               <input type="file" id="inputFileFoto" accept="image/*" capture="environment" class="hidden" onchange="prosesUploadFoto(event)" />
             </div>
           </div>
@@ -569,11 +583,11 @@
           </div>
           <div class="metric-box">
             <small>Sudah Dicek</small>
-            <strong id="metrikSudahCek" style="color:#0d6efd;">0</strong>
+            <strong id="metrikSudahCek" style="color:var(--primary);">0</strong>
           </div>
           <div class="metric-box">
             <small>Item Selisih</small>
-            <strong id="metrikSelisih" style="color:#dc2626;">0</strong>
+            <strong id="metrikSelisih" style="color:var(--danger);">0</strong>
           </div>
           <div class="metric-box" id="boxMetrikKeempat">
             <small id="lblMetrikKeempat">Belum Dicek</small>
@@ -605,7 +619,7 @@
           <button type="button" id="btnSetorFinal" class="btn-primary" onclick="setorHasilOpname()">
             📤 Setor ke Lemari Data
           </button>
-          <button type="button" id="btnUnduhExcel" class="btn-sm" style="justify-content:center;font-size:13px;border-color:#16a34a;color:#15803d;" onclick="unduhLaporanExcel()">
+          <button type="button" id="btnUnduhExcel" class="btn-sm" style="justify-content:center;font-size:13.5px;border-color:var(--success);color:var(--success);" onclick="unduhLaporanExcel()">
             📥 Download Excel (.xlsx)
           </button>
         </div>
@@ -618,9 +632,9 @@
 <div id="modalScanner" class="modal-backdrop hidden">
   <div class="modal-card">
     <h3>📷 Pemindai Barcode Kemasan</h3>
-    <p style="font-size:12.5px;color:#64748b;margin:0;">Arahkan kamera ke barcode (EAN-13 / Code-128) pada kemasan produk.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin:0;">Arahkan kamera ke barcode (EAN-13 / Code-128) pada kemasan produk.</p>
     <div id="readerBarcode"></div>
-    <button type="button" class="btn-primary" style="background:#dc2626;" onclick="tutupScanBarcode()">Tutup Kamera</button>
+    <button type="button" class="btn-primary" style="background:var(--danger);box-shadow:none;" onclick="tutupScanBarcode()">Tutup Kamera</button>
   </div>
 </div>
 
@@ -646,7 +660,7 @@
         <div class="input-box"><input type="number" id="baruHpp" value="0" min="0" /></div>
       </div>
     </div>
-    <div style="display:flex;gap:8px;margin-top:10px;">
+    <div style="display:flex;gap:10px;margin-top:12px;">
       <button type="button" class="btn-sm" style="flex:1;justify-content:center;" onclick="tutupModalTambahSKU()">Batal</button>
       <button type="button" id="btnSimpanSKUBaru" class="btn-primary" style="flex:1;" onclick="simpanArtikelBaru()">Simpan SKU</button>
     </div>
@@ -658,22 +672,19 @@
   <div class="modal-card" style="text-align:center;">
     <span class="badge-tier pro" style="font-size:12px;padding:5px 14px;">FITUR EKSKLUSIF PAKET PRO</span>
     <h3 id="judulUpsellPro" style="margin-top:12px;">Tingkatkan ke Paket PRO</h3>
-    <p id="deskripsiUpsellPro" style="font-size:13px;color:#475569;margin-bottom:18px;">
+    <p id="deskripsiUpsellPro" style="font-size:13.5px;color:var(--text-muted);margin-bottom:20px;">
       Fitur ini tersedia pada Paket PRO untuk mencegah selisih stok dan mempercepat kerja tim.
     </p>
-    <div style="display:flex;gap:8px;">
+    <div style="display:flex;gap:10px;">
       <button type="button" class="btn-sm" style="flex:1;justify-content:center;" onclick="tutupModalUpsell()">Nanti Saja</button>
-      <button type="button" class="btn-primary" style="flex:1;background:#16a34a;" onclick="hubungiAdminUpgrade()">💬 Upgrade via WA</button>
+      <button type="button" class="btn-primary" style="flex:1;background:var(--success);box-shadow:0 4px 12px rgba(40,167,69,0.25);" onclick="hubungiAdminUpgrade()">💬 Upgrade via WA</button>
     </div>
   </div>
 </div>
 
 <script>
-  // ============================================================================
-  // KONFIGURASI ENDPOINT: MENGARAH LANGSUNG KE VERCEL SERVERLESS BRAIN (/api)
-  // ============================================================================
   const API_ENDPOINT = "/api";
-  const WHATSAPP_ADMIN = "6281234567890"; // Ganti dengan nomor WA Admin SaaS kamu
+  const WHATSAPP_ADMIN = "6281234567890";
 
   let stateApp = {
     kodeToko: "E597",
@@ -693,7 +704,6 @@
 
   let html5QrInstance = null;
 
-  // Helper Panggil Server Vercel (/api)
   async function panggilServerAPI(payload) {
     const bodyKirim = Object.assign({
       kodeToko: stateApp.kodeToko || "E597",
@@ -712,7 +722,6 @@
     return data;
   }
 
-  // Inisialisasi Halaman Login & Jam Real-Time
   window.addEventListener("DOMContentLoaded", () => {
     setInterval(() => {
       const elJam = document.getElementById("jamServerLogin");
@@ -739,7 +748,6 @@
     cekStatusAwalServer();
     inisialisasiKanvasTTD();
 
-    // Sinkronisasi Latar Belakang (Dirty-State + Jitter) setiap 25 detik
     setInterval(() => {
       if (stateApp.user && stateApp.dirtyDraft && navigator.onLine) {
         const jitter = Math.floor(Math.random() * 2500);
@@ -797,7 +805,6 @@
     inp.type = inp.type === "password" ? "text" : "password";
   }
 
-  // ==================== PROSES LOGIN & OFFLINE COLD START ====================
   async function prosesLogin() {
     const kodeToko = document.getElementById("inputKodeToko").value.trim().toUpperCase() || "E597";
     const userId = document.getElementById("inputUserId").value.trim();
@@ -830,7 +837,6 @@
       stateApp.blindOpname = res.blindOpname || "OFF";
       terapkanBranding(res.configPublik);
 
-      // Simpan sesi lokal untuk Offline-First Cold Start (Paket PRO)
       localStorage.setItem("so_kode_toko", kodeToko);
       localStorage.setItem("so_last_user", JSON.stringify(res.user));
       localStorage.setItem("so_offline_auth_" + kodeToko + "_" + userId, JSON.stringify({
@@ -843,7 +849,6 @@
 
       await masukKeWorkspace(true);
     } catch (err) {
-      // Fallback Offline Cold Start khusus Paket PRO jika Wi-Fi mati total
       const cacheAuthRaw = localStorage.getItem("so_offline_auth_" + kodeToko + "_" + userId);
       if (!navigator.onLine && cacheAuthRaw) {
         const cacheAuth = JSON.parse(cacheAuthRaw);
@@ -876,7 +881,6 @@
     badgeTier.textContent = isPro ? "★ PRO" : "LITE";
     badgeTier.className = "badge-tier " + (isPro ? "pro" : "lite");
 
-    // Kontrol tombol khusus Admin
     const btnMaint = document.getElementById("btnToggleMaint");
     const btnBlind = document.getElementById("btnToggleBlind");
     if (isAdmin) {
@@ -888,7 +892,6 @@
       btnBlind.classList.add("hidden");
     }
 
-    // Kunci gembok visual pada tombol Scan Barcode jika Paket LITE
     const btnScan = document.getElementById("btnScanBarcode");
     if (!isPro) {
       btnScan.classList.add("locked");
@@ -898,7 +901,6 @@
       btnScan.innerHTML = "📷 Scan";
     }
 
-    // Hak akses tombol Upload Foto (LITE: hanya Admin | PRO: Admin + Staff)
     const btnUploadFoto = document.getElementById("btnUploadFoto");
     if (!isPro && !isAdmin) {
       btnUploadFoto.innerHTML = "🔒 Upload Foto (Admin)";
@@ -906,7 +908,6 @@
       btnUploadFoto.innerHTML = "📸 Upload Foto";
     }
 
-    // Muat draft lokal terlebih dahulu agar instan
     const lokalDraft = localStorage.getItem("so_draft_" + stateApp.kodeToko);
     if (lokalDraft) {
       try { stateApp.keranjang = JSON.parse(lokalDraft); } catch (e) {}
@@ -1010,7 +1011,6 @@
            stateApp.user.role !== "ADMIN";
   }
 
-  // ==================== PENCARIAN & BARCODE SCANNER ====================
   function filterBarangCari() {
     const q = document.getElementById("kolomCari").value.trim().toLowerCase();
     const box = document.getElementById("hasilCariList");
@@ -1038,13 +1038,12 @@
             <strong>${item.nama}</strong>
             <span>SKU: ${kode}</span>
           </div>
-          <span style="font-weight:800;color:#0d6efd;">${blind ? "🔒 Blind" : item.totalMaster + " pcs"}</span>
+          <span style="font-weight:700;color:var(--primary);">${blind ? "🔒 Blind" : item.totalMaster + " pcs"}</span>
         </div>
       `).join("");
     }
     box.classList.remove("hidden");
 
-    // Auto-select jika ketikan cocok persis dengan 1 kode barcode
     if (hasil.length === 1 && hasil[0].kode.toLowerCase() === q) {
       pilihBarangOpname(hasil[0].kode);
     }
@@ -1120,7 +1119,6 @@
     }
   }
 
-  // Lazy-Loaded Barcode Scanner (Khusus Paket PRO)
   async function mulaiScanBarcode() {
     if (stateApp.paketAktif !== "PRO") {
       bukaModalUpsell(
@@ -1171,7 +1169,6 @@
     }
   }
 
-  // ==================== UPLOAD FOTO IMGBB & ZOOM ====================
   function picuKameraUpload() {
     if (!stateApp.kodeTerpilih) return;
     if (stateApp.paketAktif !== "PRO" && stateApp.user.role !== "ADMIN") {
@@ -1246,7 +1243,6 @@
     });
   }
 
-  // ==================== KAPSUL REMARK & CATAT KERANJANG ====================
   function renderKapsulRemark(opsiStr) {
     const defaultOpsi = "🧾 Terjual (No. Faktur)=>Terjual - No. Faktur: |🔄 Tertukar barang/tipe=>Tertukar barang/tipe: |📦 Barang Masuk Baru=>Barang Masuk - No. DO/SJ: |⚠️ Rusak / Defective=>Barang Rusak / Retur Gudang|🔍 Masih Dicari=>Sementara Dicari di Gudang / Display";
     const teks = opsiStr || defaultOpsi;
@@ -1307,7 +1303,6 @@
     renderDaftarAudit();
     kirimDraftKeAwan();
 
-    // Reset kolom pencarian agar siap scan barang berikutnya
     document.getElementById("kolomCari").value = "";
     document.getElementById("kolomCari").focus();
   }
@@ -1339,7 +1334,6 @@
     }
   }
 
-  // ==================== RENDER DAFTAR AUDIT & VALUASI RUPIAH ====================
   function gantiTabAudit(tab) {
     stateApp.tabAudit = tab;
     ["tabSemua", "tabSelisih", "tabBelum"].forEach((id) => document.getElementById(id).classList.remove("active"));
@@ -1377,19 +1371,18 @@
     document.getElementById("cntSelisih").textContent = blind ? "🔒" : jmlSelisih;
     document.getElementById("cntBelum").textContent = belumKode.length;
 
-    // Kartu Metrik ke-4: Valuasi Selisih Rupiah (Khusus Admin PRO) atau Belum Dicek
     const lbl4 = document.getElementById("lblMetrikKeempat");
     const val4 = document.getElementById("valMetrikKeempat");
     if (isAdminPro) {
       lbl4.textContent = "Valuasi Selisih (Rp)";
       val4.textContent = (totalSelisihRp < 0 ? "-Rp " : "Rp ") + Math.abs(totalSelisihRp).toLocaleString("id-ID");
-      val4.style.color = totalSelisihRp < 0 ? "#dc2626" : "#16a34a";
+      val4.style.color = totalSelisihRp < 0 ? "var(--danger)" : "var(--success)";
       val4.style.fontSize = "14px";
     } else {
       lbl4.textContent = "Belum Dicek";
       val4.textContent = belumKode.length;
-      val4.style.color = "#0f172a";
-      val4.style.fontSize = "17px";
+      val4.style.color = "#1d1d1f";
+      val4.style.fontSize = "18px";
     }
 
     const container = document.getElementById("daftarAuditContainer");
@@ -1404,7 +1397,7 @@
           <div class="audit-item" style="cursor:pointer;" onclick="pilihBarangOpname('${k.replace(/'/g, "\\'")}')">
             <div class="audit-top">
               <strong>${m.nama}</strong>
-              <span style="font-size:11px;font-weight:700;color:#0d6efd;">Hitung ➡️</span>
+              <span style="font-size:12px;font-weight:600;color:var(--primary);">Hitung ➡️</span>
             </div>
             <div class="audit-sub">SKU: ${k} ${blind ? "" : "• Stok Sistem: " + m.totalMaster + " pcs"}</div>
           </div>
@@ -1448,14 +1441,14 @@
         <div class="audit-item ${clsStatus}">
           <div class="audit-top">
             <strong style="cursor:pointer;" onclick="pilihBarangOpname('${k.replace(/'/g, "\\'")}')">${d.namaBarang}</strong>
-            <button type="button" class="btn-sm danger" style="padding:2px 7px;font-size:11px;" onclick="hapusSatuItemAudit('${k.replace(/'/g, "\\'")}')">✕</button>
+            <button type="button" class="btn-sm danger" style="padding:2px 8px;font-size:11.5px;" onclick="hapusSatuItemAudit('${k.replace(/'/g, "\\'")}')">✕</button>
           </div>
           <div class="audit-sub">
             SKU: ${k} • Disp: <b>${d.display}</b> | Gud: <b>${d.gudang}</b> | Total: <b>${totFisik}</b>
             ${blind ? "" : ` (Master: ${m.totalMaster} → <b>${sel === 0 ? "Cocok" : (sel > 0 ? "+" + sel : sel)}</b>)`}
             ${infoRp}
           </div>
-          ${d.remark && d.remark !== "-" ? `<div class="audit-sub" style="color:#b91c1c;">📝 ${d.remark}</div>` : ""}
+          ${d.remark && d.remark !== "-" ? `<div class="audit-sub" style="color:var(--danger);">📝 ${d.remark}</div>` : ""}
           ${logHtml}
         </div>
       `;
@@ -1485,7 +1478,6 @@
     }
   }
 
-  // ==================== KANVAS TANDA TANGAN & SETOR FINAL ====================
   function inisialisasiKanvasTTD() {
     const canvas = document.getElementById("kanvasTTD");
     const ctx = canvas.getContext("2d");
@@ -1499,7 +1491,7 @@
         ctx.scale(2, 2);
         ctx.lineWidth = 2.2;
         ctx.lineCap = "round";
-        ctx.strokeStyle = "#0f172a";
+        ctx.strokeStyle = "#1d1d1f";
       }
     };
     window.addEventListener("resize", sesuaikanUkuran);
@@ -1581,7 +1573,6 @@
     }
   }
 
-  // ==================== MODAL TAMBAH SKU & UPSELL PRO ====================
   function bukaModalTambahSKU() {
     document.getElementById("modalTambahSKU").classList.remove("hidden");
   }
