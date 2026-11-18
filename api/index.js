@@ -13,10 +13,10 @@ const CACHE_TTL_MS = 3 * 60 * 1000;
 
 const FALLBACK_USERS = {
   "202106477": { pass: "Erafone2026", namaLengkap: "Pak Naldi (Store Leader)", role: "ADMIN" },
-  "202408242": { pass: "Erafone2026", namaLengkap: "Veidel (ERO)", role: "STAFF" },
-  "202404349": { pass: "Erafone2026", namaLengkap: "Exel (ERO)", role: "STAFF" },
-  "202608282": { pass: "Erafone2026", namaLengkap: "Frisa (ERO)", role: "STAFF" },
-  "202611324": { pass: "Erafone2026", namaLengkap: "Grasia (ERO)", role: "STAFF" }
+  "202408242": { pass: "Tomohon.2026", namaLengkap: "Veidel (ERO)", role: "STAFF" },
+  "202404349": { pass: "Tomohon.2026", namaLengkap: "Exel (ERO)", role: "STAFF" },
+  "202608282": { pass: "Tomohon.2026", namaLengkap: "Frisa (ERO)", role: "STAFF" },
+  "202611324": { pass: "Tomohon.2026", namaLengkap: "Grasia (ERO)", role: "STAFF" }
 };
 
 async function callGasCourier(targetUrl, payload) {
