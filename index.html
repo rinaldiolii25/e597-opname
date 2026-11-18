@@ -7,8 +7,8 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="E597 Opname">
-  <link rel="icon" type="image/png" sizes="192x192" href="https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png">
+  <link id="faviconLink" rel="icon" type="image/png" sizes="192x192" href="https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png">
+  <link id="appleTouchIconLink" rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png">
   <title>E597 Opname Accs - Erafone</title>
   <style>
     html { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
@@ -16,22 +16,162 @@
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
       padding: 14px; 
       background-color: #eef2f7; 
+      background-image: radial-gradient(circle at 50% 0%, rgba(13, 110, 253, 0.09) 0%, rgba(238, 242, 247, 0) 65%);
       margin: 0; 
       overscroll-behavior-y: none; 
       display: flex; 
       justify-content: center; 
       color: #1c1e21;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
     .container-utama { width: 100%; max-width: 480px; }
     
+    /* Adaptive Glass Tint pada Kartu Utama */
     .kotak { 
       background: #ffffff; 
       padding: 18px; 
       border-radius: 18px; 
       box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04); 
-      border: 1px solid rgba(226, 232, 240, 0.85);
+      border: 1.5px solid rgba(226, 232, 240, 0.85);
       margin-bottom: 14px;
       animation: munculHalus 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .kotak.glow-cocok {
+      border-color: rgba(25, 135, 84, 0.45);
+      box-shadow: 0 10px 30px rgba(25, 135, 84, 0.12), 0 0 0 3px rgba(25, 135, 84, 0.08);
+    }
+    .kotak.glow-selisih {
+      border-color: rgba(220, 53, 69, 0.45);
+      box-shadow: 0 10px 30px rgba(220, 53, 69, 0.12), 0 0 0 3px rgba(220, 53, 69, 0.08);
+    }
+
+    /* Desain Khusus Kartu Login iOS 26 & Android 17 */
+    #layarLogin {
+      margin-top: 24px;
+      padding: 26px 22px 20px 22px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
+    }
+    .baris-badge-login {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .badge-server-login {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      transition: all 0.25s ease;
+    }
+    .badge-server-login.maint {
+      background: #fffbeb;
+      color: #b45309;
+      border-color: #fde68a;
+    }
+    .wadah-input-login {
+      position: relative;
+      margin-bottom: 14px;
+    }
+    .wadah-input-login input {
+      padding-left: 40px;
+      margin-bottom: 0;
+    }
+    .wadah-input-login.input-pass input {
+      padding-right: 42px;
+    }
+    .ikon-kiri-login {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      pointer-events: none;
+      transition: color 0.22s ease;
+    }
+    .wadah-input-login:focus-within .ikon-kiri-login {
+      color: #0d6efd;
+    }
+    .btn-mata-pass {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      padding: 0;
+      margin: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #64748b;
+      box-shadow: none;
+    }
+    .btn-mata-pass:hover:not(:disabled),
+    .btn-mata-pass:active:not(:disabled) {
+      background: #f1f5f9;
+      color: #0f172a;
+      transform: translateY(-50%) scale(0.94);
+    }
+    .kapsul-user-terakhir {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 7px 11px;
+      font-size: 11.5px;
+      font-weight: 600;
+      margin-top: -6px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s ease, background-color 0.2s ease;
+    }
+    .kapsul-user-terakhir:active {
+      transform: scale(0.97);
+      background: #dbeafe;
+    }
+    .pesan-error-login {
+      display: none;
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+      animation: slideTurun 0.2s ease-out;
+    }
+    .salah-login input {
+      border-color: #dc3545 !important;
+      background-color: #fff8f8 !important;
+      box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.12) !important;
+      animation: goyang 0.38s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    }
+    .footer-versi-login {
+      text-align: center;
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-top: 14px;
+      letter-spacing: 0.2px;
     }
 
     label { font-weight: 600; color: #334155; font-size: 13.5px; display: block; margin-bottom: 6px; }
@@ -94,8 +234,8 @@
     .btn-cyan { background: linear-gradient(180deg, #1cb3cc 0%, #17a2b8 100%); box-shadow: 0 4px 12px rgba(23, 162, 184, 0.22); }
     .btn-ungu { background: linear-gradient(180deg, #7d4fd1 0%, #6f42c1 100%); box-shadow: 0 4px 12px rgba(111, 66, 193, 0.22); }
 
-    .wadah-logo-login { text-align: center; margin-bottom: 10px; }
-    .logo-login { max-height: 55px; max-width: 180px; object-fit: contain; }
+    .wadah-logo-login { text-align: center; margin-bottom: 8px; }
+    .logo-login { max-height: 52px; max-width: 175px; object-fit: contain; }
     
     .header-utama { 
       position: sticky; 
@@ -105,7 +245,7 @@
       flex-direction: column; 
       align-items: center; 
       justify-content: center; 
-      background: rgba(255, 255, 255, 0.86);
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1.5px solid #f1f5f9; 
@@ -126,6 +266,42 @@
     .btn-logout-atas:hover, .btn-logout-atas:active { background-color: #dc3545; color: #fff; }
     .btn-ikon-flex { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 
+    /* Live Sync Pulse Dot di Pojok Kiri Atas Header */
+    .badge-sync-atas {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 99px;
+      font-size: 10.5px;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+    }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #10b981;
+      display: inline-block;
+    }
+    .pulse-dot.syncing {
+      background-color: #0d6efd;
+      animation: denyutSync 1s infinite ease-in-out;
+    }
+    .pulse-dot.offline {
+      background-color: #f59e0b;
+    }
+    @keyframes denyutSync {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.45); opacity: 0.45; }
+    }
+
+    /* Spring Physics Progress Bar */
     .kartu-progres {
       background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
       border: 1px solid #dbeafe;
@@ -144,7 +320,7 @@
     }
     .jalur-progres {
       width: 100%;
-      height: 7px;
+      height: 8px;
       background-color: #dbeafe;
       border-radius: 99px;
       overflow: hidden;
@@ -154,19 +330,16 @@
       width: 0%;
       background: linear-gradient(90deg, #0d6efd 0%, #198754 100%);
       border-radius: 99px;
-      transition: width 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: width 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* Baris Label + Tombol + Tambah Akumulasi Cepat */
     .baris-label-akumulasi {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 6px;
     }
-    .baris-label-akumulasi label {
-      margin-bottom: 0;
-    }
+    .baris-label-akumulasi label { margin-bottom: 0; }
     .btn-pil-tambah {
       width: auto;
       padding: 3px 9px;
@@ -359,7 +532,43 @@
     #wadahRemark input { margin-bottom: 0; border: 1.5px solid #fcd34d; background-color: #fff; }
     #wadahRemark input:focus { border-color: #f59e0b; box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15); }
 
-    /* Tab Segmented Control di Tahap Penyelesaian Opname (Audit Semua vs Selisih) */
+    /* Quick-Tap Remark Chips (Kapsul Alasan Selisih Instan) */
+    .deret-chip-remark {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+    .btn-chip-remark {
+      width: auto;
+      padding: 5px 9px;
+      margin-bottom: 0;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 99px;
+      background-color: #ffffff;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+      gap: 4px;
+    }
+    .btn-chip-remark:active {
+      background-color: #fef3c7;
+      transform: scale(0.95);
+    }
+
+    /* Tombol Batal Cek 1 Barang di Formulir Utama */
+    #btnBatalCekForm {
+      display: none;
+      background: #fff1f2;
+      color: #e11d48;
+      border: 1.5px solid #fecdd3;
+      box-shadow: none;
+      padding: 10px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
     .tab-penyelesaian {
       display: flex;
       background: #f1f5f9;
@@ -394,10 +603,9 @@
     .input-remark-akhir { margin-bottom: 0 !important; padding: 10px !important; font-size: 13px !important; border: 1.5px solid #dc3545 !important; }
     .input-remark-akhir.terisi { border-color: #198754 !important; background-color: #f8fffb !important; }
 
-    /* Daftar Audit Semua Tercatat */
     #wadahAuditSemua {
       display: none;
-      max-height: 310px;
+      max-height: 320px;
       overflow-y: auto;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
@@ -414,14 +622,19 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .item-audit-row:last-child { margin-bottom: 0; }
     .item-audit-row.cocok { border-left: 4px solid #198754; }
     .item-audit-row.selisih { border-left: 4px solid #dc3545; }
+    .aksi-audit-grup {
+      display: flex;
+      gap: 5px;
+      flex-shrink: 0;
+    }
     .btn-edit-audit {
       width: auto;
-      padding: 6px 10px;
+      padding: 6px 9px;
       margin-bottom: 0;
       font-size: 11.5px;
       border-radius: 8px;
@@ -429,7 +642,17 @@
       color: #0d6efd;
       border: 1px solid #bfdbfe;
       box-shadow: none;
-      flex-shrink: 0;
+    }
+    .btn-hapus-audit {
+      width: auto;
+      padding: 6px 8px;
+      margin-bottom: 0;
+      font-size: 11.5px;
+      border-radius: 8px;
+      background: #fff1f2;
+      color: #e11d48;
+      border: 1px solid #fecdd3;
+      box-shadow: none;
     }
 
     .wadah-flex { display: flex; gap: 10px; margin-bottom: 10px; } 
@@ -474,7 +697,42 @@
     @keyframes popModal { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
 
     #wadahFoto { display: none; text-align: center; margin-bottom: 14px; padding: 10px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; animation: slideTurun 0.25s ease-out; }
-    #fotoPreview { max-width: 100%; max-height: 200px; border-radius: 8px; object-fit: contain; }
+    #fotoPreview { max-width: 100%; max-height: 200px; border-radius: 8px; object-fit: contain; cursor: zoom-in; transition: transform 0.2s ease; }
+    #fotoPreview:active { transform: scale(0.98); }
+
+    /* Spatial Lightbox Zoom Foto Pratinjau */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 2500;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      cursor: zoom-out;
+    }
+    .lightbox-overlay img {
+      max-width: 95%;
+      max-height: 80vh;
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      object-fit: contain;
+      background: #ffffff;
+      animation: popModal 0.22s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .lightbox-caption {
+      color: #f8fafc;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 12px;
+      text-align: center;
+    }
+
     canvas { border: 2px dashed #0d6efd; border-radius: 12px; width: 100%; height: 150px; background: #ffffff; touch-action: none; margin-bottom: 10px; display: block; cursor: crosshair; }
     #areaTandaTangan { display: none; } 
 
@@ -511,25 +769,67 @@
     <span id="dynamicToastText">Tersimpan</span>
   </div>
 
+  <!-- SPATIAL LIGHTBOX ZOOM FOTO PRATINJAU -->
+  <div id="lightboxModal" class="lightbox-overlay" onclick="tutupLightboxFoto()">
+    <img id="lightboxImg" src="" alt="Perbesaran Foto Barang">
+    <div id="lightboxCaption" class="lightbox-caption">Ketuk di mana saja untuk menutup</div>
+  </div>
+
   <div class="container-utama">
-    <!-- HALAMAN 1: LAYAR LOGIN -->
-    <div id="layarLogin" class="kotak" style="margin-top: 30px;">
-      <div class="wadah-logo-login">
-        <img src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-login" onerror="this.style.display='none'">
+    <!-- HALAMAN 1: LAYAR LOGIN MODERN (WHITE-LABEL & SERVER AUTH) -->
+    <div id="layarLogin" class="kotak">
+      <div class="baris-badge-login">
+        <div id="badgeStatusLogin" class="badge-server-login">
+          <span id="dotBadgeLogin" class="pulse-dot"></span>
+          <span id="teksBadgeLogin">Cloud Ready</span>
+        </div>
       </div>
-      <h2 style="text-align: center; color: #0d6efd; margin-top: 0; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+      <div class="wadah-logo-login">
+        <img id="imgLogoLogin" src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-login" onerror="this.style.display='none'">
+      </div>
+      <h2 style="text-align: center; color: #0d6efd; margin-top: 0; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 20px;">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
           <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
         </svg>
         <span>Login Sistem</span>
       </h2>
-      <p style="text-align: center; color: #64748b; font-size: 13px; margin-top: 0;">E597 Opname Accs</p>
-      <label>User ID:</label>
-      <input type="text" id="loginId" placeholder="Masukkan NIK Karyawan">
-      <label>Password:</label>
-      <input type="password" id="loginPass" placeholder="Masukkan password" onkeydown="if(event.key==='Enter') prosesLogin()">
-      <button class="btn-biru" id="btnMasukLogin" onclick="prosesLogin()" style="margin-top:10px;">
+      <p id="teksSubjudulLogin" style="text-align: center; color: #64748b; font-size: 13px; margin-top: 0; margin-bottom: 18px;">E597 Opname Accs</p>
+
+      <label for="loginId">User ID (NIK):</label>
+      <div id="wadahInputIdLogin" class="wadah-input-login">
+        <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <input type="text" id="loginId" inputmode="numeric" autocomplete="username" enterkeyhint="next" placeholder="Masukkan NIK Karyawan" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('loginPass').focus();}">
+      </div>
+
+      <!-- KAPSUL MEMORI PENGGUNA TERAKHIR (QUICK-TAP NIK) -->
+      <div id="kapsulUserTerakhir" class="kapsul-user-terakhir" onclick="pakaiUserTerakhir()">
+        <span id="teksUserTerakhir">👤 Terakhir: -</span>
+        <span style="font-size:11px; text-decoration:underline;">Isi Cepat</span>
+      </div>
+
+      <label for="loginPass">Password:</label>
+      <div id="wadahInputPassLogin" class="wadah-input-login input-pass">
+        <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <input type="password" id="loginPass" autocomplete="current-password" enterkeyhint="go" placeholder="Masukkan password" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter') prosesLogin()">
+        <button type="button" class="btn-mata-pass" onclick="toggleLihatPassword()" title="Tampilkan / Sembunyikan Password" aria-label="Tampilkan Password">
+          <svg id="ikonMataPass" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+
+      <div id="pesanErrorLogin" class="pesan-error-login"></div>
+
+      <button class="btn-biru" id="btnMasukLogin" onclick="prosesLogin()" style="margin-top:4px; margin-bottom:0;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
           <polyline points="10 17 15 12 10 7"></polyline>
@@ -537,13 +837,19 @@
         </svg>
         <span>Masuk (Login)</span>
       </button>
+
+      <div class="footer-versi-login">Inventory Cloud Engine &bull; v3.0 Commercial Edition</div>
     </div>
 
     <!-- HALAMAN 2: APLIKASI UTAMA -->
     <div id="layarUtama" style="display:none;">
-      <div class="kotak">
-        <!-- LIQUID GLASS STICKY HEADER -->
+      <div class="kotak" id="kartuInputUtama">
+        <!-- LIQUID GLASS STICKY HEADER + LIVE SYNC DOT -->
         <div class="header-utama">
+          <div class="badge-sync-atas" title="Status Sinkronisasi Cloud">
+            <span id="dotSyncHeader" class="pulse-dot"></span>
+            <span id="teksSyncHeader">Online</span>
+          </div>
           <button type="button" class="btn-logout-atas" onclick="logoutMandiri()" title="Keluar dari akun">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M3 5.5C3 4.3 3.9 3.2 5.1 3L10.2 2.1C11.2 1.9 12 2.7 12 3.7V20.3C12 21.3 11.2 22.1 10.2 21.9L5.1 21C3.9 20.8 3 19.7 3 18.5V5.5Z" fill="currentColor"/>
@@ -554,14 +860,14 @@
             </svg>
             <span>Log Out</span>
           </button>
-          <img src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-utama" onerror="this.style.display='none'">
+          <img id="imgLogoUtama" src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-utama" onerror="this.style.display='none'">
           <h2 style="text-align: center; color: #0d6efd; margin: 0; font-size: 19px; display: flex; align-items: center; justify-content: center; gap: 7px;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
               <rect x="9" y="3" width="6" height="4" rx="1"></rect>
               <path d="M9 14l2 2 4-4"></path>
             </svg>
-            <span>E597 Opname Accs</span>
+            <span id="teksJudulAplikasi">E597 Opname Accs</span>
           </h2>
         </div>
 
@@ -583,10 +889,10 @@
             <line x1="12" y1="9" x2="12" y2="13"></line>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
-          <span>MODE MAINTENANCE AKTIF (Hanya Store Leader yang dapat mengakses aplikasi)</span>
+          <span>MODE MAINTENANCE AKTIF (Hanya Admin / Store Leader yang dapat mengakses aplikasi)</span>
         </div>
 
-        <!-- DERETAN FITUR BARU & TOMBOL MAINTENANCE KHUSUS PAK NALDI -->
+        <!-- DERETAN FITUR BARU & TOMBOL MAINTENANCE KHUSUS ADMIN / STORE LEADER -->
         <div class="bar-fitur-atas">
           <button type="button" class="btn-ungu btn-fitur-kecil" onclick="togglePanelArtikelBaru()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -610,11 +916,11 @@
             <span>Tambah Artikel Baru</span>
           </h4>
           <label>Kode Artikel Baru:</label>
-          <input type="text" id="kodeBaruInput" placeholder="Contoh: 8100019999">
+          <input type="text" id="kodeBaruInput" inputmode="numeric" placeholder="Contoh: 8100019999">
           <label>Nama Aksesoris:</label>
           <input type="text" id="namaBaruInput" placeholder="Contoh: Adapter Charger 25W">
           <label>Jumlah Barang Masuk:</label>
-          <input type="number" id="qtyBaruInput" placeholder="Masukkan jumlah fisik yang diterima...">
+          <input type="number" id="qtyBaruInput" inputmode="numeric" pattern="[0-9]*" placeholder="Masukkan jumlah fisik yang diterima...">
           
           <label>Foto Fisik Barang (Opsional):</label>
           <input type="file" id="inputKameraBaru" accept="image/*" capture="environment" style="display:none;" onchange="prosesFotoKamera(this)">
@@ -680,12 +986,13 @@
           <option value="">-- Menyiapkan data dari server... --</option>
         </select>
         
+        <!-- FOTO PRATINJAU DENGAN SPATIAL LIGHTBOX ZOOM -->
         <div id="wadahFoto">
-          <p style="margin-top:0; font-size:12px; color:#64748b; font-weight:bold;">Pratinjau Fisik Barang:</p>
-          <img id="fotoPreview" src="" alt="Foto Aksesoris">
+          <p style="margin-top:0; margin-bottom:6px; font-size:11.5px; color:#64748b; font-weight:bold;">Pratinjau Fisik Barang (Ketuk gambar untuk memperbesar):</p>
+          <img id="fotoPreview" src="" alt="Foto Aksesoris" onclick="bukaLightboxFoto()">
         </div>
 
-        <!-- OPSI UPLOAD FOTO PRATINJAU TERPISAH (KHUSUS AKUN 202106477: KAMERA LANGSUNG / GALERI & FILE) -->
+        <!-- OPSI UPLOAD FOTO PRATINJAU TERPISAH (KHUSUS ROLE ADMIN / STORE LEADER: KAMERA LANGSUNG / GALERI & FILE) -->
         <div id="wadahUploadFotoLeader">
           <div class="label-leader-foto">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -716,14 +1023,14 @@
           <div id="statusUploadPratinjauLeader" class="status-upload-leader"></div>
         </div>
         
-        <!-- INPUT DISPLAY DENGAN STEPPER (- / +) & AKUMULASI CEPAT (+ TAMBAH) -->
+        <!-- INPUT DISPLAY DENGAN PURE NUMPAD, STEPPER (- / +) & AKUMULASI CEPAT (+ TAMBAH) -->
         <div class="baris-label-akumulasi">
           <label for="display">Fisik di Display:</label>
           <button type="button" class="btn-pil-tambah" onclick="toggleAkumulasi('display')">+ Tambah</button>
         </div>
         <div class="wadah-stepper">
           <button type="button" class="btn-step" onclick="ubahAngkaStepper('display', -1)" aria-label="Kurangi Display">−</button>
-          <input type="number" id="display" placeholder="0" oninput="cekCocokTotal()">
+          <input type="number" id="display" inputmode="numeric" pattern="[0-9]*" placeholder="0" oninput="cekCocokTotal()">
           <button type="button" class="btn-step" onclick="ubahAngkaStepper('display', 1)" aria-label="Tambah Display">+</button>
         </div>
         <div id="panelAkumulasi_display" class="panel-akumulasi">
@@ -734,20 +1041,20 @@
             <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 10)">+10</button>
           </div>
           <div class="baris-input-akumulasi">
-            <input type="number" id="inputPlus_display" placeholder="Jumlah tambahan...">
+            <input type="number" id="inputPlus_display" inputmode="numeric" pattern="[0-9]*" placeholder="Jumlah tambahan...">
             <button type="button" class="btn-hijau" onclick="terapkanTambahManual('display')">Tambah</button>
             <button type="button" class="btn-abu" onclick="toggleAkumulasi('display')">Tutup</button>
           </div>
         </div>
 
-        <!-- INPUT GUDANG DENGAN STEPPER (- / +) & AKUMULASI CEPAT (+ TAMBAH) -->
+        <!-- INPUT GUDANG DENGAN PURE NUMPAD, STEPPER (- / +) & AKUMULASI CEPAT (+ TAMBAH) -->
         <div class="baris-label-akumulasi">
           <label for="gudang">Fisik di Gudang:</label>
           <button type="button" class="btn-pil-tambah" onclick="toggleAkumulasi('gudang')">+ Tambah</button>
         </div>
         <div class="wadah-stepper">
           <button type="button" class="btn-step" onclick="ubahAngkaStepper('gudang', -1)" aria-label="Kurangi Gudang">−</button>
-          <input type="number" id="gudang" placeholder="0" oninput="cekCocokTotal()">
+          <input type="number" id="gudang" inputmode="numeric" pattern="[0-9]*" placeholder="0" oninput="cekCocokTotal()">
           <button type="button" class="btn-step" onclick="ubahAngkaStepper('gudang', 1)" aria-label="Tambah Gudang">+</button>
         </div>
         <div id="panelAkumulasi_gudang" class="panel-akumulasi">
@@ -758,20 +1065,22 @@
             <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 10)">+10</button>
           </div>
           <div class="baris-input-akumulasi">
-            <input type="number" id="inputPlus_gudang" placeholder="Jumlah tambahan...">
+            <input type="number" id="inputPlus_gudang" inputmode="numeric" pattern="[0-9]*" placeholder="Jumlah tambahan...">
             <button type="button" class="btn-hijau" onclick="terapkanTambahManual('gudang')">Tambah</button>
             <button type="button" class="btn-abu" onclick="toggleAkumulasi('gudang')">Tutup</button>
           </div>
         </div>
         
+        <!-- KOTAK REMARK + QUICK-TAP REMARK CHIPS -->
         <div id="wadahRemark">
           <label>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
             </svg>
-            <span>Remark / Alasan Selisih (Bisa diisi sekarang atau nanti saat Selesai):</span>
+            <span>Remark / Alasan Selisih (Ketuk kapsul cepat atau ketik manual):</span>
           </label>
+          <div id="wadahChipRemarkUtama" class="deret-chip-remark"></div>
           <input type="text" id="remark" placeholder="Opsional: Kosongkan dulu jika masih lanjut cek gudang/display...">
         </div>
 
@@ -782,6 +1091,15 @@
             <line x1="8" y1="12" x2="16" y2="12"></line>
           </svg>
           <span>Catat Barang Ini</span>
+        </button>
+
+        <!-- TOMBOL BATAL CEK 1 ARTIKEL (MUNCUL JIKA ARTIKEL SUDAH PERNAH DICATAT) -->
+        <button type="button" id="btnBatalCekForm" onclick="batalCekArtikelSaatIni()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          <span>Batal Cek Artikel Ini (Kembalikan ke Belum)</span>
         </button>
         
         <div id="statusAutoSave" class="status-autosave">
@@ -836,8 +1154,9 @@
         <div id="wadahRekapSelisih"></div>
         <div id="wadahAuditSemua"></div>
 
+        <!-- KANVAS TTD RESOLUSI TINGGI RETINA (600x225) -->
         <label>Paraf / Tanda Tangan Bukti Opname:</label>
-        <canvas id="kanvasTtd" width="200" height="75"></canvas>
+        <canvas id="kanvasTtd" width="600" height="225"></canvas>
         <div class="wadah-flex">
           <button class="btn-merah" onclick="hapusTtd()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -904,17 +1223,23 @@
     const SVG_SAVE = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>';
     const SVG_SEND = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
     const SVG_DOWNLOAD = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>';
+    const SVG_LOGIN_MASUK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>';
+
+    // Daftar Default Quick-Tap Remark Chips (Dapat disesuaikan dari sheet Pengaturan)
+    var DAFTAR_CHIP_REMARK = [
+      { label: "🧾 Terjual (No. Faktur)", teks: "Terjual - No. Faktur: " },
+      { label: "🔄 Tertukar barang/tipe", teks: "Tertukar barang/tipe: " },
+      { label: "📦 Barang Masuk Baru", teks: "Barang Masuk - No. DO/SJ: " },
+      { label: "🚚 Mutasi / Transfer", teks: "Mutasi / TO Toko: " },
+      { label: "⚠️ Rusak / Defective", teks: "Barang Rusak / Retur Gudang" },
+      { label: "🏷️ Pakai Display / Demo", teks: "Dipakai Display / Tester Toko" },
+      { label: "🔍 Masih Dicari", teks: "Sementara Dicari di Gudang / Display" }
+    ];
 
     var ID_STORE_LEADER = "202106477";
-    var dbUser = {
-      "202106477": { pass: "Tomohon.2026", namaLengkap: "Pak Naldi (Store Leader)" },
-      "202408242": { pass: "Tomohon.2026", namaLengkap: "Veidel (ERO)" },
-      "202404349": { pass: "Tomohon.2026", namaLengkap: "Exel (ERO)" },
-      "202608282": { pass: "Tomohon.2026", namaLengkap: "Frisa (ERO)" },
-      "202611324": { pass: "Tomohon.2026", namaLengkap: "Grasia (ERO)" }
-    };
     var userAktif = "";
     var userIdAktif = "";
+    var userRoleAktif = "STAFF";
     var statusMaintenanceServer = "OFF";
     var fotoBaruBase64 = "";
 
@@ -928,8 +1253,8 @@
     var timerJam;
     var timerToast;
     var timerSyncParalel;
+    var localResetTs = 0;
 
-    // Pelacakan nilai awal saat artikel dimuat agar merge paralel antar-HP presisi
     var stateItemDimuat = {
       kode: "",
       disp: "",
@@ -943,14 +1268,251 @@
     };
 
     var KEY_LOKAL_DRAFT = "E597_AutoSave_Draft";
+    var KEY_LOKAL_RESET_TS = "E597_Reset_Ts";
     var KEY_SESI_USER = "E597_Sesi_User";
     var KEY_SESI_ID = "E597_Sesi_Id";
+    var KEY_SESI_ROLE = "E597_Sesi_Role";
+    var KEY_LAST_USER_OBJ = "E597_Last_User_Obj";
+    var KEY_CONFIG_CACHE = "E597_Config_Cache";
+
+    function apakahAdminToko() {
+      return (userRoleAktif === "ADMIN" || userIdAktif === ID_STORE_LEADER);
+    }
 
     function getarHalus(pola) {
       try {
         if (navigator && typeof navigator.vibrate === "function") {
           navigator.vibrate(pola);
         }
+      } catch (e) {}
+    }
+
+    // Menerapkan Konfigurasi White-Label Dinamis dari Sheet "Pengaturan"
+    function terapkanKonfigurasiToko(cfg) {
+      if (!cfg) return;
+      try {
+        localStorage.setItem(KEY_CONFIG_CACHE, JSON.stringify(cfg));
+      } catch (e) {}
+
+      if (cfg.namaAplikasi) {
+        document.title = cfg.namaAplikasi;
+        var elJudul = document.getElementById("teksJudulAplikasi");
+        if (elJudul) elJudul.innerText = cfg.namaAplikasi;
+      }
+      if (cfg.subjudulLogin) {
+        var elSub = document.getElementById("teksSubjudulLogin");
+        if (elSub) elSub.innerText = cfg.subjudulLogin;
+      }
+      if (cfg.logoUtama) {
+        var logo1 = document.getElementById("imgLogoLogin");
+        var logo2 = document.getElementById("imgLogoUtama");
+        if (logo1) { logo1.src = cfg.logoUtama; logo1.style.display = "inline-block"; }
+        if (logo2) { logo2.src = cfg.logoUtama; logo2.style.display = "inline-block"; }
+      }
+      if (cfg.iconTab) {
+        var fav = document.getElementById("faviconLink");
+        var touch = document.getElementById("appleTouchIconLink");
+        if (fav) fav.href = cfg.iconTab;
+        if (touch) touch.href = cfg.iconTab;
+      }
+      if (cfg.opsiRemark && String(cfg.opsiRemark).indexOf("=>") !== -1) {
+        var potongan = String(cfg.opsiRemark).split("|");
+        var chipBaru = [];
+        for (var i = 0; i < potongan.length; i++) {
+          var bagian = potongan[i].split("=>");
+          if (bagian.length >= 2) {
+            var lbl = bagian[0].trim();
+            var tks = bagian.slice(1).join("=>");
+            if (lbl) chipBaru.push({ label: lbl, teks: tks });
+          }
+        }
+        if (chipBaru.length > 0) {
+          DAFTAR_CHIP_REMARK = chipBaru;
+          inisialisasiChipRemarkUtama();
+        }
+      }
+    }
+
+    // Fitur Halaman Login Modern: Intip Password, Quick-Tap NIK, & Lock-Screen Shake
+    function toggleLihatPassword() {
+      getarHalus(10);
+      var inputPass = document.getElementById("loginPass");
+      var ikon = document.getElementById("ikonMataPass");
+      if (inputPass.type === "password") {
+        inputPass.type = "text";
+        ikon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+      } else {
+        inputPass.type = "password";
+        ikon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+      }
+      inputPass.focus();
+    }
+
+    function muatKapsulUserTerakhir() {
+      try {
+        var raw = localStorage.getItem(KEY_LAST_USER_OBJ);
+        var kapsul = document.getElementById("kapsulUserTerakhir");
+        var teks = document.getElementById("teksUserTerakhir");
+        if (raw && kapsul && teks) {
+          var obj = JSON.parse(raw);
+          if (obj && obj.userId && obj.namaLengkap) {
+            teks.innerText = "👤 Terakhir: " + obj.namaLengkap;
+            kapsul.style.display = "flex";
+            return;
+          }
+        }
+        if (kapsul) kapsul.style.display = "none";
+      } catch (e) {}
+    }
+
+    function pakaiUserTerakhir() {
+      try {
+        var raw = localStorage.getItem(KEY_LAST_USER_OBJ);
+        if (raw) {
+          var obj = JSON.parse(raw);
+          if (obj && obj.userId) {
+            getarHalus(12);
+            document.getElementById("loginId").value = obj.userId;
+            bersihkanErrorLogin();
+            document.getElementById("loginPass").focus();
+          }
+        }
+      } catch (e) {}
+    }
+
+    function tampilkanErrorLoginInline(pesan) {
+      getarHalus([35, 50, 35]);
+      var elErr = document.getElementById("pesanErrorLogin");
+      var wId = document.getElementById("wadahInputIdLogin");
+      var wPass = document.getElementById("wadahInputPassLogin");
+      if (elErr) {
+        elErr.innerText = pesan;
+        elErr.style.display = "block";
+      }
+      if (wId && wPass) {
+        wId.classList.remove("salah-login");
+        wPass.classList.remove("salah-login");
+        void wId.offsetWidth;
+        void wPass.offsetWidth;
+        wId.classList.add("salah-login");
+        wPass.classList.add("salah-login");
+      }
+      var inputPass = document.getElementById("loginPass");
+      if (inputPass) {
+        inputPass.focus();
+        try { inputPass.select(); } catch (e) {}
+      }
+    }
+
+    function bersihkanErrorLogin() {
+      var elErr = document.getElementById("pesanErrorLogin");
+      var wId = document.getElementById("wadahInputIdLogin");
+      var wPass = document.getElementById("wadahInputPassLogin");
+      if (elErr) elErr.style.display = "none";
+      if (wId) wId.classList.remove("salah-login");
+      if (wPass) wPass.classList.remove("salah-login");
+    }
+
+    function cekStatusServerDiLayarLogin() {
+      var badge = document.getElementById("badgeStatusLogin");
+      var dot = document.getElementById("dotBadgeLogin");
+      var teks = document.getElementById("teksBadgeLogin");
+      if (!badge || !dot || !teks) return;
+
+      panggilServerAPI({ action: "cekMaintenance" })
+        .then(function(res) {
+          if (res.configPublik) {
+            terapkanKonfigurasiToko(res.configPublik);
+          }
+          statusMaintenanceServer = res.maintenance || "OFF";
+          if (statusMaintenanceServer === "ON") {
+            badge.className = "badge-server-login maint";
+            dot.className = "pulse-dot offline";
+            teks.innerText = "Mode Maintenance (Khusus Admin)";
+          } else {
+            badge.className = "badge-server-login";
+            dot.className = "pulse-dot";
+            var namaApp = (res.configPublik && res.configPublik.namaAplikasi) ? res.configPublik.namaAplikasi : "Cloud";
+            teks.innerText = namaApp + " Ready";
+          }
+        })
+        .catch(function() {
+          dot.className = "pulse-dot offline";
+          teks.innerText = "Siap (Menunggu Jaringan)";
+        });
+    }
+
+    // Indikator Live Sync Dot di Header
+    function setIndikatorSync(mode) {
+      var dot = document.getElementById("dotSyncHeader");
+      var teks = document.getElementById("teksSyncHeader");
+      if (!dot || !teks) return;
+      dot.className = "pulse-dot";
+      if (mode === "syncing") {
+        dot.classList.add("syncing");
+        teks.innerText = "Syncing...";
+      } else if (mode === "offline") {
+        dot.classList.add("offline");
+        teks.innerText = "Offline HP";
+      } else {
+        teks.innerText = "Synced";
+      }
+    }
+
+    // Spatial Lightbox Zoom pada Foto Pratinjau
+    function bukaLightboxFoto() {
+      var src = document.getElementById("fotoPreview").src;
+      if (!src) return;
+      getarHalus(10);
+      var kode = document.getElementById("kodePilihan").value;
+      var judul = (kode && kunciData[kode]) ? ("[" + kode + "] " + kunciData[kode].nama) : "Pratinjau Fisik Barang";
+      document.getElementById("lightboxImg").src = src;
+      document.getElementById("lightboxCaption").innerText = judul + " • Ketuk layar untuk menutup";
+      document.getElementById("lightboxModal").style.display = "flex";
+    }
+
+    function tutupLightboxFoto() {
+      getarHalus(8);
+      document.getElementById("lightboxModal").style.display = "none";
+    }
+
+    // Render Kapsul Quick-Tap Remark di Formulir Utama
+    function inisialisasiChipRemarkUtama() {
+      var wadah = document.getElementById("wadahChipRemarkUtama");
+      if (!wadah) return;
+      var html = "";
+      for (var i = 0; i < DAFTAR_CHIP_REMARK.length; i++) {
+        var item = DAFTAR_CHIP_REMARK[i];
+        html += '<button type="button" class="btn-chip-remark" onclick="pilihChipRemarkUtama(' + i + ')">' + item.label + '</button>';
+      }
+      wadah.innerHTML = html;
+    }
+
+    function pilihChipRemarkUtama(idx) {
+      var chip = DAFTAR_CHIP_REMARK[idx];
+      if (!chip) return;
+      getarHalus(12);
+      var inputRem = document.getElementById("remark");
+      inputRem.value = chip.teks;
+      inputRem.focus();
+      try {
+        var len = inputRem.value.length;
+        inputRem.setSelectionRange(len, len);
+      } catch (e) {}
+    }
+
+    function pilihChipRemarkAkhir(kode, idx) {
+      var chip = DAFTAR_CHIP_REMARK[idx];
+      if (!chip) return;
+      getarHalus(12);
+      var inputEl = document.getElementById("remark_akhir_" + kode);
+      if (!inputEl) return;
+      inputEl.value = chip.teks;
+      simpanRemarkAkhir(kode, inputEl);
+      inputEl.focus();
+      try {
+        var len = inputEl.value.length;
+        inputEl.setSelectionRange(len, len);
       } catch (e) {}
     }
 
@@ -1006,7 +1568,6 @@
       if (elBar) elBar.style.width = persen + "%";
     }
 
-    // Fitur #4: Input Akumulasi Cepat (+ Tambah) untuk Stok Tersebar
     function toggleAkumulasi(target) {
       var kode = document.getElementById('kodePilihan').value;
       if (!kode) {
@@ -1075,7 +1636,7 @@
       elCari.value = "";
       document.getElementById('btnClearCari').style.display = "none";
       getarHalus(10);
-      renderDropdown();
+      renderDropdown(false);
       elCari.focus();
     }
 
@@ -1121,7 +1682,7 @@
       var btnMaint = document.getElementById("btnToggleMaintenance");
       var bannerMaint = document.getElementById("bannerMaintenance");
 
-      if (userIdAktif === ID_STORE_LEADER) {
+      if (apakahAdminToko()) {
         btnMaint.style.display = "inline-flex";
         if (statusMaintenanceServer === "ON") {
           btnMaint.className = "btn-merah btn-fitur-kecil";
@@ -1139,7 +1700,7 @@
     }
 
     function ubahModeMaintenance() {
-      if (userIdAktif !== ID_STORE_LEADER) return;
+      if (!apakahAdminToko()) return;
       getarHalus(15);
       var targetStatus = (statusMaintenanceServer === "ON") ? "OFF" : "ON";
       var btnMaint = document.getElementById("btnToggleMaintenance");
@@ -1199,7 +1760,7 @@
     }
 
     function prosesUploadFotoPratinjauLeader(input) {
-      if (userIdAktif !== ID_STORE_LEADER) return;
+      if (!apakahAdminToko()) return;
       if (!input.files || !input.files[0]) return;
       var kode = document.getElementById('kodePilihan').value;
       if (!kode) {
@@ -1291,7 +1852,7 @@
         btn.disabled = false;
         if (res.kunciData) {
           kunciData = res.kunciData;
-          renderDropdown();
+          renderDropdown(false);
         }
         document.getElementById("kodeBaruInput").value = "";
         document.getElementById("namaBaruInput").value = "";
@@ -1310,13 +1871,25 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+      // Muat konfigurasi White-Label yang tersimpan di cache lokal agar logo & judul tampil instan
+      try {
+        var cachedCfg = localStorage.getItem(KEY_CONFIG_CACHE);
+        if (cachedCfg) terapkanKonfigurasiToko(JSON.parse(cachedCfg));
+      } catch (e) {}
+
+      inisialisasiChipRemarkUtama();
+      muatKapsulUserTerakhir();
+      cekStatusServerDiLayarLogin();
       hapusTtd();
       try {
+        localResetTs = Number(localStorage.getItem(KEY_LOKAL_RESET_TS)) || 0;
         var sesiTersimpan = sessionStorage.getItem(KEY_SESI_USER);
         var idTersimpan = sessionStorage.getItem(KEY_SESI_ID);
+        var roleTersimpan = sessionStorage.getItem(KEY_SESI_ROLE);
         if (sesiTersimpan && idTersimpan) {
           userAktif = sesiTersimpan;
           userIdAktif = idTersimpan;
+          userRoleAktif = roleTersimpan || (userIdAktif === ID_STORE_LEADER ? "ADMIN" : "STAFF");
           document.getElementById("layarLogin").style.display = "none";
           document.getElementById("layarUtama").style.display = "block";
           var dropPetugas = document.getElementById("petugas");
@@ -1327,31 +1900,65 @@
       } catch(e) {}
     });
 
+    // Otentikasi Login ke Sheet "DataUser" di Server Google Sheets
     function prosesLogin() {
-      var id = document.getElementById("loginId").value.toLowerCase().trim();
+      var id = document.getElementById("loginId").value.trim();
       var p = document.getElementById("loginPass").value;
       
-      if (dbUser[id] && dbUser[id].pass === p) {
-         getarHalus(18);
-         userAktif = dbUser[id].namaLengkap;
-         userIdAktif = id;
-         try {
-           sessionStorage.setItem(KEY_SESI_USER, userAktif);
-           sessionStorage.setItem(KEY_SESI_ID, userIdAktif);
-         } catch(e) {}
-         
-         document.getElementById("layarLogin").style.display = "none";
-         document.getElementById("layarUtama").style.display = "block";
-         
-         var dropPetugas = document.getElementById("petugas");
-         dropPetugas.innerHTML = '<option value="' + userAktif + '">' + userAktif + '</option>';
-         
-         aturTampilanMaintenance();
-         mulaiAplikasi();
-      } else {
-         getarHalus([30, 50, 30]);
-         tampilkanModal("Akses Ditolak", "User ID atau Password salah!");
+      if (!id || !p) {
+        tampilkanErrorLoginInline("Mohon isi User ID (NIK) dan Password terlebih dahulu.");
+        return;
       }
+
+      bersihkanErrorLogin();
+      var btnMasuk = document.getElementById("btnMasukLogin");
+      if (btnMasuk) {
+        btnMasuk.innerHTML = '<span>Memverifikasi Akun...</span>';
+        btnMasuk.disabled = true;
+      }
+
+      panggilServerAPI({ action: "loginUser", userId: id, password: p })
+        .then(function(res) {
+          if (btnMasuk) {
+            btnMasuk.innerHTML = SVG_LOGIN_MASUK + '<span>Masuk (Login)</span>';
+            btnMasuk.disabled = false;
+          }
+          if (res.configPublik) {
+            terapkanKonfigurasiToko(res.configPublik);
+          }
+
+          getarHalus(18);
+          userAktif = res.user.namaLengkap;
+          userIdAktif = String(res.user.userId);
+          userRoleAktif = res.user.role || "STAFF";
+          statusMaintenanceServer = res.maintenance || "OFF";
+
+          try {
+            sessionStorage.setItem(KEY_SESI_USER, userAktif);
+            sessionStorage.setItem(KEY_SESI_ID, userIdAktif);
+            sessionStorage.setItem(KEY_SESI_ROLE, userRoleAktif);
+            localStorage.setItem(KEY_LAST_USER_OBJ, JSON.stringify({
+              userId: userIdAktif,
+              namaLengkap: userAktif
+            }));
+          } catch(e) {}
+
+          document.getElementById("layarLogin").style.display = "none";
+          document.getElementById("layarUtama").style.display = "block";
+
+          var dropPetugas = document.getElementById("petugas");
+          dropPetugas.innerHTML = '<option value="' + userAktif + '">' + userAktif + '</option>';
+
+          aturTampilanMaintenance();
+          mulaiAplikasi();
+        })
+        .catch(function(err) {
+          if (btnMasuk) {
+            btnMasuk.innerHTML = SVG_LOGIN_MASUK + '<span>Masuk (Login)</span>';
+            btnMasuk.disabled = false;
+          }
+          tampilkanErrorLoginInline(err.message || "Gagal melakukan verifikasi login.");
+        });
     }
 
     function logoutMandiri() {
@@ -1361,18 +1968,25 @@
       try {
         sessionStorage.removeItem(KEY_SESI_USER);
         sessionStorage.removeItem(KEY_SESI_ID);
+        sessionStorage.removeItem(KEY_SESI_ROLE);
       } catch(e) {}
 
       if (Object.keys(keranjangOpname).length > 0) {
         var jsonKeranjang = JSON.stringify(keranjangOpname);
         try { localStorage.setItem(KEY_LOKAL_DRAFT, jsonKeranjang); } catch(e) {}
-        panggilServerAPI({ action: "simpanDraft", jsonString: jsonKeranjang }).catch(function(){});
+        panggilServerAPI({ action: "simpanDraft", jsonString: jsonKeranjang, clientResetTs: localResetTs }).catch(function(){});
       }
 
       userAktif = "";
       userIdAktif = "";
+      userRoleAktif = "STAFF";
       document.getElementById("loginId").value = "";
-      document.getElementById("loginPass").value = "";
+      var passInput = document.getElementById("loginPass");
+      passInput.value = "";
+      passInput.type = "password";
+      bersihkanErrorLogin();
+      muatKapsulUserTerakhir();
+      cekStatusServerDiLayarLogin();
       resetFormulir();
       hapusFotoBaru();
       document.getElementById("panelArtikelBaru").style.display = "none";
@@ -1386,20 +2000,34 @@
       window.scrollTo(0, 0);
     }
 
-    // Sinkronisasi latar belakang setiap 15 detik agar kerja paralel 2 HP (Display vs Gudang) tetap terbarui
+    // Sinkronisasi latar belakang dengan Proteksi Anti-Zombie Reset
     function jalankanSyncParalelBerkala() {
       if (timerSyncParalel) clearInterval(timerSyncParalel);
       timerSyncParalel = setInterval(function() {
-        if (!userAktif || !navigator.onLine) return;
-        panggilServerAPI({ action: "simpanDraft", jsonString: JSON.stringify(keranjangOpname) })
+        if (!userAktif) return;
+        if (!navigator.onLine) {
+          setIndikatorSync("offline");
+          return;
+        }
+        setIndikatorSync("syncing");
+        panggilServerAPI({
+          action: "simpanDraft",
+          jsonString: JSON.stringify(keranjangOpname),
+          clientResetTs: localResetTs
+        })
           .then(function(res) {
+            setIndikatorSync("online");
+            if (res && res.resetTimestamp && Number(res.resetTimestamp) > localResetTs) {
+              localResetTs = Number(res.resetTimestamp);
+              try { localStorage.setItem(KEY_LOKAL_RESET_TS, String(localResetTs)); } catch(e) {}
+            }
             if (res && res.draftJson) {
               var teksLama = JSON.stringify(keranjangOpname);
               if (res.draftJson !== teksLama) {
                 try {
                   keranjangOpname = JSON.parse(res.draftJson);
                   localStorage.setItem(KEY_LOKAL_DRAFT, res.draftJson);
-                  renderDropdown();
+                  renderDropdown(false);
                   if (document.getElementById('areaTandaTangan').style.display === 'block') {
                     renderRekapSelisih();
                     renderAuditSemua();
@@ -1408,7 +2036,9 @@
               }
             }
           })
-          .catch(function(){});
+          .catch(function(){
+            setIndikatorSync("offline");
+          });
       }, 15000);
     }
 
@@ -1416,18 +2046,23 @@
       jalankanJam(); 
       var dd = document.getElementById('kodePilihan');
       if (dd) dd.classList.add('shimmer-loading');
+      setIndikatorSync("syncing");
 
       panggilServerAPI({ action: "init" })
         .then(function(res) {
+          setIndikatorSync("online");
           if (dd) dd.classList.remove('shimmer-loading');
+          if (res.configPublik) {
+            terapkanKonfigurasiToko(res.configPublik);
+          }
           statusMaintenanceServer = res.maintenance || "OFF";
           aturTampilanMaintenance();
 
-          if (statusMaintenanceServer === "ON" && userIdAktif !== ID_STORE_LEADER) {
+          if (statusMaintenanceServer === "ON" && !apakahAdminToko()) {
             logoutMandiri();
             tampilkanModal(
               "Sistem Sedang Maintenance",
-              "Aplikasi sedang diperbarui sementara oleh Store Leader (Pak Naldi).\n\nSilakan tunggu beberapa saat dan login kembali nanti. Data draft opname Anda tetap aman tersimpan."
+              "Aplikasi sedang diperbarui sementara oleh Admin / Store Leader.\n\nSilakan tunggu beberapa saat dan login kembali nanti. Data draft opname Anda tetap aman tersimpan."
             );
             return;
           }
@@ -1435,13 +2070,24 @@
           kunciData = res.kunciData || {};
           if (res.linkExcel) linkExcelTersimpan = res.linkExcel;
 
+          var serverResetTs = Number(res.resetTimestamp) || 0;
           var draftAwan = {};
           var draftLokal = {};
           try { draftAwan = JSON.parse(res.draftJson || "{}"); } catch(e) {}
-          try { 
-            var teksLokal = localStorage.getItem(KEY_LOKAL_DRAFT);
-            if (teksLokal) draftLokal = JSON.parse(teksLokal);
-          } catch(e) {}
+
+          if (serverResetTs > localResetTs) {
+            localResetTs = serverResetTs;
+            try {
+              localStorage.setItem(KEY_LOKAL_RESET_TS, String(localResetTs));
+              localStorage.setItem(KEY_LOKAL_DRAFT, JSON.stringify(draftAwan));
+            } catch(e) {}
+            draftLokal = {};
+          } else {
+            try { 
+              var teksLokal = localStorage.getItem(KEY_LOKAL_DRAFT);
+              if (teksLokal) draftLokal = JSON.parse(teksLokal);
+            } catch(e) {}
+          }
 
           var gabunganDraft = Object.assign({}, draftAwan, draftLokal);
 
@@ -1450,11 +2096,14 @@
             var jmlTersimpan = Object.keys(keranjangOpname).length;
             autoSimpanKeAwan();
             tampilkanModal("Auto-Save Dipulihkan", "Selamat bekerja " + userAktif + "!\n\nSebanyak " + jmlTersimpan + " artikel yang sudah dicatat berhasil dipulihkan otomatis. Silakan lanjutkan opname.");
+          } else {
+            keranjangOpname = {};
           }
-          renderDropdown();
+          renderDropdown(false);
           jalankanSyncParalelBerkala();
         })
         .catch(function(err) {
+          setIndikatorSync("offline");
           if (dd) dd.classList.remove('shimmer-loading');
           tampilkanModal("Gagal Terhubung", "Pastikan URL_API_APPS_SCRIPT sudah benar dan jaringan internet Anda aktif.");
         });
@@ -1476,18 +2125,27 @@
         elStatus.style.borderColor = "#bfdbfe";
         elTeks.innerText = "Tersimpan di HP (" + totalItem + " brg). Sinkron ke Awan...";
       }
+      setIndikatorSync("syncing");
 
       clearTimeout(timerAutoSaveAwan);
       timerAutoSaveAwan = setTimeout(function() {
-        panggilServerAPI({ action: "simpanDraft", jsonString: jsonKeranjang })
+        panggilServerAPI({
+          action: "simpanDraft",
+          jsonString: jsonKeranjang,
+          clientResetTs: localResetTs
+        })
           .then(function(res) {
-            // Terima hasil merge dari server agar data paralel antar-HP langsung sinkron
+            setIndikatorSync("online");
+            if (res && res.resetTimestamp && Number(res.resetTimestamp) > localResetTs) {
+              localResetTs = Number(res.resetTimestamp);
+              try { localStorage.setItem(KEY_LOKAL_RESET_TS, String(localResetTs)); } catch(e) {}
+            }
             if (res && res.draftJson) {
               try {
                 keranjangOpname = JSON.parse(res.draftJson);
                 localStorage.setItem(KEY_LOKAL_DRAFT, res.draftJson);
                 totalItem = Object.keys(keranjangOpname).length;
-                renderDropdown();
+                renderDropdown(false);
               } catch(e) {}
             }
             if (elStatus && elTeks) {
@@ -1499,6 +2157,7 @@
             }
           })
           .catch(function() {
+            setIndikatorSync("offline");
             if (elStatus && elTeks) {
               elStatus.style.color = "#92400e";
               elStatus.style.backgroundColor = "#fffbeb";
@@ -1506,14 +2165,72 @@
               elTeks.innerText = "Tersimpan aman di HP (" + totalItem + " brg). Menunggu sinkron Awan...";
             }
           });
-      }, 2500);
+      }, 2200);
     }
 
     window.addEventListener('online', function() {
+      setIndikatorSync("online");
       if (Object.keys(keranjangOpname).length > 0) {
         autoSimpanKeAwan();
       }
     });
+    window.addEventListener('offline', function() {
+      setIndikatorSync("offline");
+    });
+
+    // Batal Cek / Hapus 1 Artikel kembali menjadi Belum
+    function batalCekArtikelSaatIni() {
+      var kode = document.getElementById('kodePilihan').value;
+      if (!kode || !keranjangOpname[kode]) return;
+      hapusSatuArtikelDariKeranjang(kode);
+    }
+
+    function hapusSatuArtikelDariKeranjang(kode) {
+      if (!keranjangOpname[kode]) return;
+      var nama = keranjangOpname[kode].namaBarang || kode;
+      if (!confirm("Kembalikan artikel [" + kode + "] " + nama + " ke status BELUM dicek?")) {
+        return;
+      }
+      getarHalus(15);
+      clearTimeout(timerAutoSaveAwan);
+      delete keranjangOpname[kode];
+      try { localStorage.setItem(KEY_LOKAL_DRAFT, JSON.stringify(keranjangOpname)); } catch(e) {}
+
+      setIndikatorSync("syncing");
+      panggilServerAPI({ action: "hapusItemDraft", kodeArtikel: kode })
+        .then(function(res) {
+          setIndikatorSync("online");
+          if (res && res.resetTimestamp) {
+            localResetTs = Number(res.resetTimestamp);
+            try { localStorage.setItem(KEY_LOKAL_RESET_TS, String(localResetTs)); } catch(e) {}
+          }
+          if (res && res.draftJson) {
+            try {
+              keranjangOpname = JSON.parse(res.draftJson);
+              localStorage.setItem(KEY_LOKAL_DRAFT, res.draftJson);
+            } catch(e) {}
+          }
+          renderDropdown(false);
+          if (document.getElementById('areaTandaTangan').style.display === 'block') {
+            renderRekapSelisih();
+            renderAuditSemua();
+          }
+        })
+        .catch(function() {
+          setIndikatorSync("offline");
+        });
+
+      document.getElementById('kodePilihan').value = '';
+      document.getElementById('wadahFoto').style.display = 'none';
+      document.getElementById('wadahUploadFotoLeader').style.display = 'none';
+      resetFormulir();
+      renderDropdown(false);
+      if (document.getElementById('areaTandaTangan').style.display === 'block') {
+        renderRekapSelisih();
+        renderAuditSemua();
+      }
+      tampilkanToast("[" + kode + "] dikembalikan ke status Belum");
+    }
 
     function resetDraftTotal() {
       getarHalus(20);
@@ -1521,10 +2238,16 @@
         clearTimeout(timerAutoSaveAwan);
         keranjangOpname = {}; 
         try { localStorage.removeItem(KEY_LOKAL_DRAFT); } catch(e) {}
+        setIndikatorSync("syncing");
         panggilServerAPI({ action: "hapusDraft" })
           .then(function(res) {
+            setIndikatorSync("online");
+            if (res && res.resetTimestamp) {
+              localResetTs = Number(res.resetTimestamp);
+              try { localStorage.setItem(KEY_LOKAL_RESET_TS, String(localResetTs)); } catch(e) {}
+            }
             tampilkanModal("Data Direset", res.pesan);
-            renderDropdown();
+            renderDropdown(false);
             var elStatus = document.getElementById('statusAutoSave');
             var elTeks = document.getElementById('teksAutoSave');
             if (elStatus && elTeks) {
@@ -1535,7 +2258,8 @@
             }
           })
           .catch(function() {
-            renderDropdown();
+            setIndikatorSync("offline");
+            renderDropdown(false);
           });
       }
     }
@@ -1553,8 +2277,12 @@
       var jsonKeranjang = JSON.stringify(keranjangOpname);
       try { localStorage.setItem(KEY_LOKAL_DRAFT, jsonKeranjang); } catch(e) {}
       
-      panggilServerAPI({ action: "simpanDraft", jsonString: jsonKeranjang })
+      panggilServerAPI({ action: "simpanDraft", jsonString: jsonKeranjang, clientResetTs: localResetTs })
         .then(function(res) {
+          if (res && res.resetTimestamp) {
+            localResetTs = Number(res.resetTimestamp);
+            try { localStorage.setItem(KEY_LOKAL_RESET_TS, String(localResetTs)); } catch(e) {}
+          }
           if (res && res.draftJson) {
             try { localStorage.setItem(KEY_LOKAL_DRAFT, res.draftJson); } catch(e) {}
           }
@@ -1579,15 +2307,16 @@
       }
       clearTimeout(timerCari); 
       document.getElementById('kodePilihan').innerHTML = '<option value="">Menyaring data...</option>'; 
-      timerCari = setTimeout(function() { renderDropdown(); }, 300); 
+      timerCari = setTimeout(function() { renderDropdown(true); }, 280); 
     }
 
-    function renderDropdown() {
+    function renderDropdown(dariKetikCari) {
       var dropdown = document.getElementById('kodePilihan'); 
-      var kataKunci = document.getElementById('kolomCari').value.toLowerCase(); 
+      var kataKunci = document.getElementById('kolomCari').value.toLowerCase().trim(); 
       var nilaiSebelumnya = dropdown.value; 
       var htmlOpsi = '<option value="">-- Pilih Kode & Aksesoris --</option>'; 
       var jumlahTampil = 0;
+      var kodeTunggal = "";
 
       for (var kode in kunciData) {
         var stat = getStatusKeranjang(kode); 
@@ -1597,6 +2326,7 @@
         
         if (cocokFilter && cocokCari) {
           jumlahTampil++;
+          kodeTunggal = kode;
           if (stat === 'cocok') { 
             htmlOpsi += '<option value="' + kode + '" style="background-color:#d1e7dd; color:#0f5132;">🟢 ' + namaFull + '</option>'; 
           } else if (stat === 'selisih') { 
@@ -1609,7 +2339,10 @@
       if (jumlahTampil === 0) htmlOpsi = '<option value="">-- Tidak ada barang --</option>';
       dropdown.innerHTML = htmlOpsi;
       
-      if (document.querySelector('#kodePilihan option[value="' + nilaiSebelumnya + '"]') && nilaiSebelumnya !== "") { 
+      if (dariKetikCari && kataKunci.length >= 2 && jumlahTampil === 1 && kodeTunggal !== "") {
+        dropdown.value = kodeTunggal;
+        muatUlangData();
+      } else if (document.querySelector('#kodePilihan option[value="' + nilaiSebelumnya + '"]') && nilaiSebelumnya !== "") { 
         dropdown.value = nilaiSebelumnya; 
       } else { 
         dropdown.value = ''; 
@@ -1639,7 +2372,7 @@
       if (j === 'belum') document.getElementById('btnBelum').classList.add('aktif-belum'); 
       if (j === 'selisih') document.getElementById('btnSelisih').classList.add('aktif-selisih'); 
       if (j === 'cocok') document.getElementById('btnCocok').classList.add('aktif-cocok'); 
-      renderDropdown(); 
+      renderDropdown(false); 
     }
 
     function resetFormulir() { 
@@ -1649,6 +2382,9 @@
       document.getElementById('gudang').value = ''; 
       document.getElementById('remark').value = '';
       document.getElementById('wadahRemark').style.display = 'none';
+      document.getElementById('btnBatalCekForm').style.display = 'none';
+      var kartu = document.getElementById('kartuInputUtama');
+      if (kartu) kartu.className = 'kotak';
       var pDisp = document.getElementById('panelAkumulasi_display');
       var pGud = document.getElementById('panelAkumulasi_gudang');
       if (pDisp) pDisp.style.display = 'none';
@@ -1677,7 +2413,7 @@
       } else { 
         img.src = ""; 
         wadah.style.display = 'none'; 
-        if (kode !== "" && userIdAktif === ID_STORE_LEADER && wadahUploadLeader) {
+        if (kode !== "" && apakahAdminToko() && wadahUploadLeader) {
           wadahUploadLeader.style.display = 'block';
         } else if (wadahUploadLeader) {
           wadahUploadLeader.style.display = 'none';
@@ -1686,7 +2422,6 @@
       
       if (keranjangOpname[kode]) { 
         var item = keranjangOpname[kode];
-        // Tampilkan angka yang sudah diisi; jika salah satu sisi belum pernah diisi (ts === 0), biarkan kosong agar mudah dilihat
         var nilaiDispTampil = (item.tsDisp === 0 && String(item.display) === "0") ? "" : String(item.display);
         var nilaiGudTampil = (item.tsGud === 0 && String(item.gudang) === "0") ? "" : String(item.gudang);
 
@@ -1694,6 +2429,7 @@
         document.getElementById('gudang').value = nilaiGudTampil; 
         var nilaiRemTampil = (item.remark && item.remark !== "-") ? item.remark : "";
         document.getElementById('remark').value = nilaiRemTampil;
+        document.getElementById('btnBatalCekForm').style.display = 'inline-flex';
 
         stateItemDimuat = {
           kode: kode,
@@ -1712,7 +2448,11 @@
 
     function cekCocokTotal() {
       var kode = document.getElementById('kodePilihan').value; 
-      if (kode === "") return; 
+      var kartu = document.getElementById('kartuInputUtama');
+      if (kode === "") {
+        if (kartu) kartu.className = 'kotak';
+        return; 
+      }
       
       var kolomDisp = document.getElementById('display');
       var kolomGud = document.getElementById('gudang');
@@ -1724,6 +2464,7 @@
         kolomDisp.className = '';
         kolomGud.className = '';
         kotakRemark.style.display = 'none';
+        if (kartu) kartu.className = 'kotak';
         statusTotalSaatIni = "Kosong";
         return;
       }
@@ -1741,6 +2482,7 @@
         kolomDisp.className = 'benar';
         kolomGud.className = 'benar';
         kotakRemark.style.display = 'none';
+        if (kartu) kartu.className = 'kotak glow-cocok';
         statusTotalSaatIni = "Cocok";
       } else {
         kolomDisp.className = '';
@@ -1750,6 +2492,7 @@
         kolomDisp.className = 'salah';
         kolomGud.className = 'salah';
         kotakRemark.style.display = 'block';
+        if (kartu) kartu.className = 'kotak glow-selisih';
         
         var selisih = totalFisik - angkaMaster;
         var tanda = selisih > 0 ? "+" + selisih : String(selisih);
@@ -1780,7 +2523,6 @@
       var now = Date.now();
       var existing = keranjangOpname[kode] || {};
 
-      // Tentukan stempel waktu per kolom agar merge paralel Display vs Gudang tidak saling menimpa
       var finalDisp = valDisp === "" ? (existing.display || "0") : valDisp;
       var finalTsDisp = Number(existing.tsDisp) || 0;
       var finalPetugasDisp = existing.petugasDisp || "";
@@ -1855,14 +2597,13 @@
         : "Tersimpan (" + statusTotalSaatIni.split("(")[0].trim() + ")";
       tampilkanToast(labelToast);
 
-      renderDropdown(); 
+      renderDropdown(false); 
       document.getElementById('kodePilihan').value = ''; 
       document.getElementById('wadahFoto').style.display = 'none'; 
       document.getElementById('wadahUploadFotoLeader').style.display = 'none';
       resetFormulir();
     }
 
-    // Fitur #5: Tab Penyelesaian (Wajib Remark Selisih vs Audit Semua Tercatat)
     function gantiTabPenyelesaian(tab) {
       getarHalus(10);
       var btnSelisih = document.getElementById("btnTabSelisihSelesai");
@@ -1912,7 +2653,10 @@
         html += '<div style="font-size:11.5px; color:#475569; margin-top:2px;">Disp: <b>' + d + '</b> | Gud: <b>' + g + '</b> | Total: <b>' + tot + '</b> (Master: ' + mTot + ')</div>';
         html += '<div style="font-size:11px; color:' + (isCocok ? '#15803d' : '#b91c1c') + '; font-weight:600; margin-top:2px;">' + (isCocok ? '🟢 Cocok' : '🔴 ' + item.statusTotal) + ' &bull; ' + (item.petugasCek || '-') + '</div>';
         html += '</div>';
+        html += '<div class="aksi-audit-grup">';
         html += '<button type="button" class="btn-edit-audit" onclick="editItemDariAudit(\'' + kode + '\')">Ubah</button>';
+        html += '<button type="button" class="btn-hapus-audit" onclick="hapusSatuArtikelDariKeranjang(\'' + kode + '\')" title="Kembalikan ke Belum">✕</button>';
+        html += '</div>';
         html += '</div>';
       }
       wadah.innerHTML = html;
@@ -1953,7 +2697,7 @@
 
       var html = '<div class="kotak-rekap-selisih">';
       html += '<div style="font-weight:bold; color:#842029; font-size:14px; margin-bottom:6px; display:flex; align-items:center; gap:6px;">' + SVG_WARN + '<span>Daftar Barang Selisih (' + daftarSelisih.length + ' Artikel)</span></div>';
-      html += '<p style="font-size:12px; color:#64748b; margin-top:0; margin-bottom:12px;">Silakan lengkapi alasan selisih (No. Faktur / Rotasi / Keterangan) untuk setiap artikel di bawah ini sebelum menyetor laporan:</p>';
+      html += '<p style="font-size:12px; color:#64748b; margin-top:0; margin-bottom:12px;">Ketuk kapsul alasan cepat atau lengkapi keterangan selisih untuk setiap artikel di bawah ini sebelum menyetor laporan:</p>';
 
       for (var i = 0; i < daftarSelisih.length; i++) {
         var item = daftarSelisih[i];
@@ -1963,6 +2707,11 @@
         html += '<div class="item-selisih-akhir">';
         html += '<div class="judul-item-selisih">[' + item.kodeArtikel + '] ' + item.namaBarang + '</div>';
         html += '<div class="info-item-selisih"><span class="dot-status dot-selisih"></span><span>' + item.statusTotal + ' &bull; (Disp: ' + item.display + ' | Gud: ' + item.gudang + ')</span></div>';
+        html += '<div class="deret-chip-remark">';
+        for (var c = 0; c < DAFTAR_CHIP_REMARK.length; c++) {
+          html += '<button type="button" class="btn-chip-remark" onclick="pilihChipRemarkAkhir(\'' + item.kodeArtikel + '\', ' + c + ')">' + DAFTAR_CHIP_REMARK[c].label + '</button>';
+        }
+        html += '</div>';
         html += '<input type="text" id="remark_akhir_' + item.kodeArtikel + '" class="' + kelasInput + '" value="' + nilaiRemark + '" placeholder="Wajib isi alasan selisih / No. Faktur..." oninput="simpanRemarkAkhir(\'' + item.kodeArtikel + '\', this)">';
         html += '</div>';
       }
@@ -1984,7 +2733,6 @@
       autoSimpanKeAwan();
     }
     
-    // Fitur #2: Peringatan Pengaman Jika Masih Ada Artikel "Belum Dicek" Sebelum TTD
     function bukaTandaTangan() {
       if (!document.getElementById('petugas').value) { tampilkanModal("Perhatian", "Anda belum login!"); return; }
       if (Object.keys(keranjangOpname).length === 0) { getarHalus([25, 40, 25]); tampilkanModal("Perhatian", "Keranjang kosong!"); return; }
@@ -2039,6 +2787,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // Kanvas Tanda Tangan Resolusi Tinggi Retina (600x225)
     var canvas = document.getElementById("kanvasTtd"); 
     var ctx = canvas.getContext("2d"); 
     var lagiGambar = false;
@@ -2046,8 +2795,8 @@
 
     function ambilKoordinatKanvas(e) {
       var rect = canvas.getBoundingClientRect();
-      var scaleX = canvas.width / (rect.width || 200);
-      var scaleY = canvas.height / (rect.height || 75);
+      var scaleX = canvas.width / (rect.width || 300);
+      var scaleY = canvas.height / (rect.height || 150);
       var clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
       var clientY = (e.touches && e.touches.length > 0) ? e.touches[0].clientY : e.clientY;
       return {
@@ -2061,7 +2810,7 @@
       lagiGambar = true;
       adaCoretanTtd = true;
       var pos = ambilKoordinatKanvas(e);
-      ctx.lineWidth = 2.5;
+      ctx.lineWidth = 6.5;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.strokeStyle = "#000000";
@@ -2075,7 +2824,7 @@
       if (!lagiGambar) return;
       e.preventDefault();
       var pos = ambilKoordinatKanvas(e);
-      ctx.lineWidth = 2.5;
+      ctx.lineWidth = 6.5;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.strokeStyle = "#000000";
@@ -2108,7 +2857,7 @@
        clearTimeout(timerAutoSaveAwan);
        keranjangOpname = {}; 
        try { localStorage.removeItem(KEY_LOKAL_DRAFT); } catch(e) {}
-       renderDropdown(); 
+       renderDropdown(false); 
        hapusTtd(); 
        document.getElementById('wadahRekapSelisih').innerHTML = '';
        document.getElementById('wadahAuditSemua').innerHTML = '';
@@ -2162,9 +2911,15 @@
       var tombolKirim = document.getElementById('btnKirimAkhir'); 
       tombolKirim.innerHTML = '<span>Sedang Menyetor Data...</span>'; 
       tombolKirim.disabled = true;
+      setIndikatorSync("syncing");
       
       panggilServerAPI({ action: "simpanKeranjang", paketKirim: paketKirim })
         .then(function(res) {
+          setIndikatorSync("online");
+          if (res && res.resetTimestamp) {
+            localResetTs = Number(res.resetTimestamp);
+            try { localStorage.setItem(KEY_LOKAL_RESET_TS, String(localResetTs)); } catch(e) {}
+          }
           if (res.linkExcel) linkExcelTersimpan = res.linkExcel;
           getarHalus([15, 30, 20]);
           tampilkanModal("Sukses Besar!", res.pesan + "\n\nSilakan klik 'Download Laporan Excel' di layar bawah."); 
@@ -2173,6 +2928,7 @@
           resetSistemPenuhLokal();
         })
         .catch(function(err) {
+          setIndikatorSync("offline");
           tombolKirim.innerHTML = SVG_SEND + '<span>Setor ke Lemari Data</span>'; 
           tombolKirim.disabled = false;
           getarHalus([35, 50, 35]);
@@ -2201,7 +2957,7 @@
           var urlBlob = URL.createObjectURL(blob);
           var linkDownload = document.createElement("a");
           linkDownload.href = urlBlob;
-          linkDownload.download = res.namaFile || ("Opname_Accs_E597_" + new Date().getTime() + ".xlsx");
+          linkDownload.download = res.namaFile || ("Opname_Accs_" + new Date().getTime() + ".xlsx");
           document.body.appendChild(linkDownload);
           linkDownload.click();
           document.body.removeChild(linkDownload);
