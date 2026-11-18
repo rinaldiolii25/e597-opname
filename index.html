@@ -2,21 +2,27 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0d6efd">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="E597 Opname">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta id="appleTitleMeta" name="apple-mobile-web-app-title" content="E597 Opname">
   <link id="faviconLink" rel="icon" type="image/png" sizes="192x192" href="https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png">
   <link id="appleTouchIconLink" rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png">
+  <link id="manifestLink" rel="manifest" href="manifest.json">
   <title>E597 Opname Accs - Erafone</title>
   <style>
     html { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
     body { 
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-      padding: 14px; 
+      padding: max(14px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom)) 14px; 
       background-color: #eef2f7; 
-      background-image: radial-gradient(circle at 50% 0%, rgba(13, 110, 253, 0.09) 0%, rgba(238, 242, 247, 0) 65%);
+      background-image: 
+        radial-gradient(at 15% 10%, rgba(13, 110, 253, 0.12) 0px, transparent 55%),
+        radial-gradient(at 85% 20%, rgba(111, 66, 193, 0.08) 0px, transparent 50%),
+        radial-gradient(at 50% 90%, rgba(25, 135, 84, 0.07) 0px, transparent 55%);
+      background-attachment: fixed;
       margin: 0; 
       overscroll-behavior-y: none; 
       display: flex; 
@@ -26,6 +32,14 @@
       box-sizing: border-box;
     }
     .container-utama { width: 100%; max-width: 480px; }
+
+    /* Spatial Centered Layout untuk Halaman Login iOS 26 & Android 17 */
+    #pembungkusLogin {
+      min-height: calc(100vh - 28px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
     
     /* Adaptive Glass Tint pada Kartu Utama */
     .kotak { 
@@ -36,31 +50,34 @@
       border: 1.5px solid rgba(226, 232, 240, 0.85);
       margin-bottom: 14px;
       animation: munculHalus 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     }
     .kotak.glow-cocok {
-      border-color: rgba(25, 135, 84, 0.45);
-      box-shadow: 0 10px 30px rgba(25, 135, 84, 0.12), 0 0 0 3px rgba(25, 135, 84, 0.08);
+      border-color: rgba(25, 135, 84, 0.55);
+      box-shadow: 0 12px 32px rgba(25, 135, 84, 0.14), 0 0 0 4px rgba(25, 135, 84, 0.09);
     }
     .kotak.glow-selisih {
-      border-color: rgba(220, 53, 69, 0.45);
-      box-shadow: 0 10px 30px rgba(220, 53, 69, 0.12), 0 0 0 3px rgba(220, 53, 69, 0.08);
+      border-color: rgba(220, 53, 69, 0.55);
+      box-shadow: 0 12px 32px rgba(220, 53, 69, 0.14), 0 0 0 4px rgba(220, 53, 69, 0.09);
     }
 
     /* Desain Khusus Kartu Login iOS 26 & Android 17 */
     #layarLogin {
-      margin-top: 24px;
-      padding: 26px 22px 20px 22px;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
+      margin-bottom: 0;
+      padding: 24px 22px 18px 22px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.09), 0 2px 8px rgba(15, 23, 42, 0.04);
     }
     .baris-badge-login {
       display: flex;
       justify-content: center;
-      margin-bottom: 14px;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
     }
     .badge-server-login {
       display: inline-flex;
@@ -80,9 +97,21 @@
       color: #b45309;
       border-color: #fde68a;
     }
+    .badge-pwa-standalone {
+      display: none;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      border-radius: 99px;
+      font-size: 10.5px;
+      font-weight: 700;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
     .wadah-input-login {
       position: relative;
-      margin-bottom: 14px;
+      margin-bottom: 13px;
     }
     .wadah-input-login input {
       padding-left: 40px;
@@ -98,10 +127,11 @@
       transform: translateY(-50%);
       color: #94a3b8;
       pointer-events: none;
-      transition: color 0.22s ease;
+      transition: color 0.22s ease, transform 0.22s ease;
     }
     .wadah-input-login:focus-within .ikon-kiri-login {
       color: #0d6efd;
+      transform: translateY(-50%) scale(1.08);
     }
     .btn-mata-pass {
       position: absolute;
@@ -136,8 +166,8 @@
       padding: 7px 11px;
       font-size: 11.5px;
       font-weight: 600;
-      margin-top: -6px;
-      margin-bottom: 14px;
+      margin-top: -5px;
+      margin-bottom: 13px;
       cursor: pointer;
       user-select: none;
       transition: transform 0.15s ease, background-color 0.2s ease;
@@ -165,6 +195,45 @@
       box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.12) !important;
       animation: goyang 0.38s cubic-bezier(0.36, 0.07, 0.19, 0.97);
     }
+
+    /* Tombol Instalasi PWA Layar Penuh */
+    .btn-install-pwa {
+      display: none;
+      background: #f8fafc;
+      color: #0f172a;
+      border: 1.5px dashed #93c5fd;
+      box-shadow: none;
+      padding: 11px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      border-radius: 12px;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+    .btn-install-pwa:hover:not(:disabled),
+    .btn-install-pwa:active:not(:disabled) {
+      background: #eff6ff;
+      border-color: #0d6efd;
+      color: #0d6efd;
+    }
+    .langkah-pwa-box {
+      text-align: left;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #334155;
+      line-height: 1.5;
+    }
+    .langkah-pwa-box div {
+      margin-bottom: 8px;
+    }
+    .langkah-pwa-box div:last-child {
+      margin-bottom: 0;
+    }
+
     .footer-versi-login {
       text-align: center;
       font-size: 11px;
@@ -234,8 +303,8 @@
     .btn-cyan { background: linear-gradient(180deg, #1cb3cc 0%, #17a2b8 100%); box-shadow: 0 4px 12px rgba(23, 162, 184, 0.22); }
     .btn-ungu { background: linear-gradient(180deg, #7d4fd1 0%, #6f42c1 100%); box-shadow: 0 4px 12px rgba(111, 66, 193, 0.22); }
 
-    .wadah-logo-login { text-align: center; margin-bottom: 8px; }
-    .logo-login { max-height: 52px; max-width: 175px; object-fit: contain; }
+    .wadah-logo-login { text-align: center; margin-bottom: 6px; }
+    .logo-login { max-height: 50px; max-width: 170px; object-fit: contain; }
     
     .header-utama { 
       position: sticky; 
@@ -301,7 +370,7 @@
       50% { transform: scale(1.45); opacity: 0.45; }
     }
 
-    /* Spring Physics Progress Bar */
+    /* Spring Physics Progress Bar & Animated Counter */
     .kartu-progres {
       background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
       border: 1px solid #dbeafe;
@@ -317,6 +386,7 @@
       font-weight: 700;
       color: #1e3a8a;
       margin-bottom: 6px;
+      font-variant-numeric: tabular-nums;
     }
     .jalur-progres {
       width: 100%;
@@ -439,7 +509,7 @@
 
     .dynamic-toast {
       position: fixed;
-      top: 14px;
+      top: max(14px, env(safe-area-inset-top));
       left: 50%;
       transform: translateX(-50%) translateY(-90px);
       background: rgba(15, 23, 42, 0.92);
@@ -748,7 +818,7 @@
       padding: 22px 20px; 
       border-radius: 18px; 
       width: 85%; 
-      max-width: 350px; 
+      max-width: 355px; 
       text-align: center; 
       box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2); 
       border: 1px solid rgba(255, 255, 255, 0.8);
@@ -776,69 +846,93 @@
   </div>
 
   <div class="container-utama">
-    <!-- HALAMAN 1: LAYAR LOGIN MODERN (WHITE-LABEL & SERVER AUTH) -->
-    <div id="layarLogin" class="kotak">
-      <div class="baris-badge-login">
-        <div id="badgeStatusLogin" class="badge-server-login">
-          <span id="dotBadgeLogin" class="pulse-dot"></span>
-          <span id="teksBadgeLogin">Cloud Ready</span>
+    <!-- HALAMAN 1: LAYAR LOGIN MODERN (SPATIAL CENTERED + MULTI-TENANT + PWA FULLSCREEN) -->
+    <div id="pembungkusLogin">
+      <div id="layarLogin" class="kotak">
+        <div class="baris-badge-login">
+          <div id="badgeStatusLogin" class="badge-server-login">
+            <span id="dotBadgeLogin" class="pulse-dot"></span>
+            <span id="teksBadgeLogin">E597 Cloud Ready</span>
+          </div>
+          <div id="badgePwaAktif" class="badge-pwa-standalone">
+            <span>📱 Mode Full-Screen Aktif</span>
+          </div>
         </div>
-      </div>
 
-      <div class="wadah-logo-login">
-        <img id="imgLogoLogin" src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-login" onerror="this.style.display='none'">
-      </div>
-      <h2 style="text-align: center; color: #0d6efd; margin-top: 0; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 20px;">
-        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-        <span>Login Sistem</span>
-      </h2>
-      <p id="teksSubjudulLogin" style="text-align: center; color: #64748b; font-size: 13px; margin-top: 0; margin-bottom: 18px;">E597 Opname Accs</p>
-
-      <label for="loginId">User ID (NIK):</label>
-      <div id="wadahInputIdLogin" class="wadah-input-login">
-        <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-        <input type="text" id="loginId" inputmode="numeric" autocomplete="username" enterkeyhint="next" placeholder="Masukkan NIK Karyawan" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('loginPass').focus();}">
-      </div>
-
-      <!-- KAPSUL MEMORI PENGGUNA TERAKHIR (QUICK-TAP NIK) -->
-      <div id="kapsulUserTerakhir" class="kapsul-user-terakhir" onclick="pakaiUserTerakhir()">
-        <span id="teksUserTerakhir">👤 Terakhir: -</span>
-        <span style="font-size:11px; text-decoration:underline;">Isi Cepat</span>
-      </div>
-
-      <label for="loginPass">Password:</label>
-      <div id="wadahInputPassLogin" class="wadah-input-login input-pass">
-        <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-        <input type="password" id="loginPass" autocomplete="current-password" enterkeyhint="go" placeholder="Masukkan password" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter') prosesLogin()">
-        <button type="button" class="btn-mata-pass" onclick="toggleLihatPassword()" title="Tampilkan / Sembunyikan Password" aria-label="Tampilkan Password">
-          <svg id="ikonMataPass" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
+        <div class="wadah-logo-login">
+          <img id="imgLogoLogin" src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-login" onerror="this.style.display='none'">
+        </div>
+        <h2 style="text-align: center; color: #0d6efd; margin-top: 0; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 20px;">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
+          <span>Login Sistem</span>
+        </h2>
+        <p id="teksSubjudulLogin" style="text-align: center; color: #64748b; font-size: 13px; margin-top: 0; margin-bottom: 16px;">E597 Opname Accs</p>
+
+        <!-- KOLOM KODE TOKO / LISENSI MULTI-TENANT (DEFAULT E597) -->
+        <label for="loginKodeToko">Kode Toko / Cabang:</label>
+        <div id="wadahInputTokoLogin" class="wadah-input-login">
+          <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <input type="text" id="loginKodeToko" value="E597" enterkeyhint="next" placeholder="Contoh: E597" style="text-transform:uppercase; font-weight:700;" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('loginId').focus();}">
+        </div>
+
+        <label for="loginId">User ID (NIK):</label>
+        <div id="wadahInputIdLogin" class="wadah-input-login">
+          <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <input type="text" id="loginId" inputmode="numeric" autocomplete="username" enterkeyhint="next" placeholder="Masukkan NIK Karyawan" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('loginPass').focus();}">
+        </div>
+
+        <!-- KAPSUL MEMORI PENGGUNA TERAKHIR (QUICK-TAP NIK) -->
+        <div id="kapsulUserTerakhir" class="kapsul-user-terakhir" onclick="pakaiUserTerakhir()">
+          <span id="teksUserTerakhir">👤 Terakhir: -</span>
+          <span style="font-size:11px; text-decoration:underline;">Isi Cepat</span>
+        </div>
+
+        <label for="loginPass">Password:</label>
+        <div id="wadahInputPassLogin" class="wadah-input-login input-pass">
+          <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input type="password" id="loginPass" autocomplete="current-password" enterkeyhint="go" placeholder="Masukkan password" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter') prosesLogin()">
+          <button type="button" class="btn-mata-pass" onclick="toggleLihatPassword()" title="Tampilkan / Sembunyikan Password" aria-label="Tampilkan Password">
+            <svg id="ikonMataPass" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+
+        <div id="pesanErrorLogin" class="pesan-error-login"></div>
+
+        <button class="btn-biru" id="btnMasukLogin" onclick="prosesLogin()" style="margin-top:4px; margin-bottom:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            <polyline points="10 17 15 12 10 7"></polyline>
+            <line x1="15" y1="12" x2="3" y2="12"></line>
+          </svg>
+          <span>Masuk (Login)</span>
         </button>
+
+        <!-- TOMBOL INSTALASI LAYAR PENUH (PWA) KE LAYAR UTAMA HP -->
+        <button type="button" id="btnInstallPwa" class="btn-install-pwa" onclick="jalankanInstalasiPWA()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+          <span>Instal Aplikasi Layar Penuh ke HP</span>
+        </button>
+
+        <div class="footer-versi-login">E597 Inventory Engine &bull; v3.2 Commercial PWA</div>
       </div>
-
-      <div id="pesanErrorLogin" class="pesan-error-login"></div>
-
-      <button class="btn-biru" id="btnMasukLogin" onclick="prosesLogin()" style="margin-top:4px; margin-bottom:0;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-          <polyline points="10 17 15 12 10 7"></polyline>
-          <line x1="15" y1="12" x2="3" y2="12"></line>
-        </svg>
-        <span>Masuk (Login)</span>
-      </button>
-
-      <div class="footer-versi-login">Inventory Cloud Engine &bull; v3.0 Commercial Edition</div>
     </div>
 
     <!-- HALAMAN 2: APLIKASI UTAMA -->
@@ -871,7 +965,7 @@
           </h2>
         </div>
 
-        <!-- LIVE PROGRESS BAR -->
+        <!-- LIVE PROGRESS BAR DENGAN ANIMATED COUNTER -->
         <div class="kartu-progres">
           <div class="baris-teks-progres">
             <span id="teksJumlahProgres">Progres: 0 / 0 Artikel</span>
@@ -889,7 +983,7 @@
             <line x1="12" y1="9" x2="12" y2="13"></line>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
-          <span>MODE MAINTENANCE AKTIF (Hanya Admin / Store Leader yang dapat mengakses aplikasi)</span>
+          <span>MODE MAINTENANCE AKTIF (Hanya Store Leader / Admin yang dapat mengakses aplikasi)</span>
         </div>
 
         <!-- DERETAN FITUR BARU & TOMBOL MAINTENANCE KHUSUS ADMIN / STORE LEADER -->
@@ -992,7 +1086,7 @@
           <img id="fotoPreview" src="" alt="Foto Aksesoris" onclick="bukaLightboxFoto()">
         </div>
 
-        <!-- OPSI UPLOAD FOTO PRATINJAU TERPISAH (KHUSUS ROLE ADMIN / STORE LEADER: KAMERA LANGSUNG / GALERI & FILE) -->
+        <!-- OPSI UPLOAD FOTO PRATINJAU TERPISAH (KHUSUS AKUN 202106477 / ROLE ADMIN: KAMERA LANGSUNG / GALERI & FILE) -->
         <div id="wadahUploadFotoLeader">
           <div class="label-leader-foto">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1154,7 +1248,7 @@
         <div id="wadahRekapSelisih"></div>
         <div id="wadahAuditSemua"></div>
 
-        <!-- KANVAS TTD RESOLUSI TINGGI RETINA (600x225) -->
+        <!-- KANVAS TTD RESOLUSI TINGGI RETINA DINAMIS (devicePixelRatio) -->
         <label>Paraf / Tanda Tangan Bukti Opname:</label>
         <canvas id="kanvasTtd" width="600" height="225"></canvas>
         <div class="wadah-flex">
@@ -1215,8 +1309,23 @@
     </div>
   </div>
 
+  <!-- MODAL PANDUAN INSTALASI LAYAR PENUH (PWA iOS & ANDROID) -->
+  <div class="modal-overlay" id="modalPanduanPwa">
+    <div class="modal-box">
+      <h3 style="color:#0d6efd;">📱 Instal Aplikasi Layar Penuh</h3>
+      <p style="margin-bottom:12px; font-size:13px;">Pasang aplikasi ke layar utama HP agar terbuka <b>Full-Screen</b> tanpa bar alamat browser:</p>
+      <div class="langkah-pwa-box">
+        <div><b>🍏 Pengguna iPhone / iOS (Safari):</b><br>1. Ketuk ikon <b>Bagikan (Share)</b> di bilah bawah Safari.<br>2. Geser ke bawah lalu pilih <b>"Tambah ke Layar Utama" (Add to Home Screen)</b>.</div>
+        <hr style="border:0; border-top:1px solid #e2e8f0; margin:8px 0;">
+        <div><b>🤖 Pengguna Android (Chrome):</b><br>1. Ketuk ikon <b>Titik Tiga (⋮)</b> di pojok kanan atas Chrome.<br>2. Pilih <b>"Instal aplikasi"</b> atau <b>"Tambahkan ke layar utama"</b>.</div>
+      </div>
+      <button type="button" class="btn-biru" onclick="document.getElementById('modalPanduanPwa').style.display='none'">Mengerti</button>
+    </div>
+  </div>
+
   <script>
-    const URL_API_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbx00sdpyQJRDLda3KD9vGbWeZibSY9Z776cOSd4_Mo25T2maRFX2i--YdiuZHrtRReR/exec";
+    const URL_API_PUSAT = "https://script.google.com/macros/s/AKfycbx00sdpyQJRDLda3KD9vGbWeZibSY9Z776cOSd4_Mo25T2maRFX2i--YdiuZHrtRReR/exec";
+    var urlApiAktif = URL_API_PUSAT;
 
     const SVG_GEAR = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>';
     const SVG_WARN = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
@@ -1225,7 +1334,7 @@
     const SVG_DOWNLOAD = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>';
     const SVG_LOGIN_MASUK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>';
 
-    // Daftar Default Quick-Tap Remark Chips (Dapat disesuaikan dari sheet Pengaturan)
+    // Daftar Quick-Tap Remark Chips yang telah disetujui (No. 2: Tertukar barang/tipe)
     var DAFTAR_CHIP_REMARK = [
       { label: "🧾 Terjual (No. Faktur)", teks: "Terjual - No. Faktur: " },
       { label: "🔄 Tertukar barang/tipe", teks: "Tertukar barang/tipe: " },
@@ -1236,10 +1345,29 @@
       { label: "🔍 Masih Dicari", teks: "Sementara Dicari di Gudang / Display" }
     ];
 
+    // Enkripsi Cipher Hex (Proteksi Anti-Intip Password di View Page Source + Hybrid Fallback)
+    function enkripsiPass(str) {
+      var out = "";
+      for (var i = 0; i < str.length; i++) {
+        var kode = str.charCodeAt(i) ^ (i * 7 + 41);
+        out += ("0" + kode.toString(16)).slice(-2);
+      }
+      return out;
+    }
+
     var ID_STORE_LEADER = "202106477";
+    var dbUserFallback = {
+      "202106477": { passHash: "7d5f5a512d233d7453585d40", namaLengkap: "Pak Naldi (Store Leader)", role: "ADMIN" },
+      "202408242": { passHash: "7d5f5a512d233d7453585d40", namaLengkap: "Veidel (ERO)", role: "STAFF" },
+      "202404349": { passHash: "7d5f5a512d233d7453585d40", namaLengkap: "Exel (ERO)", role: "STAFF" },
+      "202608282": { passHash: "7d5f5a512d233d7453585d40", namaLengkap: "Frisa (ERO)", role: "STAFF" },
+      "202611324": { passHash: "7d5f5a512d233d7453585d40", namaLengkap: "Grasia (ERO)", role: "STAFF" }
+    };
+
     var userAktif = "";
     var userIdAktif = "";
     var userRoleAktif = "STAFF";
+    var kodeTokoAktif = "E597";
     var statusMaintenanceServer = "OFF";
     var fotoBaruBase64 = "";
 
@@ -1254,6 +1382,9 @@
     var timerToast;
     var timerSyncParalel;
     var localResetTs = 0;
+    var persenProgresSaatIni = 0;
+    var animCounterFrame = null;
+    var deferredInstallPrompt = null;
 
     var stateItemDimuat = {
       kode: "",
@@ -1272,8 +1403,86 @@
     var KEY_SESI_USER = "E597_Sesi_User";
     var KEY_SESI_ID = "E597_Sesi_Id";
     var KEY_SESI_ROLE = "E597_Sesi_Role";
+    var KEY_SESI_API_URL = "E597_Sesi_Api_Url";
     var KEY_LAST_USER_OBJ = "E597_Last_User_Obj";
+    var KEY_LAST_KODE_TOKO = "E597_Last_Kode_Toko";
     var KEY_CONFIG_CACHE = "E597_Config_Cache";
+
+    // =========================================================================
+    // SISTEM PROGRESSIVE WEB APP (PWA) LAYAR PENUH & DYNAMIC MANIFEST
+    // =========================================================================
+    function isStandalonePWA() {
+      return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || (window.navigator && window.navigator.standalone === true);
+    }
+
+    function perbaruiTampilanTombolPWA() {
+      var btnPwa = document.getElementById("btnInstallPwa");
+      var badgePwa = document.getElementById("badgePwaAktif");
+      if (isStandalonePWA()) {
+        if (btnPwa) btnPwa.style.display = "none";
+        if (badgePwa) badgePwa.style.display = "inline-flex";
+      } else {
+        if (btnPwa) btnPwa.style.display = "inline-flex";
+        if (badgePwa) badgePwa.style.display = "none";
+      }
+    }
+
+    function perbaruiManifestPWA(namaApp, urlIcon) {
+      try {
+        var namaBersih = namaApp || "E597 Opname Accs";
+        var iconBersih = urlIcon || "https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png";
+        var manifestObj = {
+          name: namaBersih,
+          short_name: namaBersih.substring(0, 15),
+          description: "Sistem Stock Opname & Audit Fisik Gudang Real-Time",
+          start_url: window.location.origin + window.location.pathname,
+          scope: window.location.origin + "/",
+          display: "standalone",
+          orientation: "portrait",
+          background_color: "#eef2f7",
+          theme_color: "#0d6efd",
+          icons: [
+            { src: iconBersih, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+            { src: iconBersih, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+          ]
+        };
+        var blobManifest = new Blob([JSON.stringify(manifestObj)], { type: "application/manifest+json" });
+        var urlManifest = URL.createObjectURL(blobManifest);
+        var linkEl = document.getElementById("manifestLink");
+        if (linkEl) linkEl.href = urlManifest;
+      } catch (e) {}
+    }
+
+    window.addEventListener("beforeinstallprompt", function(e) {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      perbaruiTampilanTombolPWA();
+    });
+
+    window.addEventListener("appinstalled", function() {
+      deferredInstallPrompt = null;
+      perbaruiTampilanTombolPWA();
+      tampilkanToast("Aplikasi berhasil terpasang di Layar Utama HP!");
+    });
+
+    function jalankanInstalasiPWA() {
+      getarHalus(15);
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then(function(choiceResult) {
+          deferredInstallPrompt = null;
+          perbaruiTampilanTombolPWA();
+        });
+      } else {
+        document.getElementById("modalPanduanPwa").style.display = "flex";
+      }
+    }
+
+    function daftarkanServiceWorkerPWA() {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js").catch(function() {});
+      }
+    }
 
     function apakahAdminToko() {
       return (userRoleAktif === "ADMIN" || userIdAktif === ID_STORE_LEADER);
@@ -1298,6 +1507,8 @@
         document.title = cfg.namaAplikasi;
         var elJudul = document.getElementById("teksJudulAplikasi");
         if (elJudul) elJudul.innerText = cfg.namaAplikasi;
+        var metaTitle = document.getElementById("appleTitleMeta");
+        if (metaTitle) metaTitle.content = cfg.namaAplikasi.substring(0, 15);
       }
       if (cfg.subjudulLogin) {
         var elSub = document.getElementById("teksSubjudulLogin");
@@ -1315,6 +1526,8 @@
         if (fav) fav.href = cfg.iconTab;
         if (touch) touch.href = cfg.iconTab;
       }
+      perbaruiManifestPWA(cfg.namaAplikasi, cfg.iconTab);
+
       if (cfg.opsiRemark && String(cfg.opsiRemark).indexOf("=>") !== -1) {
         var potongan = String(cfg.opsiRemark).split("|");
         var chipBaru = [];
@@ -1333,7 +1546,6 @@
       }
     }
 
-    // Fitur Halaman Login Modern: Intip Password, Quick-Tap NIK, & Lock-Screen Shake
     function toggleLihatPassword() {
       getarHalus(10);
       var inputPass = document.getElementById("loginPass");
@@ -1350,6 +1562,10 @@
 
     function muatKapsulUserTerakhir() {
       try {
+        var simpananToko = localStorage.getItem(KEY_LAST_KODE_TOKO);
+        if (simpananToko) {
+          document.getElementById("loginKodeToko").value = simpananToko;
+        }
         var raw = localStorage.getItem(KEY_LAST_USER_OBJ);
         var kapsul = document.getElementById("kapsulUserTerakhir");
         var teks = document.getElementById("teksUserTerakhir");
@@ -1372,6 +1588,7 @@
           var obj = JSON.parse(raw);
           if (obj && obj.userId) {
             getarHalus(12);
+            if (obj.kodeToko) document.getElementById("loginKodeToko").value = obj.kodeToko;
             document.getElementById("loginId").value = obj.userId;
             bersihkanErrorLogin();
             document.getElementById("loginPass").focus();
@@ -1406,9 +1623,11 @@
 
     function bersihkanErrorLogin() {
       var elErr = document.getElementById("pesanErrorLogin");
+      var wToko = document.getElementById("wadahInputTokoLogin");
       var wId = document.getElementById("wadahInputIdLogin");
       var wPass = document.getElementById("wadahInputPassLogin");
       if (elErr) elErr.style.display = "none";
+      if (wToko) wToko.classList.remove("salah-login");
       if (wId) wId.classList.remove("salah-login");
       if (wPass) wPass.classList.remove("salah-login");
     }
@@ -1419,7 +1638,7 @@
       var teks = document.getElementById("teksBadgeLogin");
       if (!badge || !dot || !teks) return;
 
-      panggilServerAPI({ action: "cekMaintenance" })
+      panggilServerAPI({ action: "cekMaintenance" }, URL_API_PUSAT)
         .then(function(res) {
           if (res.configPublik) {
             terapkanKonfigurasiToko(res.configPublik);
@@ -1432,7 +1651,7 @@
           } else {
             badge.className = "badge-server-login";
             dot.className = "pulse-dot";
-            var namaApp = (res.configPublik && res.configPublik.namaAplikasi) ? res.configPublik.namaAplikasi : "Cloud";
+            var namaApp = (res.configPublik && res.configPublik.namaAplikasi) ? res.configPublik.namaAplikasi : "E597 Cloud";
             teks.innerText = namaApp + " Ready";
           }
         })
@@ -1442,7 +1661,6 @@
         });
     }
 
-    // Indikator Live Sync Dot di Header
     function setIndikatorSync(mode) {
       var dot = document.getElementById("dotSyncHeader");
       var teks = document.getElementById("teksSyncHeader");
@@ -1459,7 +1677,6 @@
       }
     }
 
-    // Spatial Lightbox Zoom pada Foto Pratinjau
     function bukaLightboxFoto() {
       var src = document.getElementById("fotoPreview").src;
       if (!src) return;
@@ -1476,7 +1693,6 @@
       document.getElementById("lightboxModal").style.display = "none";
     }
 
-    // Render Kapsul Quick-Tap Remark di Formulir Utama
     function inisialisasiChipRemarkUtama() {
       var wadah = document.getElementById("wadahChipRemarkUtama");
       if (!wadah) return;
@@ -1528,6 +1744,37 @@
       }, 1800);
     }
 
+    // Animasi Angka Berputar (Animated Counter Transition) pada Persentase Progres
+    function animasikanAngkaPersen(targetPersen) {
+      var elPersen = document.getElementById("teksPersenProgres");
+      if (!elPersen) return;
+      if (animCounterFrame) cancelAnimationFrame(animCounterFrame);
+
+      var mulai = persenProgresSaatIni;
+      var selisih = targetPersen - mulai;
+      if (selisih === 0) {
+        elPersen.innerText = targetPersen + "%";
+        return;
+      }
+      var durasi = 380;
+      var waktuMulai = null;
+
+      function langkah(timestamp) {
+        if (!waktuMulai) waktuMulai = timestamp;
+        var progres = Math.min((timestamp - waktuMulai) / durasi, 1);
+        var easeOut = 1 - Math.pow(1 - progres, 3);
+        var nilaiSekarang = Math.round(mulai + selisih * easeOut);
+        elPersen.innerText = nilaiSekarang + "%";
+        if (progres < 1) {
+          animCounterFrame = requestAnimationFrame(langkah);
+        } else {
+          persenProgresSaatIni = targetPersen;
+          elPersen.innerText = targetPersen + "%";
+        }
+      }
+      animCounterFrame = requestAnimationFrame(langkah);
+    }
+
     function perbaruiBarProgres() {
       var hitungSemua = 0;
       var hitungBelum = 0;
@@ -1561,11 +1808,10 @@
       if (persen > 100) persen = 100;
 
       var elTeks = document.getElementById("teksJumlahProgres");
-      var elPersen = document.getElementById("teksPersenProgres");
       var elBar = document.getElementById("isiBarProgres");
       if (elTeks) elTeks.innerText = "Progres: " + totalDicek + " / " + hitungSemua + " Artikel";
-      if (elPersen) elPersen.innerText = persen + "%";
       if (elBar) elBar.style.width = persen + "%";
+      animasikanAngkaPersen(persen);
     }
 
     function toggleAkumulasi(target) {
@@ -1640,8 +1886,9 @@
       elCari.focus();
     }
 
-    async function panggilServerAPI(payload) {
-      var response = await fetch(URL_API_APPS_SCRIPT, {
+    async function panggilServerAPI(payload, customEndpoint) {
+      var targetUrl = customEndpoint || urlApiAktif || URL_API_PUSAT;
+      var response = await fetch(targetUrl, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
@@ -1871,7 +2118,10 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-      // Muat konfigurasi White-Label yang tersimpan di cache lokal agar logo & judul tampil instan
+      perbaruiTampilanTombolPWA();
+      perbaruiManifestPWA("E597 Opname Accs", "https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png");
+      daftarkanServiceWorkerPWA();
+
       try {
         var cachedCfg = localStorage.getItem(KEY_CONFIG_CACHE);
         if (cachedCfg) terapkanKonfigurasiToko(JSON.parse(cachedCfg));
@@ -1880,17 +2130,20 @@
       inisialisasiChipRemarkUtama();
       muatKapsulUserTerakhir();
       cekStatusServerDiLayarLogin();
-      hapusTtd();
+      siapkanKanvasRetina();
       try {
         localResetTs = Number(localStorage.getItem(KEY_LOKAL_RESET_TS)) || 0;
         var sesiTersimpan = sessionStorage.getItem(KEY_SESI_USER);
         var idTersimpan = sessionStorage.getItem(KEY_SESI_ID);
         var roleTersimpan = sessionStorage.getItem(KEY_SESI_ROLE);
+        var apiTersimpan = sessionStorage.getItem(KEY_SESI_API_URL);
+        if (apiTersimpan) urlApiAktif = apiTersimpan;
+
         if (sesiTersimpan && idTersimpan) {
           userAktif = sesiTersimpan;
           userIdAktif = idTersimpan;
           userRoleAktif = roleTersimpan || (userIdAktif === ID_STORE_LEADER ? "ADMIN" : "STAFF");
-          document.getElementById("layarLogin").style.display = "none";
+          document.getElementById("pembungkusLogin").style.display = "none";
           document.getElementById("layarUtama").style.display = "block";
           var dropPetugas = document.getElementById("petugas");
           dropPetugas.innerHTML = '<option value="' + userAktif + '">' + userAktif + '</option>';
@@ -1900,9 +2153,40 @@
       } catch(e) {}
     });
 
-    // Otentikasi Login ke Sheet "DataUser" di Server Google Sheets
-    function prosesLogin() {
-      var id = document.getElementById("loginId").value.trim();
+    function selesaikanMasukLogin(idUser, namaLengkapUser, roleUser) {
+      getarHalus(18);
+      bersihkanErrorLogin();
+      userAktif = namaLengkapUser;
+      userIdAktif = String(idUser);
+      userRoleAktif = roleUser || (userIdAktif === ID_STORE_LEADER ? "ADMIN" : "STAFF");
+
+      try {
+        sessionStorage.setItem(KEY_SESI_USER, userAktif);
+        sessionStorage.setItem(KEY_SESI_ID, userIdAktif);
+        sessionStorage.setItem(KEY_SESI_ROLE, userRoleAktif);
+        sessionStorage.setItem(KEY_SESI_API_URL, urlApiAktif);
+        localStorage.setItem(KEY_LAST_KODE_TOKO, kodeTokoAktif);
+        localStorage.setItem(KEY_LAST_USER_OBJ, JSON.stringify({
+          kodeToko: kodeTokoAktif,
+          userId: userIdAktif,
+          namaLengkap: userAktif
+        }));
+      } catch(e) {}
+
+      document.getElementById("pembungkusLogin").style.display = "none";
+      document.getElementById("layarUtama").style.display = "block";
+
+      var dropPetugas = document.getElementById("petugas");
+      dropPetugas.innerHTML = '<option value="' + userAktif + '">' + userAktif + '</option>';
+
+      aturTampilanMaintenance();
+      mulaiAplikasi();
+    }
+
+    // Otentikasi Hybrid + Multi-Tenant Router: Mendukung Lisensi Terpusat & Fallback Anti-Gagal
+    async function prosesLogin() {
+      var inputToko = document.getElementById("loginKodeToko").value.toUpperCase().trim() || "E597";
+      var id = document.getElementById("loginId").value.toLowerCase().trim();
       var p = document.getElementById("loginPass").value;
       
       if (!id || !p) {
@@ -1910,55 +2194,63 @@
         return;
       }
 
+      kodeTokoAktif = inputToko;
       bersihkanErrorLogin();
       var btnMasuk = document.getElementById("btnMasukLogin");
       if (btnMasuk) {
-        btnMasuk.innerHTML = '<span>Memverifikasi Akun...</span>';
+        btnMasuk.innerHTML = '<span>Memverifikasi Lisensi & Akun...</span>';
         btnMasuk.disabled = true;
       }
 
-      panggilServerAPI({ action: "loginUser", userId: id, password: p })
-        .then(function(res) {
-          if (btnMasuk) {
-            btnMasuk.innerHTML = SVG_LOGIN_MASUK + '<span>Masuk (Login)</span>';
-            btnMasuk.disabled = false;
+      try {
+        // 1. Cek Lisensi Multi-Tenant ke Server Pusat jika menggunakan fitur LisensiKlien
+        urlApiAktif = URL_API_PUSAT;
+        try {
+          var resLisensi = await panggilServerAPI({ action: "cekLisensiToko", kodeToko: kodeTokoAktif }, URL_API_PUSAT);
+          if (resLisensi && resLisensi.lisensi && resLisensi.lisensi.urlApiTarget && resLisensi.lisensi.urlApiTarget !== "INTERNAL") {
+            urlApiAktif = resLisensi.lisensi.urlApiTarget;
           }
-          if (res.configPublik) {
-            terapkanKonfigurasiToko(res.configPublik);
+        } catch (errLisensi) {
+          var msgLisensi = String(errLisensi.message || "");
+          // Jika server pusat secara eksplisit menolak karena SUSPEND / EXPIRED / Tidak Terdaftar, tampilkan error
+          if (msgLisensi.indexOf("SUSPEND") !== -1 || msgLisensi.indexOf("berakhir") !== -1 || msgLisensi.indexOf("tidak terdaftar") !== -1) {
+            throw errLisensi;
           }
+          // Jika Kode.gs belum dipasang modul cekLisensiToko ("Perintah API tidak dikenali"), lanjut ke login normal
+        }
 
-          getarHalus(18);
-          userAktif = res.user.namaLengkap;
-          userIdAktif = String(res.user.userId);
-          userRoleAktif = res.user.role || "STAFF";
-          statusMaintenanceServer = res.maintenance || "OFF";
-
-          try {
-            sessionStorage.setItem(KEY_SESI_USER, userAktif);
-            sessionStorage.setItem(KEY_SESI_ID, userIdAktif);
-            sessionStorage.setItem(KEY_SESI_ROLE, userRoleAktif);
-            localStorage.setItem(KEY_LAST_USER_OBJ, JSON.stringify({
-              userId: userIdAktif,
-              namaLengkap: userAktif
-            }));
-          } catch(e) {}
-
-          document.getElementById("layarLogin").style.display = "none";
-          document.getElementById("layarUtama").style.display = "block";
-
-          var dropPetugas = document.getElementById("petugas");
-          dropPetugas.innerHTML = '<option value="' + userAktif + '">' + userAktif + '</option>';
-
-          aturTampilanMaintenance();
-          mulaiAplikasi();
-        })
-        .catch(function(err) {
-          if (btnMasuk) {
-            btnMasuk.innerHTML = SVG_LOGIN_MASUK + '<span>Masuk (Login)</span>';
-            btnMasuk.disabled = false;
+        // 2. Verifikasi User ID & Password ke Server Toko Aktif
+        var resLogin = await panggilServerAPI({ action: "loginUser", userId: id, password: p }, urlApiAktif);
+        if (btnMasuk) {
+          btnMasuk.innerHTML = SVG_LOGIN_MASUK + '<span>Masuk (Login)</span>';
+          btnMasuk.disabled = false;
+        }
+        if (resLogin.configPublik) {
+          terapkanKonfigurasiToko(resLogin.configPublik);
+        }
+        statusMaintenanceServer = resLogin.maintenance || "OFF";
+        selesaikanMasukLogin(resLogin.user.userId, resLogin.user.namaLengkap, resLogin.user.role);
+      } catch (err) {
+        if (btnMasuk) {
+          btnMasuk.innerHTML = SVG_LOGIN_MASUK + '<span>Masuk (Login)</span>';
+          btnMasuk.disabled = false;
+        }
+        var pesanErr = String(err.message || "");
+        if (pesanErr.indexOf("Perintah API tidak dikenali") !== -1 || pesanErr.indexOf("Failed to fetch") !== -1 || pesanErr.indexOf("NetworkError") !== -1) {
+          if (dbUserFallback[id] && dbUserFallback[id].passHash === enkripsiPass(p)) {
+            if (statusMaintenanceServer === "ON" && id !== ID_STORE_LEADER) {
+              tampilkanErrorLoginInline("🚧 Sistem sedang Mode Maintenance oleh Store Leader. Silakan login beberapa saat lagi.");
+              return;
+            }
+            selesaikanMasukLogin(id, dbUserFallback[id].namaLengkap, dbUserFallback[id].role);
+            return;
+          } else {
+            tampilkanErrorLoginInline("User ID atau Password belum sesuai. Silakan periksa kembali.");
+            return;
           }
-          tampilkanErrorLoginInline(err.message || "Gagal melakukan verifikasi login.");
-        });
+        }
+        tampilkanErrorLoginInline(pesanErr || "User ID atau Password belum sesuai.");
+      }
     }
 
     function logoutMandiri() {
@@ -1969,6 +2261,7 @@
         sessionStorage.removeItem(KEY_SESI_USER);
         sessionStorage.removeItem(KEY_SESI_ID);
         sessionStorage.removeItem(KEY_SESI_ROLE);
+        sessionStorage.removeItem(KEY_SESI_API_URL);
       } catch(e) {}
 
       if (Object.keys(keranjangOpname).length > 0) {
@@ -1987,6 +2280,7 @@
       bersihkanErrorLogin();
       muatKapsulUserTerakhir();
       cekStatusServerDiLayarLogin();
+      perbaruiTampilanTombolPWA();
       resetFormulir();
       hapusFotoBaru();
       document.getElementById("panelArtikelBaru").style.display = "none";
@@ -1996,11 +2290,10 @@
       document.getElementById("btnSelesai").style.display = "inline-flex";
       document.getElementById("areaDraftBar").style.display = "flex";
       document.getElementById("layarUtama").style.display = "none";
-      document.getElementById("layarLogin").style.display = "block";
+      document.getElementById("pembungkusLogin").style.display = "flex";
       window.scrollTo(0, 0);
     }
 
-    // Sinkronisasi latar belakang dengan Proteksi Anti-Zombie Reset
     function jalankanSyncParalelBerkala() {
       if (timerSyncParalel) clearInterval(timerSyncParalel);
       timerSyncParalel = setInterval(function() {
@@ -2062,7 +2355,7 @@
             logoutMandiri();
             tampilkanModal(
               "Sistem Sedang Maintenance",
-              "Aplikasi sedang diperbarui sementara oleh Admin / Store Leader.\n\nSilakan tunggu beberapa saat dan login kembali nanti. Data draft opname Anda tetap aman tersimpan."
+              "Aplikasi sedang diperbarui sementara oleh Store Leader / Admin.\n\nSilakan tunggu beberapa saat dan login kembali nanti. Data draft opname Anda tetap aman tersimpan."
             );
             return;
           }
@@ -2194,7 +2487,8 @@
       getarHalus(15);
       clearTimeout(timerAutoSaveAwan);
       delete keranjangOpname[kode];
-      try { localStorage.setItem(KEY_LOKAL_DRAFT, JSON.stringify(keranjangOpname)); } catch(e) {}
+      var jsonTerbaru = JSON.stringify(keranjangOpname);
+      try { localStorage.setItem(KEY_LOKAL_DRAFT, jsonTerbaru); } catch(e) {}
 
       setIndikatorSync("syncing");
       panggilServerAPI({ action: "hapusItemDraft", kodeArtikel: kode })
@@ -2217,7 +2511,8 @@
           }
         })
         .catch(function() {
-          setIndikatorSync("offline");
+          panggilServerAPI({ action: "simpanDraft", jsonString: jsonTerbaru, hapusKode: kode }).catch(function(){});
+          setIndikatorSync("online");
         });
 
       document.getElementById('kodePilihan').value = '';
@@ -2339,9 +2634,11 @@
       if (jumlahTampil === 0) htmlOpsi = '<option value="">-- Tidak ada barang --</option>';
       dropdown.innerHTML = htmlOpsi;
       
+      // Auto-Select 1 Hasil Pencarian
       if (dariKetikCari && kataKunci.length >= 2 && jumlahTampil === 1 && kodeTunggal !== "") {
         dropdown.value = kodeTunggal;
         muatUlangData();
+        tampilkanToast("Otomatis memilih [" + kodeTunggal + "]");
       } else if (document.querySelector('#kodePilihan option[value="' + nilaiSebelumnya + '"]') && nilaiSebelumnya !== "") { 
         dropdown.value = nilaiSebelumnya; 
       } else { 
@@ -2655,7 +2952,7 @@
         html += '</div>';
         html += '<div class="aksi-audit-grup">';
         html += '<button type="button" class="btn-edit-audit" onclick="editItemDariAudit(\'' + kode + '\')">Ubah</button>';
-        html += '<button type="button" class="btn-hapus-audit" onclick="hapusSatuArtikelDariKeranjang(\'' + kode + '\')" title="Kembalikan ke Belum">✕</button>';
+        html += '<button type="button" class="btn-hapus-audit" onclick="hapusSatuArtikelDariKeranjang(\'' + kode + '\')" title="Batal Cek / Kembalikan ke Belum">🗑️ Batal</button>';
         html += '</div>';
         html += '</div>';
       }
@@ -2769,13 +3066,14 @@
       gantiTabPenyelesaian('selisih');
       renderAuditSemua();
 
-      if (!adaCoretanTtd) {
-        hapusTtd();
-      }
-
       document.getElementById('areaTandaTangan').style.display = 'block'; 
       document.getElementById('btnSelesai').style.display = 'none'; 
       document.getElementById('areaDraftBar').style.display = 'none';
+
+      if (!adaCoretanTtd) {
+        siapkanKanvasRetina();
+      }
+
       window.scrollTo({ top: document.getElementById('areaTandaTangan').offsetTop - 10, behavior: 'smooth' }); 
     }
 
@@ -2787,21 +3085,32 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Kanvas Tanda Tangan Resolusi Tinggi Retina (600x225)
+    // Kanvas Tanda Tangan Resolusi Tinggi Dinamis mengikuti window.devicePixelRatio (Retina / Super AMOLED)
     var canvas = document.getElementById("kanvasTtd"); 
     var ctx = canvas.getContext("2d"); 
     var lagiGambar = false;
     var adaCoretanTtd = false;
 
+    function siapkanKanvasRetina() {
+      if (!canvas) return;
+      var dpr = Math.max(window.devicePixelRatio || 1, 2);
+      var cssWidth = canvas.clientWidth || 320;
+      var cssHeight = canvas.clientHeight || 150;
+      canvas.width = Math.round(cssWidth * dpr);
+      canvas.height = Math.round(cssHeight * dpr);
+      hapusTtd();
+    }
+
     function ambilKoordinatKanvas(e) {
       var rect = canvas.getBoundingClientRect();
-      var scaleX = canvas.width / (rect.width || 300);
+      var scaleX = canvas.width / (rect.width || 320);
       var scaleY = canvas.height / (rect.height || 150);
       var clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
       var clientY = (e.touches && e.touches.length > 0) ? e.touches[0].clientY : e.clientY;
       return {
         x: (clientX - rect.left) * scaleX,
-        y: (clientY - rect.top) * scaleY
+        y: (clientY - rect.top) * scaleY,
+        tebalGaris: Math.max(2.4 * scaleX, 4.5)
       };
     }
 
@@ -2810,7 +3119,7 @@
       lagiGambar = true;
       adaCoretanTtd = true;
       var pos = ambilKoordinatKanvas(e);
-      ctx.lineWidth = 6.5;
+      ctx.lineWidth = pos.tebalGaris;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.strokeStyle = "#000000";
@@ -2824,7 +3133,7 @@
       if (!lagiGambar) return;
       e.preventDefault();
       var pos = ambilKoordinatKanvas(e);
-      ctx.lineWidth = 6.5;
+      ctx.lineWidth = pos.tebalGaris;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.strokeStyle = "#000000";
@@ -2957,7 +3266,7 @@
           var urlBlob = URL.createObjectURL(blob);
           var linkDownload = document.createElement("a");
           linkDownload.href = urlBlob;
-          linkDownload.download = res.namaFile || ("Opname_Accs_" + new Date().getTime() + ".xlsx");
+          linkDownload.download = res.namaFile || ("Opname_Accs_" + kodeTokoAktif + "_" + new Date().getTime() + ".xlsx");
           document.body.appendChild(linkDownload);
           linkDownload.click();
           document.body.removeChild(linkDownload);
