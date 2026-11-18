@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#0d6efd">
+  <meta name="theme-color" content="#eef2f7">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -19,9 +19,11 @@
       padding: max(14px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom)) 14px; 
       background-color: #eef2f7; 
       background-image: 
-        radial-gradient(at 15% 10%, rgba(13, 110, 253, 0.12) 0px, transparent 55%),
+        radial-gradient(at 15% 10%, rgba(13, 110, 253, 0.11) 0px, transparent 50%),
         radial-gradient(at 85% 20%, rgba(111, 66, 193, 0.08) 0px, transparent 50%),
-        radial-gradient(at 50% 90%, rgba(25, 135, 84, 0.07) 0px, transparent 55%);
+        radial-gradient(at 50% 90%, rgba(25, 135, 84, 0.07) 0px, transparent 50%),
+        radial-gradient(#cbd5e1 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px;
       background-attachment: fixed;
       margin: 0; 
       overscroll-behavior-y: none; 
@@ -31,9 +33,9 @@
       min-height: 100vh;
       box-sizing: border-box;
     }
-    .container-utama { width: 100%; max-width: 480px; }
+    .container-utama { width: 100%; max-width: 480px; transition: max-width 0.3s ease; }
 
-    /* Spatial Centered Layout untuk Halaman Login iOS 26 & Android 17 */
+    /* Spatial Centered Layout untuk Halaman Login */
     #pembungkusLogin {
       min-height: calc(100vh - 28px);
       display: flex;
@@ -61,12 +63,17 @@
       box-shadow: 0 12px 32px rgba(220, 53, 69, 0.14), 0 0 0 4px rgba(220, 53, 69, 0.09);
     }
 
-    /* Desain Khusus Kartu Login iOS 26 & Android 17 */
+    /* Panel Hero Login & Panel Monitor Desktop (Default Sembunyi di Layar HP) */
+    .panel-hero-desktop { display: none; }
+    .panel-monitor-desktop { display: none; }
+    .kbd-hint { display: none; }
+
+    /* Desain Khusus Kartu Login Mobile & Desktop */
     #layarLogin {
       margin-bottom: 0;
       padding: 24px 22px 18px 22px;
       border-radius: 24px;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
       border: 1.5px solid rgba(255, 255, 255, 0.9);
@@ -227,12 +234,8 @@
       color: #334155;
       line-height: 1.5;
     }
-    .langkah-pwa-box div {
-      margin-bottom: 8px;
-    }
-    .langkah-pwa-box div:last-child {
-      margin-bottom: 0;
-    }
+    .langkah-pwa-box div { margin-bottom: 8px; }
+    .langkah-pwa-box div:last-child { margin-bottom: 0; }
 
     .footer-versi-login {
       text-align: center;
@@ -602,7 +605,7 @@
     #wadahRemark input { margin-bottom: 0; border: 1.5px solid #fcd34d; background-color: #fff; }
     #wadahRemark input:focus { border-color: #f59e0b; box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15); }
 
-    /* Quick-Tap Remark Chips (Kapsul Alasan Selisih Instan) */
+    /* Quick-Tap Remark Chips */
     .deret-chip-remark {
       display: flex;
       flex-wrap: wrap;
@@ -827,6 +830,212 @@
     .modal-box h3 { margin-top: 0; color: #0f172a; font-size: 17px; }
     .modal-box p { color: #475569; margin-bottom: 20px; font-size: 14.5px; line-height: 1.45; white-space: pre-line; }
     .modal-box button { margin-bottom: 0; padding: 12px; border-radius: 12px; }
+
+    /* =========================================================================
+       WIDESCREEN DESKTOP & LAPTOP UI (WINDOWS 11 & macOS >= 920px)
+       ========================================================================= */
+    @media (min-width: 920px) {
+      .container-utama { max-width: 1120px; }
+
+      /* 1. Portal Login Split-Screen 2 Panel */
+      #pembungkusLogin {
+        align-items: center;
+      }
+      #layarLogin {
+        width: 100%;
+        max-width: 920px;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1.08fr 1fr;
+        overflow: hidden;
+        border-radius: 26px;
+        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.12), 0 4px 16px rgba(15, 23, 42, 0.05);
+      }
+      .panel-hero-desktop {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 36px 32px;
+        background: linear-gradient(145deg, #0f172a 0%, #1e3a8a 60%, #0d6efd 100%);
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+      }
+      .panel-hero-desktop::before {
+        content: "";
+        position: absolute;
+        top: -60px; right: -60px;
+        width: 240px; height: 240px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,255,255,0.16) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .hero-top-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 6px 13px;
+        border-radius: 99px;
+        font-size: 11.5px;
+        font-weight: 700;
+        width: fit-content;
+        backdrop-filter: blur(8px);
+      }
+      .hero-title {
+        font-size: 27px;
+        font-weight: 800;
+        line-height: 1.25;
+        margin: 18px 0 10px 0;
+        letter-spacing: -0.4px;
+      }
+      .hero-desc {
+        font-size: 13.5px;
+        color: rgba(255, 255, 255, 0.82);
+        line-height: 1.55;
+        margin: 0 0 22px 0;
+      }
+      .hero-fitur-list {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+        margin-bottom: 24px;
+      }
+      .hero-fitur-item {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        background: rgba(15, 23, 42, 0.28);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 10px 13px;
+        border-radius: 13px;
+        font-size: 12.5px;
+        font-weight: 600;
+      }
+      .hero-fitur-ikon {
+        width: 32px; height: 32px;
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .hero-clock-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 12px 16px;
+        border-radius: 14px;
+        font-variant-numeric: tabular-nums;
+      }
+      .panel-form-login {
+        padding: 32px 30px 24px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #ffffff;
+      }
+
+      /* 2. Bento Grid 2 Kolom Setelah Login di Desktop */
+      .grid-utama-desktop {
+        display: grid;
+        grid-template-columns: 450px 1fr;
+        gap: 20px;
+        align-items: start;
+      }
+      .panel-monitor-desktop {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        position: sticky;
+        top: 14px;
+      }
+      .kartu-monitor-bento {
+        background: #ffffff;
+        padding: 18px 20px;
+        border-radius: 18px;
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+        border: 1.5px solid rgba(226, 232, 240, 0.85);
+      }
+      .header-monitor-bento {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1.5px solid #f1f5f9;
+      }
+      .grid-kpi-desktop {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .kotak-kpi-kecil {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 10px 12px;
+        text-align: center;
+      }
+      .kotak-kpi-kecil .lbl-kpi {
+        font-size: 11px;
+        font-weight: 700;
+        color: #64748b;
+        margin-bottom: 4px;
+      }
+      .kotak-kpi-kecil .val-kpi {
+        font-size: 18px;
+        font-weight: 800;
+        color: #0f172a;
+        font-variant-numeric: tabular-nums;
+      }
+      .kotak-kpi-kecil.hijau { background: #f0fdf4; border-color: #bbf7d0; }
+      .kotak-kpi-kecil.hijau .val-kpi { color: #15803d; }
+      .kotak-kpi-kecil.merah { background: #fef2f2; border-color: #fecaca; }
+      .kotak-kpi-kecil.merah .val-kpi { color: #b91c1c; }
+      .kotak-kpi-kecil.biru { background: #eff6ff; border-color: #bfdbfe; }
+      .kotak-kpi-kecil.biru .val-kpi { color: #1d4ed8; }
+
+      .daftar-live-desktop {
+        max-height: 410px;
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+
+      /* 3. Lencana Pintasan Keyboard (Desktop Hotkey Badges) */
+      .kbd-hint {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-weight: 700;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.22);
+        color: inherit;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        margin-left: 4px;
+      }
+      .kbd-cari-desktop {
+        position: absolute;
+        right: 36px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #e2e8f0;
+        color: #475569;
+        border: 1px solid #cbd5e1;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-weight: 700;
+        border-radius: 5px;
+        pointer-events: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -842,449 +1051,556 @@
   <!-- SPATIAL LIGHTBOX ZOOM FOTO PRATINJAU -->
   <div id="lightboxModal" class="lightbox-overlay" onclick="tutupLightboxFoto()">
     <img id="lightboxImg" src="" alt="Perbesaran Foto Barang">
-    <div id="lightboxCaption" class="lightbox-caption">Ketuk di mana saja untuk menutup</div>
+    <div id="lightboxCaption" class="lightbox-caption">Ketuk di mana saja atau tekan [Esc] untuk menutup</div>
   </div>
 
   <div class="container-utama">
-    <!-- HALAMAN 1: LAYAR LOGIN MODERN (SPATIAL CENTERED + MULTI-TENANT + PWA FULLSCREEN) -->
+    <!-- HALAMAN 1: LAYAR LOGIN MODERN (SPLIT-SCREEN DESKTOP + MOBILE CARD) -->
     <div id="pembungkusLogin">
       <div id="layarLogin" class="kotak">
-        <div class="baris-badge-login">
-          <div id="badgeStatusLogin" class="badge-server-login">
-            <span id="dotBadgeLogin" class="pulse-dot"></span>
-            <span id="teksBadgeLogin">E597 Cloud Ready</span>
-          </div>
-          <div id="badgePwaAktif" class="badge-pwa-standalone">
-            <span>📱 Mode Full-Screen Aktif</span>
-          </div>
-        </div>
-
-        <div class="wadah-logo-login">
-          <img id="imgLogoLogin" src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-login" onerror="this.style.display='none'">
-        </div>
-        <h2 style="text-align: center; color: #0d6efd; margin-top: 0; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 20px;">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-          <span>Login Sistem</span>
-        </h2>
-        <p id="teksSubjudulLogin" style="text-align: center; color: #64748b; font-size: 13px; margin-top: 0; margin-bottom: 16px;">E597 Opname Accs</p>
-
-        <!-- KOLOM KODE TOKO / LISENSI MULTI-TENANT (DEFAULT E597) -->
-        <label for="loginKodeToko">Kode Toko / Cabang:</label>
-        <div id="wadahInputTokoLogin" class="wadah-input-login">
-          <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
-          <input type="text" id="loginKodeToko" value="E597" enterkeyhint="next" placeholder="Contoh: E597" style="text-transform:uppercase; font-weight:700;" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('loginId').focus();}">
-        </div>
-
-        <label for="loginId">User ID (NIK):</label>
-        <div id="wadahInputIdLogin" class="wadah-input-login">
-          <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          <input type="text" id="loginId" inputmode="numeric" autocomplete="username" enterkeyhint="next" placeholder="Masukkan NIK Karyawan" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('loginPass').focus();}">
-        </div>
-
-        <!-- KAPSUL MEMORI PENGGUNA TERAKHIR (QUICK-TAP NIK) -->
-        <div id="kapsulUserTerakhir" class="kapsul-user-terakhir" onclick="pakaiUserTerakhir()">
-          <span id="teksUserTerakhir">👤 Terakhir: -</span>
-          <span style="font-size:11px; text-decoration:underline;">Isi Cepat</span>
-        </div>
-
-        <label for="loginPass">Password:</label>
-        <div id="wadahInputPassLogin" class="wadah-input-login input-pass">
-          <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-          <input type="password" id="loginPass" autocomplete="current-password" enterkeyhint="go" placeholder="Masukkan password" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter') prosesLogin()">
-          <button type="button" class="btn-mata-pass" onclick="toggleLihatPassword()" title="Tampilkan / Sembunyikan Password" aria-label="Tampilkan Password">
-            <svg id="ikonMataPass" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
-          </button>
-        </div>
-
-        <div id="pesanErrorLogin" class="pesan-error-login"></div>
-
-        <button class="btn-biru" id="btnMasukLogin" onclick="prosesLogin()" style="margin-top:4px; margin-bottom:0;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-            <polyline points="10 17 15 12 10 7"></polyline>
-            <line x1="15" y1="12" x2="3" y2="12"></line>
-          </svg>
-          <span>Masuk (Login)</span>
-        </button>
-
-        <!-- TOMBOL INSTALASI LAYAR PENUH (PWA) KE LAYAR UTAMA HP -->
-        <button type="button" id="btnInstallPwa" class="btn-install-pwa" onclick="jalankanInstalasiPWA()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-            <line x1="12" y1="18" x2="12.01" y2="18"></line>
-          </svg>
-          <span>Instal Aplikasi Layar Penuh ke HP</span>
-        </button>
-
-        <div class="footer-versi-login">E597 Inventory Engine &bull; v3.2 Commercial PWA</div>
-      </div>
-    </div>
-
-    <!-- HALAMAN 2: APLIKASI UTAMA -->
-    <div id="layarUtama" style="display:none;">
-      <div class="kotak" id="kartuInputUtama">
-        <!-- LIQUID GLASS STICKY HEADER + LIVE SYNC DOT -->
-        <div class="header-utama">
-          <div class="badge-sync-atas" title="Status Sinkronisasi Cloud">
-            <span id="dotSyncHeader" class="pulse-dot"></span>
-            <span id="teksSyncHeader">Online</span>
-          </div>
-          <button type="button" class="btn-logout-atas" onclick="logoutMandiri()" title="Keluar dari akun">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M3 5.5C3 4.3 3.9 3.2 5.1 3L10.2 2.1C11.2 1.9 12 2.7 12 3.7V20.3C12 21.3 11.2 22.1 10.2 21.9L5.1 21C3.9 20.8 3 19.7 3 18.5V5.5Z" fill="currentColor"/>
-              <circle cx="9.2" cy="12" r="1.1" fill="#ffffff"/>
-              <path d="M12 4.5H16.5V7.5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
-              <path d="M12 19.5H16.5V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
-              <path d="M14 10.7H18.5V8.3L22.5 12L18.5 15.7V13.3H14V10.7Z" fill="currentColor"/>
-            </svg>
-            <span>Log Out</span>
-          </button>
-          <img id="imgLogoUtama" src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-utama" onerror="this.style.display='none'">
-          <h2 style="text-align: center; color: #0d6efd; margin: 0; font-size: 19px; display: flex; align-items: center; justify-content: center; gap: 7px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
-              <rect x="9" y="3" width="6" height="4" rx="1"></rect>
-              <path d="M9 14l2 2 4-4"></path>
-            </svg>
-            <span id="teksJudulAplikasi">E597 Opname Accs</span>
-          </h2>
-        </div>
-
-        <!-- LIVE PROGRESS BAR DENGAN ANIMATED COUNTER -->
-        <div class="kartu-progres">
-          <div class="baris-teks-progres">
-            <span id="teksJumlahProgres">Progres: 0 / 0 Artikel</span>
-            <span id="teksPersenProgres">0%</span>
-          </div>
-          <div class="jalur-progres">
-            <div id="isiBarProgres" class="isi-progres"></div>
-          </div>
-        </div>
-
-        <!-- BANNER INDIKATOR SAAT MAINTENANCE AKTIF -->
-        <div id="bannerMaintenance" class="banner-maintenance-aktif">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-            <line x1="12" y1="9" x2="12" y2="13"></line>
-            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-          </svg>
-          <span>MODE MAINTENANCE AKTIF (Hanya Store Leader / Admin yang dapat mengakses aplikasi)</span>
-        </div>
-
-        <!-- DERETAN FITUR BARU & TOMBOL MAINTENANCE KHUSUS ADMIN / STORE LEADER -->
-        <div class="bar-fitur-atas">
-          <button type="button" class="btn-ungu btn-fitur-kecil" onclick="togglePanelArtikelBaru()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-              <line x1="12" y1="22.08" x2="12" y2="12"></line>
-            </svg>
-            <span>+ Artikel Baru</span>
-          </button>
-          <button type="button" id="btnToggleMaintenance" class="btn-abu btn-fitur-kecil" style="display:none;" onclick="ubahModeMaintenance()"></button>
-        </div>
-
-        <!-- PANEL INPUT ARTIKEL BARU + KAMERA LANGSUNG -->
-        <div id="panelArtikelBaru">
-          <h4>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-              <line x1="12" y1="22.08" x2="12" y2="12"></line>
-            </svg>
-            <span>Tambah Artikel Baru</span>
-          </h4>
-          <label>Kode Artikel Baru:</label>
-          <input type="text" id="kodeBaruInput" inputmode="numeric" placeholder="Contoh: 8100019999">
-          <label>Nama Aksesoris:</label>
-          <input type="text" id="namaBaruInput" placeholder="Contoh: Adapter Charger 25W">
-          <label>Jumlah Barang Masuk:</label>
-          <input type="number" id="qtyBaruInput" inputmode="numeric" pattern="[0-9]*" placeholder="Masukkan jumlah fisik yang diterima...">
-          
-          <label>Foto Fisik Barang (Opsional):</label>
-          <input type="file" id="inputKameraBaru" accept="image/*" capture="environment" style="display:none;" onchange="prosesFotoKamera(this)">
-          <button type="button" class="btn-cyan" onclick="document.getElementById('inputKameraBaru').click()" style="padding:11px; font-size:13px; margin-bottom:10px;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-              <circle cx="12" cy="13" r="4"></circle>
-            </svg>
-            <span>Ambil Foto dari Kamera / Galeri</span>
-          </button>
-          <div id="wadahPreviewBaru" style="display:none; text-align:center; margin-bottom:12px; background:#fff; padding:8px; border-radius:10px; border:1px solid #e2e8f0;">
-            <img id="previewFotoBaru" src="" style="max-height:130px; max-width:100%; border-radius:8px; object-fit:contain;">
-            <div style="margin-top:6px;">
-              <button type="button" class="btn-merah" onclick="hapusFotoBaru()" style="width:auto; padding:5px 10px; font-size:11px; margin-bottom:0;">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polyline points="3 6 5 6 21 6"></polyline>
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
-                <span>Hapus Foto</span>
-              </button>
+        
+        <!-- PANEL KIRI KHUSUS DESKTOP / LAPTOP (SPLIT-SCREEN HERO SHOWCASE) -->
+        <div class="panel-hero-desktop">
+          <div>
+            <div class="hero-top-tag">
+              <span class="pulse-dot"></span>
+              <span>Enterprise Cloud Inventory SaaS</span>
+            </div>
+            <h1 class="hero-title" id="heroJudulDesktop">E597 Opname Accs &amp; Audit Gudang</h1>
+            <p class="hero-desc">Sistem audit stok fisik multi-perangkat dengan sinkronisasi awan <i>real-time</i>, penggabungan otomatis Display vs Gudang, dan pencetakan Berita Acara instan.</p>
+            
+            <div class="hero-fitur-list">
+              <div class="hero-fitur-item">
+                <div class="hero-fitur-ikon">⚡</div>
+                <div>
+                  <div style="font-weight:700;">Multi-Device Parallel Merge</div>
+                  <div style="font-size:11px; color:rgba(255,255,255,0.72);">Hitung Display &amp; Gudang serentak dari banyak HP/Laptop tanpa saling timpa.</div>
+                </div>
+              </div>
+              <div class="hero-fitur-item">
+                <div class="hero-fitur-ikon">🛡️</div>
+                <div>
+                  <div style="font-weight:700;">Anti-Loss Local &amp; Cloud Auto-Save</div>
+                  <div style="font-size:11px; color:rgba(255,255,255,0.72);">Data aman tersimpan meski sinyal gudang terputus atau halaman ter-refresh.</div>
+                </div>
+              </div>
+              <div class="hero-fitur-item">
+                <div class="hero-fitur-ikon">📊</div>
+                <div>
+                  <div style="font-weight:700;">Berita Acara &amp; Paraf Digital Retina</div>
+                  <div style="font-size:11px; color:rgba(255,255,255,0.72);">Rekap otomatis total Master, Display, Gudang, dan Selisih siap unduh ke Excel.</div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="wadah-flex" style="margin-bottom:0;">
-            <button type="button" class="btn-hijau" id="btnSimpanArtikelBaru" onclick="simpanArtikelBaru()" style="padding:10px; font-size:13px; margin-bottom:0;">
+          <div class="hero-clock-card">
+            <div>
+              <div style="font-size:11px; color:rgba(255,255,255,0.75); font-weight:600;">WAKTU SERVER REAL-TIME</div>
+              <div id="jamHeroDesktop" style="font-size:16px; font-weight:800; margin-top:2px;">--:--:--</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:11px; color:rgba(255,255,255,0.75); font-weight:600;">MODE LAYAR</div>
+              <div style="font-size:12.5px; font-weight:700; color:#4ade80; margin-top:2px;">🖥️ Widescreen Pro</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL KANAN: FORMULIR LOGIN UTAMA -->
+        <div class="panel-form-login">
+          <div class="baris-badge-login">
+            <div id="badgeStatusLogin" class="badge-server-login">
+              <span id="dotBadgeLogin" class="pulse-dot"></span>
+              <span id="teksBadgeLogin">E597 Cloud Ready</span>
+            </div>
+            <div id="badgePwaAktif" class="badge-pwa-standalone">
+              <span>📱 Mode Full-Screen Aktif</span>
+            </div>
+          </div>
+
+          <div class="wadah-logo-login">
+            <img id="imgLogoLogin" src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-login" onerror="this.style.display='none'">
+          </div>
+          <h2 style="text-align: center; color: #0d6efd; margin-top: 0; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 20px;">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span>Login Sistem</span>
+          </h2>
+          <p id="teksSubjudulLogin" style="text-align: center; color: #64748b; font-size: 13px; margin-top: 0; margin-bottom: 16px;">E597 Opname Accs</p>
+
+          <!-- KOLOM KODE TOKO / LISENSI MULTI-TENANT (DEFAULT E597) -->
+          <label for="loginKodeToko">Kode Toko / Cabang:</label>
+          <div id="wadahInputTokoLogin" class="wadah-input-login">
+            <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <input type="text" id="loginKodeToko" value="E597" enterkeyhint="next" placeholder="Contoh: E597" style="text-transform:uppercase; font-weight:700;" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('loginId').focus();}">
+          </div>
+
+          <label for="loginId">User ID (NIK):</label>
+          <div id="wadahInputIdLogin" class="wadah-input-login">
+            <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <input type="text" id="loginId" inputmode="numeric" autocomplete="username" enterkeyhint="next" placeholder="Masukkan NIK Karyawan" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('loginPass').focus();}">
+          </div>
+
+          <!-- KAPSUL MEMORI PENGGUNA TERAKHIR (QUICK-TAP NIK) -->
+          <div id="kapsulUserTerakhir" class="kapsul-user-terakhir" onclick="pakaiUserTerakhir()">
+            <span id="teksUserTerakhir">👤 Terakhir: -</span>
+            <span style="font-size:11px; text-decoration:underline;">Isi Cepat</span>
+          </div>
+
+          <label for="loginPass">Password:</label>
+          <div id="wadahInputPassLogin" class="wadah-input-login input-pass">
+            <svg class="ikon-kiri-login" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input type="password" id="loginPass" autocomplete="current-password" enterkeyhint="go" placeholder="Masukkan password" oninput="bersihkanErrorLogin()" onkeydown="if(event.key==='Enter') prosesLogin()">
+            <button type="button" class="btn-mata-pass" onclick="toggleLihatPassword()" title="Tampilkan / Sembunyikan Password" aria-label="Tampilkan Password">
+              <svg id="ikonMataPass" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+
+          <div id="pesanErrorLogin" class="pesan-error-login"></div>
+
+          <button class="btn-biru" id="btnMasukLogin" onclick="prosesLogin()" style="margin-top:4px; margin-bottom:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+            <span>Masuk (Login)</span>
+            <span class="kbd-hint">Enter ↵</span>
+          </button>
+
+          <!-- TOMBOL INSTALASI LAYAR PENUH (PWA) KE LAYAR UTAMA HP / DESKTOP -->
+          <button type="button" id="btnInstallPwa" class="btn-install-pwa" onclick="jalankanInstalasiPWA()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            <span>Instal Aplikasi Layar Penuh</span>
+          </button>
+
+          <div class="footer-versi-login">E597 Inventory Engine &bull; v3.5 Commercial Widescreen PWA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HALAMAN 2: APLIKASI UTAMA (OTOMATIS BENTO 2 KOLOM DI LAPTOP / DESKTOP) -->
+    <div id="layarUtama" style="display:none;">
+      <div class="grid-utama-desktop">
+        
+        <!-- KOLOM KIRI: KENDALI INPUT OPNAME UTAMA -->
+        <div class="kolom-kiri-opname">
+          <div class="kotak" id="kartuInputUtama">
+            <!-- LIQUID GLASS STICKY HEADER + LIVE SYNC DOT -->
+            <div class="header-utama">
+              <div class="badge-sync-atas" title="Status Sinkronisasi Cloud">
+                <span id="dotSyncHeader" class="pulse-dot"></span>
+                <span id="teksSyncHeader">Online</span>
+              </div>
+              <button type="button" class="btn-logout-atas" onclick="logoutMandiri()" title="Keluar dari akun">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M3 5.5C3 4.3 3.9 3.2 5.1 3L10.2 2.1C11.2 1.9 12 2.7 12 3.7V20.3C12 21.3 11.2 22.1 10.2 21.9L5.1 21C3.9 20.8 3 19.7 3 18.5V5.5Z" fill="currentColor"/>
+                  <circle cx="9.2" cy="12" r="1.1" fill="#ffffff"/>
+                  <path d="M12 4.5H16.5V7.5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+                  <path d="M12 19.5H16.5V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+                  <path d="M14 10.7H18.5V8.3L22.5 12L18.5 15.7V13.3H14V10.7Z" fill="currentColor"/>
+                </svg>
+                <span>Log Out</span>
+              </button>
+              <img id="imgLogoUtama" src="https://i.ibb.co.com/chNnvnb0/Logo-erafone-Background-Terang-2.png" alt="Logo Toko" class="logo-utama" onerror="this.style.display='none'">
+              <h2 style="text-align: center; color: #0d6efd; margin: 0; font-size: 19px; display: flex; align-items: center; justify-content: center; gap: 7px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
+                  <rect x="9" y="3" width="6" height="4" rx="1"></rect>
+                  <path d="M9 14l2 2 4-4"></path>
+                </svg>
+                <span id="teksJudulAplikasi">E597 Opname Accs</span>
+              </h2>
+            </div>
+
+            <!-- LIVE PROGRESS BAR DENGAN ANIMATED COUNTER -->
+            <div class="kartu-progres">
+              <div class="baris-teks-progres">
+                <span id="teksJumlahProgres">Progres: 0 / 0 Artikel</span>
+                <span id="teksPersenProgres">0%</span>
+              </div>
+              <div class="jalur-progres">
+                <div id="isiBarProgres" class="isi-progres"></div>
+              </div>
+            </div>
+
+            <!-- BANNER INDIKATOR SAAT MAINTENANCE AKTIF -->
+            <div id="bannerMaintenance" class="banner-maintenance-aktif">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <span>MODE MAINTENANCE AKTIF (Hanya Store Leader / Admin yang dapat mengakses aplikasi)</span>
+            </div>
+
+            <!-- DERETAN FITUR BARU & TOMBOL MAINTENANCE KHUSUS ADMIN / STORE LEADER -->
+            <div class="bar-fitur-atas">
+              <button type="button" class="btn-ungu btn-fitur-kecil" onclick="togglePanelArtikelBaru()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <span>+ Artikel Baru</span>
+              </button>
+              <button type="button" id="btnToggleMaintenance" class="btn-abu btn-fitur-kecil" style="display:none;" onclick="ubahModeMaintenance()"></button>
+            </div>
+
+            <!-- PANEL INPUT ARTIKEL BARU + KAMERA LANGSUNG -->
+            <div id="panelArtikelBaru">
+              <h4>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <span>Tambah Artikel Baru</span>
+              </h4>
+              <label>Kode Artikel Baru:</label>
+              <input type="text" id="kodeBaruInput" inputmode="numeric" placeholder="Contoh: 8100019999">
+              <label>Nama Aksesoris:</label>
+              <input type="text" id="namaBaruInput" placeholder="Contoh: Adapter Charger 25W">
+              <label>Jumlah Barang Masuk:</label>
+              <input type="number" id="qtyBaruInput" inputmode="numeric" pattern="[0-9]*" placeholder="Masukkan jumlah fisik yang diterima...">
+              
+              <label>Foto Fisik Barang (Opsional):</label>
+              <input type="file" id="inputKameraBaru" accept="image/*" capture="environment" style="display:none;" onchange="prosesFotoKamera(this)">
+              <button type="button" class="btn-cyan" onclick="document.getElementById('inputKameraBaru').click()" style="padding:11px; font-size:13px; margin-bottom:10px;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                  <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <span>Ambil Foto dari Kamera / Galeri</span>
+              </button>
+              <div id="wadahPreviewBaru" style="display:none; text-align:center; margin-bottom:12px; background:#fff; padding:8px; border-radius:10px; border:1px solid #e2e8f0;">
+                <img id="previewFotoBaru" src="" style="max-height:130px; max-width:100%; border-radius:8px; object-fit:contain;">
+                <div style="margin-top:6px;">
+                  <button type="button" class="btn-merah" onclick="hapusFotoBaru()" style="width:auto; padding:5px 10px; font-size:11px; margin-bottom:0;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span>Hapus Foto</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="wadah-flex" style="margin-bottom:0;">
+                <button type="button" class="btn-hijau" id="btnSimpanArtikelBaru" onclick="simpanArtikelBaru()" style="padding:10px; font-size:13px; margin-bottom:0;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                  </svg>
+                  <span>Simpan ke ListOpname</span>
+                </button>
+                <button type="button" class="btn-abu" onclick="togglePanelArtikelBaru()" style="padding:10px; font-size:13px; margin-bottom:0;">Batal</button>
+              </div>
+            </div>
+
+            <label>Waktu (Real-Time):</label>
+            <input type="text" id="waktu" readonly style="background-color: #f1f5f9; font-weight: bold; text-align: center; color: #475569; border-color: #e2e8f0;">
+            <label>Nama Petugas:</label>
+            <select id="petugas" disabled style="background-color: #f1f5f9; font-weight:bold; color: #0f172a; border-color: #e2e8f0;">
+              <option value="">-- Siapa yang melakukan Stock Opname? --</option>
+            </select>
+
+            <!-- FILTER STATUS DENGAN ANGKA JUMLAH BARANG -->
+            <label>Filter Status Aksesoris:</label>
+            <div class="wadah-filter">
+              <button class="btn-filter aktif-semua" id="btnSemua" onclick="setFilter('semua')"><span id="lblSemua">Semua (0)</span></button>
+              <button class="btn-filter" id="btnBelum" onclick="setFilter('belum')"><span class="dot-status dot-belum"></span><span id="lblBelum">Belum (0)</span></button>
+              <button class="btn-filter" id="btnSelisih" onclick="setFilter('selisih')"><span class="dot-status dot-selisih"></span><span id="lblSelisih">Selisih (0)</span></button>
+              <button class="btn-filter" id="btnCocok" onclick="setFilter('cocok')"><span class="dot-status dot-cocok"></span><span id="lblCocok">Cocok (0)</span></button>
+            </div>
+            
+            <div class="wadah-cari-svg">
+              <svg class="ikon-cari" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="kolomCari" placeholder="Ketik nama barang atau kode di sini..." oninput="pencarianTertunda()">
+              <span class="kbd-hint kbd-cari-desktop" title="Tekan / untuk mencari">/</span>
+              <button type="button" id="btnClearCari" class="btn-clear-cari" onclick="hapusPencarian()" title="Hapus pencarian">✕</button>
+            </div>
+            
+            <select id="kodePilihan" class="shimmer-loading" onchange="muatUlangData()">
+              <option value="">-- Menyiapkan data dari server... --</option>
+            </select>
+            
+            <!-- FOTO PRATINJAU DENGAN SPATIAL LIGHTBOX ZOOM -->
+            <div id="wadahFoto">
+              <p style="margin-top:0; margin-bottom:6px; font-size:11.5px; color:#64748b; font-weight:bold;">Pratinjau Fisik Barang (Ketuk gambar untuk memperbesar):</p>
+              <img id="fotoPreview" src="" alt="Foto Aksesoris" onclick="bukaLightboxFoto()">
+            </div>
+
+            <!-- OPSI UPLOAD FOTO PRATINJAU TERPISAH (KHUSUS AKUN 202106477 / ROLE ADMIN) -->
+            <div id="wadahUploadFotoLeader">
+              <div class="label-leader-foto">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                  <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <span>Upload Foto Pratinjau</span>
+              </div>
+              <input type="file" id="inputKameraPratinjauLeader" accept="image/*" capture="environment" style="display:none;" onchange="prosesUploadFotoPratinjauLeader(this)">
+              <input type="file" id="inputGaleriPratinjauLeader" accept="image/*" style="display:none;" onchange="prosesUploadFotoPratinjauLeader(this)">
+              <div class="grid-opsi-upload-leader">
+                <button type="button" id="btnCamPratinjauLeader" class="btn-ungu" onclick="document.getElementById('inputKameraPratinjauLeader').click()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                  </svg>
+                  <span>Kamera</span>
+                </button>
+                <button type="button" id="btnGaleriPratinjauLeader" class="btn-cyan" onclick="document.getElementById('inputGaleriPratinjauLeader').click()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                  <span>Galeri / File</span>
+                </button>
+              </div>
+              <div id="statusUploadPratinjauLeader" class="status-upload-leader"></div>
+            </div>
+            
+            <!-- INPUT DISPLAY DENGAN PURE NUMPAD, STEPPER (- / +) & AKUMULASI CEPAT (+ TAMBAH) -->
+            <div class="baris-label-akumulasi">
+              <label for="display">Fisik di Display:</label>
+              <button type="button" class="btn-pil-tambah" onclick="toggleAkumulasi('display')">+ Tambah</button>
+            </div>
+            <div class="wadah-stepper">
+              <button type="button" class="btn-step" onclick="ubahAngkaStepper('display', -1)" aria-label="Kurangi Display">−</button>
+              <input type="number" id="display" inputmode="numeric" pattern="[0-9]*" placeholder="0" oninput="cekCocokTotal()" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('gudang').focus();}">
+              <button type="button" class="btn-step" onclick="ubahAngkaStepper('display', 1)" aria-label="Tambah Display">+</button>
+            </div>
+            <div id="panelAkumulasi_display" class="panel-akumulasi">
+              <div class="baris-chip-cepat">
+                <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 1)">+1</button>
+                <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 2)">+2</button>
+                <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 5)">+5</button>
+                <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 10)">+10</button>
+              </div>
+              <div class="baris-input-akumulasi">
+                <input type="number" id="inputPlus_display" inputmode="numeric" pattern="[0-9]*" placeholder="Jumlah tambahan...">
+                <button type="button" class="btn-hijau" onclick="terapkanTambahManual('display')">Tambah</button>
+                <button type="button" class="btn-abu" onclick="toggleAkumulasi('display')">Tutup</button>
+              </div>
+            </div>
+
+            <!-- INPUT GUDANG DENGAN PURE NUMPAD, STEPPER (- / +) & AKUMULASI CEPAT (+ TAMBAH) -->
+            <div class="baris-label-akumulasi">
+              <label for="gudang">Fisik di Gudang:</label>
+              <button type="button" class="btn-pil-tambah" onclick="toggleAkumulasi('gudang')">+ Tambah</button>
+            </div>
+            <div class="wadah-stepper">
+              <button type="button" class="btn-step" onclick="ubahAngkaStepper('gudang', -1)" aria-label="Kurangi Gudang">−</button>
+              <input type="number" id="gudang" inputmode="numeric" pattern="[0-9]*" placeholder="0" oninput="cekCocokTotal()" onkeydown="if(event.ctrlKey && event.key==='Enter'){event.preventDefault(); catatKeKeranjang();}">
+              <button type="button" class="btn-step" onclick="ubahAngkaStepper('gudang', 1)" aria-label="Tambah Gudang">+</button>
+            </div>
+            <div id="panelAkumulasi_gudang" class="panel-akumulasi">
+              <div class="baris-chip-cepat">
+                <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 1)">+1</button>
+                <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 2)">+2</button>
+                <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 5)">+5</button>
+                <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 10)">+10</button>
+              </div>
+              <div class="baris-input-akumulasi">
+                <input type="number" id="inputPlus_gudang" inputmode="numeric" pattern="[0-9]*" placeholder="Jumlah tambahan...">
+                <button type="button" class="btn-hijau" onclick="terapkanTambahManual('gudang')">Tambah</button>
+                <button type="button" class="btn-abu" onclick="toggleAkumulasi('gudang')">Tutup</button>
+              </div>
+            </div>
+            
+            <!-- KOTAK REMARK + QUICK-TAP REMARK CHIPS -->
+            <div id="wadahRemark">
+              <label>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                <span>Remark / Alasan Selisih (Ketuk kapsul cepat atau ketik manual):</span>
+              </label>
+              <div id="wadahChipRemarkUtama" class="deret-chip-remark"></div>
+              <input type="text" id="remark" placeholder="Opsional: Kosongkan dulu jika masih lanjut cek gudang/display..." onkeydown="if(event.key==='Enter'){event.preventDefault(); catatKeKeranjang();}">
+            </div>
+
+            <button class="btn-biru" onclick="catatKeKeranjang()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg>
+              <span>Catat Barang Ini</span>
+              <span class="kbd-hint">Ctrl + ↵</span>
+            </button>
+
+            <!-- TOMBOL BATAL CEK 1 ARTIKEL -->
+            <button type="button" id="btnBatalCekForm" onclick="batalCekArtikelSaatIni()">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              <span>Batal Cek Artikel Ini (Kembalikan ke Belum)</span>
+            </button>
+            
+            <div id="statusAutoSave" class="status-autosave">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <path d="M9 12l2 2 4-4"></path>
+              </svg>
+              <span id="teksAutoSave">Auto-Save Aktif (Aman dari putus jaringan / refresh)</span>
+            </div>
+          </div>
+
+          <div class="wadah-flex" id="areaDraftBar">
+            <button class="btn-cyan" id="btnDraft" onclick="simpanDraftAwan()" style="flex: 2; margin-bottom: 0; padding: 12px; font-size: 14px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
                 <polyline points="17 21 17 13 7 13 7 21"></polyline>
                 <polyline points="7 3 7 8 15 8"></polyline>
               </svg>
-              <span>Simpan ke ListOpname</span>
+              <span>Simpan &amp; Log Out</span>
             </button>
-            <button type="button" class="btn-abu" onclick="togglePanelArtikelBaru()" style="padding:10px; font-size:13px; margin-bottom:0;">Batal</button>
-          </div>
-        </div>
-
-        <label>Waktu (Real-Time):</label>
-        <input type="text" id="waktu" readonly style="background-color: #f1f5f9; font-weight: bold; text-align: center; color: #475569; border-color: #e2e8f0;">
-        <label>Nama Petugas:</label>
-        <select id="petugas" disabled style="background-color: #f1f5f9; font-weight:bold; color: #0f172a; border-color: #e2e8f0;">
-          <option value="">-- Siapa yang melakukan Stock Opname? --</option>
-        </select>
-
-        <!-- FILTER STATUS DENGAN ANGKA JUMLAH BARANG -->
-        <label>Filter Status Aksesoris:</label>
-        <div class="wadah-filter">
-          <button class="btn-filter aktif-semua" id="btnSemua" onclick="setFilter('semua')"><span id="lblSemua">Semua (0)</span></button>
-          <button class="btn-filter" id="btnBelum" onclick="setFilter('belum')"><span class="dot-status dot-belum"></span><span id="lblBelum">Belum (0)</span></button>
-          <button class="btn-filter" id="btnSelisih" onclick="setFilter('selisih')"><span class="dot-status dot-selisih"></span><span id="lblSelisih">Selisih (0)</span></button>
-          <button class="btn-filter" id="btnCocok" onclick="setFilter('cocok')"><span class="dot-status dot-cocok"></span><span id="lblCocok">Cocok (0)</span></button>
-        </div>
-        
-        <div class="wadah-cari-svg">
-          <svg class="ikon-cari" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="text" id="kolomCari" placeholder="Ketik nama barang atau kode di sini..." oninput="pencarianTertunda()">
-          <button type="button" id="btnClearCari" class="btn-clear-cari" onclick="hapusPencarian()" title="Hapus pencarian">✕</button>
-        </div>
-        
-        <select id="kodePilihan" class="shimmer-loading" onchange="muatUlangData()">
-          <option value="">-- Menyiapkan data dari server... --</option>
-        </select>
-        
-        <!-- FOTO PRATINJAU DENGAN SPATIAL LIGHTBOX ZOOM -->
-        <div id="wadahFoto">
-          <p style="margin-top:0; margin-bottom:6px; font-size:11.5px; color:#64748b; font-weight:bold;">Pratinjau Fisik Barang (Ketuk gambar untuk memperbesar):</p>
-          <img id="fotoPreview" src="" alt="Foto Aksesoris" onclick="bukaLightboxFoto()">
-        </div>
-
-        <!-- OPSI UPLOAD FOTO PRATINJAU TERPISAH (KHUSUS AKUN 202106477 / ROLE ADMIN: KAMERA LANGSUNG / GALERI & FILE) -->
-        <div id="wadahUploadFotoLeader">
-          <div class="label-leader-foto">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-              <circle cx="12" cy="13" r="4"></circle>
-            </svg>
-            <span>Upload Foto Pratinjau</span>
-          </div>
-          <input type="file" id="inputKameraPratinjauLeader" accept="image/*" capture="environment" style="display:none;" onchange="prosesUploadFotoPratinjauLeader(this)">
-          <input type="file" id="inputGaleriPratinjauLeader" accept="image/*" style="display:none;" onchange="prosesUploadFotoPratinjauLeader(this)">
-          <div class="grid-opsi-upload-leader">
-            <button type="button" id="btnCamPratinjauLeader" class="btn-ungu" onclick="document.getElementById('inputKameraPratinjauLeader').click()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                <circle cx="12" cy="13" r="4"></circle>
+            <button class="btn-merah btn-ikon-flex" onclick="resetDraftTotal()" style="flex: 1.15; margin-bottom: 0; padding: 12px 8px; font-size: 13px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4.5C16.14 4.5 19.5 7.86 19.5 12C19.5 16.14 16.14 19.5 12 19.5C7.86 19.5 4.5 16.14 4.5 12C4.5 9.93 5.34 8.06 6.7 6.7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                <path d="M12 2L9.2 4.5L12 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 7.2C14.65 7.2 16.8 9.35 16.8 12C16.8 14.65 14.65 16.8 12 16.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
               </svg>
-              <span>Kamera</span>
+              <span>Reset Data</span>
             </button>
-            <button type="button" id="btnGaleriPratinjauLeader" class="btn-cyan" onclick="document.getElementById('inputGaleriPratinjauLeader').click()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
+          </div>
+          
+          <button class="btn-orange" id="btnSelesai" onclick="bukaTandaTangan()" style="margin-top: 10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Selesai Cek &amp; Buka TTD</span>
+          </button>
+
+          <div class="kotak" id="areaTandaTangan">
+            <h3 style="text-align: center; color: #198754; margin-top: 0; margin-bottom: 12px;">Tahap Penyelesaian Opname</h3>
+            
+            <!-- TAB SEGMENTED: WAJIB REMARK SELISIH VS AUDIT SEMUA TERCATAT -->
+            <div class="tab-penyelesaian">
+              <button type="button" id="btnTabSelisihSelesai" class="btn-tab-selesai aktif" onclick="gantiTabPenyelesaian('selisih')">
+                <span id="lblTabSelisihSelesai">Wajib Remark Selisih (0)</span>
+              </button>
+              <button type="button" id="btnTabAuditSelesai" class="btn-tab-selesai" onclick="gantiTabPenyelesaian('audit')">
+                <span id="lblTabAuditSelesai">Audit Semua Tercatat (0)</span>
+              </button>
+            </div>
+
+            <div id="wadahRekapSelisih"></div>
+            <div id="wadahAuditSemua"></div>
+
+            <!-- KANVAS TTD RESOLUSI TINGGI RETINA DINAMIS (devicePixelRatio) -->
+            <label>Paraf / Tanda Tangan Bukti Opname:</label>
+            <canvas id="kanvasTtd" width="600" height="225"></canvas>
+            <div class="wadah-flex">
+              <button class="btn-merah" onclick="hapusTtd()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+                <span>Hapus TTD</span>
+              </button>
+              <button class="btn-abu" onclick="tutupTandaTangan()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Lanjut Cek Barang</span>
+              </button>
+            </div>
+            <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 18px 0;">
+            <button class="btn-hijau" id="btnKirimAkhir" onclick="kirimSemuaKeRobot()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
               </svg>
-              <span>Galeri / File</span>
+              <span>Setor ke Lemari Data</span>
             </button>
           </div>
-          <div id="statusUploadPratinjauLeader" class="status-upload-leader"></div>
-        </div>
-        
-        <!-- INPUT DISPLAY DENGAN PURE NUMPAD, STEPPER (- / +) & AKUMULASI CEPAT (+ TAMBAH) -->
-        <div class="baris-label-akumulasi">
-          <label for="display">Fisik di Display:</label>
-          <button type="button" class="btn-pil-tambah" onclick="toggleAkumulasi('display')">+ Tambah</button>
-        </div>
-        <div class="wadah-stepper">
-          <button type="button" class="btn-step" onclick="ubahAngkaStepper('display', -1)" aria-label="Kurangi Display">−</button>
-          <input type="number" id="display" inputmode="numeric" pattern="[0-9]*" placeholder="0" oninput="cekCocokTotal()">
-          <button type="button" class="btn-step" onclick="ubahAngkaStepper('display', 1)" aria-label="Tambah Display">+</button>
-        </div>
-        <div id="panelAkumulasi_display" class="panel-akumulasi">
-          <div class="baris-chip-cepat">
-            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 1)">+1</button>
-            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 2)">+2</button>
-            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 5)">+5</button>
-            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('display', 10)">+10</button>
-          </div>
-          <div class="baris-input-akumulasi">
-            <input type="number" id="inputPlus_display" inputmode="numeric" pattern="[0-9]*" placeholder="Jumlah tambahan...">
-            <button type="button" class="btn-hijau" onclick="terapkanTambahManual('display')">Tambah</button>
-            <button type="button" class="btn-abu" onclick="toggleAkumulasi('display')">Tutup</button>
-          </div>
-        </div>
-
-        <!-- INPUT GUDANG DENGAN PURE NUMPAD, STEPPER (- / +) & AKUMULASI CEPAT (+ TAMBAH) -->
-        <div class="baris-label-akumulasi">
-          <label for="gudang">Fisik di Gudang:</label>
-          <button type="button" class="btn-pil-tambah" onclick="toggleAkumulasi('gudang')">+ Tambah</button>
-        </div>
-        <div class="wadah-stepper">
-          <button type="button" class="btn-step" onclick="ubahAngkaStepper('gudang', -1)" aria-label="Kurangi Gudang">−</button>
-          <input type="number" id="gudang" inputmode="numeric" pattern="[0-9]*" placeholder="0" oninput="cekCocokTotal()">
-          <button type="button" class="btn-step" onclick="ubahAngkaStepper('gudang', 1)" aria-label="Tambah Gudang">+</button>
-        </div>
-        <div id="panelAkumulasi_gudang" class="panel-akumulasi">
-          <div class="baris-chip-cepat">
-            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 1)">+1</button>
-            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 2)">+2</button>
-            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 5)">+5</button>
-            <button type="button" class="btn-chip-angka" onclick="tambahStokCepat('gudang', 10)">+10</button>
-          </div>
-          <div class="baris-input-akumulasi">
-            <input type="number" id="inputPlus_gudang" inputmode="numeric" pattern="[0-9]*" placeholder="Jumlah tambahan...">
-            <button type="button" class="btn-hijau" onclick="terapkanTambahManual('gudang')">Tambah</button>
-            <button type="button" class="btn-abu" onclick="toggleAkumulasi('gudang')">Tutup</button>
-          </div>
-        </div>
-        
-        <!-- KOTAK REMARK + QUICK-TAP REMARK CHIPS -->
-        <div id="wadahRemark">
-          <label>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          
+          <button class="btn-abu" id="btnExcel" onclick="downloadExcel()" style="margin-top:10px; display:none;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span>Remark / Alasan Selisih (Ketuk kapsul cepat atau ketik manual):</span>
-          </label>
-          <div id="wadahChipRemarkUtama" class="deret-chip-remark"></div>
-          <input type="text" id="remark" placeholder="Opsional: Kosongkan dulu jika masih lanjut cek gudang/display...">
+            <span>Download Laporan Excel</span>
+          </button>
         </div>
 
-        <button class="btn-biru" onclick="catatKeKeranjang()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-          </svg>
-          <span>Catat Barang Ini</span>
-        </button>
+        <!-- KOLOM KANAN KHUSUS DESKTOP / LAPTOP: LIVE COMMAND CENTER & AUDIT MONITOR -->
+        <div class="panel-monitor-desktop">
+          <div class="kartu-monitor-bento">
+            <div class="header-monitor-bento">
+              <div>
+                <h3 style="margin:0; font-size:16px; color:#0f172a; display:flex; align-items:center; gap:7px;">
+                  <span>🖥️ Live Executive Monitor</span>
+                </h3>
+                <p style="margin:2px 0 0 0; font-size:11.5px; color:#64748b;">Ringkasan kuantitas fisik &amp; daftar barang tercatat secara <i>real-time</i></p>
+              </div>
+              <span style="font-size:11px; font-weight:700; color:#0d6efd; background:#eff6ff; border:1px solid #bfdbfe; padding:4px 10px; border-radius:99px;">Auto-Sync Cloud</span>
+            </div>
 
-        <!-- TOMBOL BATAL CEK 1 ARTIKEL (MUNCUL JIKA ARTIKEL SUDAH PERNAH DICATAT) -->
-        <button type="button" id="btnBatalCekForm" onclick="batalCekArtikelSaatIni()">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="3 6 5 6 21 6"></polyline>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-          </svg>
-          <span>Batal Cek Artikel Ini (Kembalikan ke Belum)</span>
-        </button>
-        
-        <div id="statusAutoSave" class="status-autosave">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            <path d="M9 12l2 2 4-4"></path>
-          </svg>
-          <span id="teksAutoSave">Auto-Save Aktif (Aman dari putus jaringan / refresh)</span>
+            <!-- 4 KARTU METRIK KUANTITAS (PCS) -->
+            <div class="grid-kpi-desktop">
+              <div class="kotak-kpi-kecil biru">
+                <div class="lbl-kpi">MASTER QTY</div>
+                <div class="val-kpi" id="kpiMasterQty">0</div>
+              </div>
+              <div class="kotak-kpi-kecil">
+                <div class="lbl-kpi">FISIK DISPLAY</div>
+                <div class="val-kpi" id="kpiDispQty">0</div>
+              </div>
+              <div class="kotak-kpi-kecil">
+                <div class="lbl-kpi">FISIK GUDANG</div>
+                <div class="val-kpi" id="kpiGudQty">0</div>
+              </div>
+              <div class="kotak-kpi-kecil hijau" id="kotakKpiTotalFisik">
+                <div class="lbl-kpi">HASIL OPNAME</div>
+                <div class="val-kpi" id="kpiTotalFisikQty">0</div>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:12.5px; font-weight:700; color:#334155;" id="judulDaftarMonitorDesktop">Daftar Artikel Tercatat (0)</span>
+              <span style="font-size:11px; color:#64748b;">Klik <b>Ubah</b> untuk memuat ke panel kiri</span>
+            </div>
+
+            <div id="wadahDaftarMonitorDesktop" class="daftar-live-desktop">
+              <div style="text-align:center; padding:32px 16px; color:#94a3b8; font-size:13px;">
+                Belum ada artikel yang dicatat.<br>Pilih barang di panel kiri untuk memulai opname.
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
-
-      <div class="wadah-flex" id="areaDraftBar">
-        <button class="btn-cyan" id="btnDraft" onclick="simpanDraftAwan()" style="flex: 2; margin-bottom: 0; padding: 12px; font-size: 14px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-            <polyline points="17 21 17 13 7 13 7 21"></polyline>
-            <polyline points="7 3 7 8 15 8"></polyline>
-          </svg>
-          <span>Simpan & Log Out</span>
-        </button>
-        <button class="btn-merah btn-ikon-flex" onclick="resetDraftTotal()" style="flex: 1.15; margin-bottom: 0; padding: 12px 8px; font-size: 13px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 4.5C16.14 4.5 19.5 7.86 19.5 12C19.5 16.14 16.14 19.5 12 19.5C7.86 19.5 4.5 16.14 4.5 12C4.5 9.93 5.34 8.06 6.7 6.7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-            <path d="M12 2L9.2 4.5L12 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 7.2C14.65 7.2 16.8 9.35 16.8 12C16.8 14.65 14.65 16.8 12 16.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
-          </svg>
-          <span>Reset Data</span>
-        </button>
-      </div>
-      
-      <button class="btn-orange" id="btnSelesai" onclick="bukaTandaTangan()" style="margin-top: 10px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-          <polyline points="22 4 12 14.01 9 11.01"></polyline>
-        </svg>
-        <span>Selesai Cek & Buka TTD</span>
-      </button>
-
-      <div class="kotak" id="areaTandaTangan">
-        <h3 style="text-align: center; color: #198754; margin-top: 0; margin-bottom: 12px;">Tahap Penyelesaian Opname</h3>
-        
-        <!-- TAB SEGMENTED: WAJIB REMARK SELISIH VS AUDIT SEMUA TERCATAT -->
-        <div class="tab-penyelesaian">
-          <button type="button" id="btnTabSelisihSelesai" class="btn-tab-selesai aktif" onclick="gantiTabPenyelesaian('selisih')">
-            <span id="lblTabSelisihSelesai">Wajib Remark Selisih (0)</span>
-          </button>
-          <button type="button" id="btnTabAuditSelesai" class="btn-tab-selesai" onclick="gantiTabPenyelesaian('audit')">
-            <span id="lblTabAuditSelesai">Audit Semua Tercatat (0)</span>
-          </button>
-        </div>
-
-        <div id="wadahRekapSelisih"></div>
-        <div id="wadahAuditSemua"></div>
-
-        <!-- KANVAS TTD RESOLUSI TINGGI RETINA DINAMIS (devicePixelRatio) -->
-        <label>Paraf / Tanda Tangan Bukti Opname:</label>
-        <canvas id="kanvasTtd" width="600" height="225"></canvas>
-        <div class="wadah-flex">
-          <button class="btn-merah" onclick="hapusTtd()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            </svg>
-            <span>Hapus TTD</span>
-          </button>
-          <button class="btn-abu" onclick="tutupTandaTangan()" style="padding: 10px; font-size: 14px; margin-bottom: 0;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            <span>Lanjut Cek Barang</span>
-          </button>
-        </div>
-        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 18px 0;">
-        <button class="btn-hijau" id="btnKirimAkhir" onclick="kirimSemuaKeRobot()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-          <span>Setor ke Lemari Data</span>
-        </button>
-      </div>
-      
-      <button class="btn-abu" id="btnExcel" onclick="downloadExcel()" style="margin-top:10px; display:none;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-        <span>Download Laporan Excel</span>
-      </button>
     </div>
   </div>
 
@@ -1313,11 +1629,11 @@
   <div class="modal-overlay" id="modalPanduanPwa">
     <div class="modal-box">
       <h3 style="color:#0d6efd;">📱 Instal Aplikasi Layar Penuh</h3>
-      <p style="margin-bottom:12px; font-size:13px;">Pasang aplikasi ke layar utama HP agar terbuka <b>Full-Screen</b> tanpa bar alamat browser:</p>
+      <p style="margin-bottom:12px; font-size:13px;">Pasang aplikasi ke perangkat agar terbuka <b>Full-Screen</b> tanpa bar alamat browser:</p>
       <div class="langkah-pwa-box">
         <div><b>🍏 Pengguna iPhone / iOS (Safari):</b><br>1. Ketuk ikon <b>Bagikan (Share)</b> di bilah bawah Safari.<br>2. Geser ke bawah lalu pilih <b>"Tambah ke Layar Utama" (Add to Home Screen)</b>.</div>
         <hr style="border:0; border-top:1px solid #e2e8f0; margin:8px 0;">
-        <div><b>🤖 Pengguna Android (Chrome):</b><br>1. Ketuk ikon <b>Titik Tiga (⋮)</b> di pojok kanan atas Chrome.<br>2. Pilih <b>"Instal aplikasi"</b> atau <b>"Tambahkan ke layar utama"</b>.</div>
+        <div><b>🤖 Pengguna Android &amp; Desktop (Chrome/Edge):</b><br>1. Ketuk ikon <b>Install / Titik Tiga (⋮)</b> di kanan atas browser.<br>2. Pilih <b>"Instal aplikasi"</b> atau <b>"Tambahkan ke layar utama"</b>.</div>
       </div>
       <button type="button" class="btn-biru" onclick="document.getElementById('modalPanduanPwa').style.display='none'">Mengerti</button>
     </div>
@@ -1409,6 +1725,30 @@
     var KEY_CONFIG_CACHE = "E597_Config_Cache";
 
     // =========================================================================
+    // PINTASAN KEYBOARD FISIK (DESKTOP HOTKEYS: '/' CARI, 'ESC' TUTUP)
+    // =========================================================================
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        tutupLightboxFoto();
+        tutupModal();
+        document.getElementById("modalKonfirmasiBelum").style.display = "none";
+        document.getElementById("modalPanduanPwa").style.display = "none";
+        return;
+      }
+      var tagAktif = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toUpperCase() : "";
+      if (e.key === "/" && tagAktif !== "INPUT" && tagAktif !== "TEXTAREA" && tagAktif !== "SELECT") {
+        if (document.getElementById("layarUtama").style.display === "block") {
+          e.preventDefault();
+          var elCari = document.getElementById("kolomCari");
+          if (elCari) {
+            elCari.focus();
+            elCari.select();
+          }
+        }
+      }
+    });
+
+    // =========================================================================
     // SISTEM PROGRESSIVE WEB APP (PWA) LAYAR PENUH & DYNAMIC MANIFEST
     // =========================================================================
     function isStandalonePWA() {
@@ -1440,7 +1780,7 @@
           display: "standalone",
           orientation: "portrait",
           background_color: "#eef2f7",
-          theme_color: "#0d6efd",
+          theme_color: "#eef2f7",
           icons: [
             { src: iconBersih, sizes: "192x192", type: "image/png", purpose: "any maskable" },
             { src: iconBersih, sizes: "512x512", type: "image/png", purpose: "any maskable" }
@@ -1462,14 +1802,14 @@
     window.addEventListener("appinstalled", function() {
       deferredInstallPrompt = null;
       perbaruiTampilanTombolPWA();
-      tampilkanToast("Aplikasi berhasil terpasang di Layar Utama HP!");
+      tampilkanToast("Aplikasi berhasil terpasang di Perangkat!");
     });
 
     function jalankanInstalasiPWA() {
       getarHalus(15);
       if (deferredInstallPrompt) {
         deferredInstallPrompt.prompt();
-        deferredInstallPrompt.userChoice.then(function(choiceResult) {
+        deferredInstallPrompt.userChoice.then(function() {
           deferredInstallPrompt = null;
           perbaruiTampilanTombolPWA();
         });
@@ -1507,6 +1847,8 @@
         document.title = cfg.namaAplikasi;
         var elJudul = document.getElementById("teksJudulAplikasi");
         if (elJudul) elJudul.innerText = cfg.namaAplikasi;
+        var elHeroJudul = document.getElementById("heroJudulDesktop");
+        if (elHeroJudul) elHeroJudul.innerText = cfg.namaAplikasi + " — Cloud Inventory";
         var metaTitle = document.getElementById("appleTitleMeta");
         if (metaTitle) metaTitle.content = cfg.namaAplikasi.substring(0, 15);
       }
@@ -1684,7 +2026,7 @@
       var kode = document.getElementById("kodePilihan").value;
       var judul = (kode && kunciData[kode]) ? ("[" + kode + "] " + kunciData[kode].nama) : "Pratinjau Fisik Barang";
       document.getElementById("lightboxImg").src = src;
-      document.getElementById("lightboxCaption").innerText = judul + " • Ketuk layar untuk menutup";
+      document.getElementById("lightboxCaption").innerText = judul + " • Ketuk layar atau tekan [Esc] untuk menutup";
       document.getElementById("lightboxModal").style.display = "flex";
     }
 
@@ -1775,6 +2117,63 @@
       animCounterFrame = requestAnimationFrame(langkah);
     }
 
+    // Render Live Executive Monitor di Kolom Kanan Desktop
+    function renderMonitorDesktop() {
+      var sumMaster = 0;
+      for (var k in kunciData) {
+        sumMaster += (parseInt(kunciData[k].totalMaster, 10) || 0);
+      }
+
+      var sumDisp = 0;
+      var sumGud = 0;
+      var keys = Object.keys(keranjangOpname);
+      var htmlList = "";
+
+      for (var i = keys.length - 1; i >= 0; i--) {
+        var kode = keys[i];
+        var item = keranjangOpname[kode];
+        var d = parseInt(item.display, 10) || 0;
+        var g = parseInt(item.gudang, 10) || 0;
+        var tot = d + g;
+        sumDisp += d;
+        sumGud += g;
+        var mTot = (kunciData[kode]) ? (parseInt(kunciData[kode].totalMaster, 10) || 0) : 0;
+        var isCocok = (item.statusTotal === "Cocok");
+
+        htmlList += '<div class="item-audit-row ' + (isCocok ? 'cocok' : 'selisih') + '">';
+        htmlList += '<div style="flex:1; min-width:0;">';
+        htmlList += '<div style="font-weight:700; font-size:12.5px; color:#1e293b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">[' + kode + '] ' + item.namaBarang + '</div>';
+        htmlList += '<div style="font-size:11.5px; color:#475569; margin-top:2px;">Disp: <b>' + d + '</b> | Gud: <b>' + g + '</b> | Total: <b>' + tot + '</b> (Master: ' + mTot + ')</div>';
+        htmlList += '<div style="font-size:11px; color:' + (isCocok ? '#15803d' : '#b91c1c') + '; font-weight:600; margin-top:2px;">' + (isCocok ? '🟢 Sesuai' : '🔴 ' + item.statusTotal) + (item.remark && item.remark !== '-' ? ' • ' + item.remark : '') + '</div>';
+        htmlList += '</div>';
+        htmlList += '<div class="aksi-audit-grup">';
+        htmlList += '<button type="button" class="btn-edit-audit" onclick="editItemDariAudit(\'' + kode + '\')">Ubah</button>';
+        htmlList += '<button type="button" class="btn-hapus-audit" onclick="hapusSatuArtikelDariKeranjang(\'' + kode + '\')" title="Batal Cek">🗑️</button>';
+        htmlList += '</div>';
+        htmlList += '</div>';
+      }
+
+      var elMaster = document.getElementById("kpiMasterQty");
+      var elDisp = document.getElementById("kpiDispQty");
+      var elGud = document.getElementById("kpiGudQty");
+      var elTot = document.getElementById("kpiTotalFisikQty");
+      var elJudul = document.getElementById("judulDaftarMonitorDesktop");
+      var elWadah = document.getElementById("wadahDaftarMonitorDesktop");
+
+      if (elMaster) elMaster.innerText = sumMaster;
+      if (elDisp) elDisp.innerText = sumDisp;
+      if (elGud) elGud.innerText = sumGud;
+      if (elTot) elTot.innerText = (sumDisp + sumGud);
+      if (elJudul) elJudul.innerText = "Daftar Artikel Tercatat (" + keys.length + ")";
+      if (elWadah) {
+        if (keys.length === 0) {
+          elWadah.innerHTML = '<div style="text-align:center; padding:32px 16px; color:#94a3b8; font-size:13px;">Belum ada artikel yang dicatat.<br>Pilih barang di panel kiri untuk memulai opname.</div>';
+        } else {
+          elWadah.innerHTML = htmlList;
+        }
+      }
+    }
+
     function perbaruiBarProgres() {
       var hitungSemua = 0;
       var hitungBelum = 0;
@@ -1812,6 +2211,7 @@
       if (elTeks) elTeks.innerText = "Progres: " + totalDicek + " / " + hitungSemua + " Artikel";
       if (elBar) elBar.style.width = persen + "%";
       animasikanAngkaPersen(persen);
+      renderMonitorDesktop();
     }
 
     function toggleAkumulasi(target) {
@@ -1909,11 +2309,15 @@
 
     function jalankanJam() { 
       var el = document.getElementById('waktu'); 
+      var elHero = document.getElementById('jamHeroDesktop');
       if (timerJam) clearInterval(timerJam);
-      if (el) {
-        el.value = new Date().toLocaleString('id-ID');
-        timerJam = setInterval(function() { el.value = new Date().toLocaleString('id-ID'); }, 1000); 
-      }
+      var updateWaktu = function() {
+        var skr = new Date().toLocaleString('id-ID');
+        if (el) el.value = skr;
+        if (elHero) elHero.innerText = skr;
+      };
+      updateWaktu();
+      timerJam = setInterval(updateWaktu, 1000); 
     }
     function tampilkanModal(j, p) { 
       document.getElementById('modalTitle').innerText = j; 
@@ -2118,6 +2522,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
+      jalankanJam();
       perbaruiTampilanTombolPWA();
       perbaruiManifestPWA("E597 Opname Accs", "https://i.ibb.co.com/RTLCfKLf/Logo-new-erafone-e-red.png");
       daftarkanServiceWorkerPWA();
@@ -2183,7 +2588,7 @@
       mulaiAplikasi();
     }
 
-    // Otentikasi Hybrid + Multi-Tenant Router: Mendukung Lisensi Terpusat & Fallback Anti-Gagal
+    // Otentikasi Hybrid + Multi-Tenant Router
     async function prosesLogin() {
       var inputToko = document.getElementById("loginKodeToko").value.toUpperCase().trim() || "E597";
       var id = document.getElementById("loginId").value.toLowerCase().trim();
@@ -2203,7 +2608,6 @@
       }
 
       try {
-        // 1. Cek Lisensi Multi-Tenant ke Server Pusat jika menggunakan fitur LisensiKlien
         urlApiAktif = URL_API_PUSAT;
         try {
           var resLisensi = await panggilServerAPI({ action: "cekLisensiToko", kodeToko: kodeTokoAktif }, URL_API_PUSAT);
@@ -2212,17 +2616,14 @@
           }
         } catch (errLisensi) {
           var msgLisensi = String(errLisensi.message || "");
-          // Jika server pusat secara eksplisit menolak karena SUSPEND / EXPIRED / Tidak Terdaftar, tampilkan error
           if (msgLisensi.indexOf("SUSPEND") !== -1 || msgLisensi.indexOf("berakhir") !== -1 || msgLisensi.indexOf("tidak terdaftar") !== -1) {
             throw errLisensi;
           }
-          // Jika Kode.gs belum dipasang modul cekLisensiToko ("Perintah API tidak dikenali"), lanjut ke login normal
         }
 
-        // 2. Verifikasi User ID & Password ke Server Toko Aktif
         var resLogin = await panggilServerAPI({ action: "loginUser", userId: id, password: p }, urlApiAktif);
         if (btnMasuk) {
-          btnMasuk.innerHTML = SVG_LOGIN_MASUK + '<span>Masuk (Login)</span>';
+          btnMasuk.innerHTML = SVG_LOGIN_MASUK + '<span>Masuk (Login)</span><span class="kbd-hint">Enter ↵</span>';
           btnMasuk.disabled = false;
         }
         if (resLogin.configPublik) {
@@ -2232,7 +2633,7 @@
         selesaikanMasukLogin(resLogin.user.userId, resLogin.user.namaLengkap, resLogin.user.role);
       } catch (err) {
         if (btnMasuk) {
-          btnMasuk.innerHTML = SVG_LOGIN_MASUK + '<span>Masuk (Login)</span>';
+          btnMasuk.innerHTML = SVG_LOGIN_MASUK + '<span>Masuk (Login)</span><span class="kbd-hint">Enter ↵</span>';
           btnMasuk.disabled = false;
         }
         var pesanErr = String(err.message || "");
@@ -2416,7 +2817,7 @@
         elStatus.style.color = "#0d6efd";
         elStatus.style.backgroundColor = "#eff6ff";
         elStatus.style.borderColor = "#bfdbfe";
-        elTeks.innerText = "Tersimpan di HP (" + totalItem + " brg). Sinkron ke Awan...";
+        elTeks.innerText = "Tersimpan di Perangkat (" + totalItem + " brg). Sinkron ke Awan...";
       }
       setIndikatorSync("syncing");
 
@@ -2455,7 +2856,7 @@
               elStatus.style.color = "#92400e";
               elStatus.style.backgroundColor = "#fffbeb";
               elStatus.style.borderColor = "#fde68a";
-              elTeks.innerText = "Tersimpan aman di HP (" + totalItem + " brg). Menunggu sinkron Awan...";
+              elTeks.innerText = "Tersimpan aman di Perangkat (" + totalItem + " brg). Menunggu sinkron Awan...";
             }
           });
       }, 2200);
@@ -2529,7 +2930,7 @@
 
     function resetDraftTotal() {
       getarHalus(20);
-      if (confirm("YAKIN INGIN MENGHAPUS DATA? \n\nTindakan ini akan menghapus semua sisa kerjaan di HP maupun di Awan.")) {
+      if (confirm("YAKIN INGIN MENGHAPUS DATA? \n\nTindakan ini akan menghapus semua sisa kerjaan di Perangkat maupun di Awan.")) {
         clearTimeout(timerAutoSaveAwan);
         keranjangOpname = {}; 
         try { localStorage.removeItem(KEY_LOKAL_DRAFT); } catch(e) {}
@@ -2590,7 +2991,7 @@
           btn.innerHTML = SVG_SAVE + '<span>Simpan & Log Out</span>';
           btn.disabled = false;
           logoutMandiri();
-          tampilkanModal("Tersimpan di HP", "Data telah diamankan di memori HP Anda dan Anda berhasil Log Out.");
+          tampilkanModal("Tersimpan di Perangkat", "Data telah diamankan di memori perangkat Anda dan Anda berhasil Log Out.");
         });
     }
 
@@ -3028,6 +3429,7 @@
         elInput.className = "input-remark-akhir";
       }
       autoSimpanKeAwan();
+      renderMonitorDesktop();
     }
     
     function bukaTandaTangan() {
