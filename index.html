@@ -15,8 +15,6 @@
   <style>
     html { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
     body { 
-      overscroll-behavior: none;
-    }
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
       padding: max(14px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom)) 14px; 
       background-color: #eef2f7; 
@@ -28,7 +26,7 @@
       background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px;
       background-attachment: fixed;
       margin: 0; 
-      overscroll-behavior-y: none; 
+      overscroll-behavior: none; 
       display: flex; 
       justify-content: center; 
       color: #1c1e21;
@@ -1051,10 +1049,10 @@
   </div>
 
   <!-- SPATIAL LIGHTBOX ZOOM FOTO PRATINJAU -->
-<div id="lightboxModal" class="lightbox-overlay" onclick="tutupLightboxFoto()">
-  <img id="lightboxImg" src="" alt="Perbesaran Foto Barang" referrerpolicy="no-referrer" onerror="perbaikiLinkFotoPecah(this)">
-  <div id="lightboxCaption" class="lightbox-caption">Ketuk di mana saja atau tekan [Esc] untuk menutup</div>
-</div>
+  <div id="lightboxModal" class="lightbox-overlay" onclick="tutupLightboxFoto()">
+    <img id="lightboxImg" src="" alt="Perbesaran Foto Barang" referrerpolicy="no-referrer" onerror="perbaikiLinkFotoPecah(this)">
+    <div id="lightboxCaption" class="lightbox-caption">Ketuk di mana saja atau tekan [Esc] untuk menutup</div>
+  </div>
 
   <div class="container-utama">
     <!-- HALAMAN 1: LAYAR LOGIN MODERN (SPLIT-SCREEN DESKTOP + MOBILE CARD) -->
@@ -1193,7 +1191,7 @@
             <span>Instal Aplikasi Layar Penuh</span>
           </button>
 
-          <div class="footer-versi-login"> Inventory Engine &bull; v3.5 Commercial Widescreen</div>
+          <div class="footer-versi-login">E597 Inventory Engine &bull; v3.5 Stabil PWA</div>
         </div>
       </div>
     </div>
@@ -1351,14 +1349,8 @@
             <!-- FOTO PRATINJAU DENGAN SPATIAL LIGHTBOX ZOOM -->
             <div id="wadahFoto">
               <p style="margin-top:0; margin-bottom:6px; font-size:11.5px; color:#64748b; font-weight:bold;">Pratinjau Fisik Barang (Ketuk gambar untuk memperbesar):</p>
-              <!-- Ganti baris img di dalam #wadahFoto -->
               <img id="fotoPreview" src="" alt="Foto Aksesoris" referrerpolicy="no-referrer" onclick="bukaLightboxFoto()" onerror="perbaikiLinkFotoPecah(this)">
-
-              <!-- FOTO PRATINJAU DENGAN SPATIAL LIGHTBOX ZOOM -->
-            <div id="wadahFoto">
-            <p style="margin-top:0; margin-bottom:6px; font-size:11.5px; color:#64748b; font-weight:bold;">Pratinjau Fisik Barang (Ketuk gambar untuk memperbesar):</p>
-            <img id="fotoPreview" src="" alt="Foto Aksesoris" referrerpolicy="no-referrer" onclick="bukaLightboxFoto()" onerror="perbaikiLinkFotoPecah(this)">
-          </div>
+            </div>
 
             <!-- OPSI UPLOAD FOTO PRATINJAU TERPISAH (KHUSUS AKUN 202106477 / ROLE ADMIN) -->
             <div id="wadahUploadFotoLeader">
@@ -1658,7 +1650,7 @@
     const SVG_DOWNLOAD = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>';
     const SVG_LOGIN_MASUK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>';
 
-    // Daftar Quick-Tap Remark Chips yang telah disetujui (No. 2: Tertukar barang/tipe)
+    // Daftar Quick-Tap Remark Chips
     var DAFTAR_CHIP_REMARK = [
       { label: "🧾 Terjual (No. Faktur)", teks: "Terjual - No. Faktur: " },
       { label: "🔄 Tertukar barang/tipe", teks: "Tertukar barang/tipe: " },
@@ -1729,7 +1721,7 @@
     var KEY_SESI_ROLE = "E597_Sesi_Role";
     var KEY_SESI_API_URL = "E597_Sesi_Api_Url";
     var KEY_SESI_EXP = "E597_Sesi_Exp";
-    var DURASI_SESI_MS = 24 * 60 * 60 * 1000; // Sesi aktif 24 jam (tetap login meski pindah app / keluar ke Home)
+    var DURASI_SESI_MS = 24 * 60 * 60 * 1000; // Sesi aktif 24 jam (anti-logout saat pindah app / ke Home)
     var KEY_LAST_USER_OBJ = "E597_Last_User_Obj";
     var KEY_LAST_KODE_TOKO = "E597_Last_Kode_Toko";
     var KEY_CONFIG_CACHE = "E597_Config_Cache";
@@ -1738,7 +1730,27 @@
     // PINTASAN KEYBOARD FISIK (DESKTOP HOTKEYS: '/' CARI, 'ESC' TUTUP)
     // =========================================================================
     document.addEventListener("keydown", function(e) {
-      // =========================================================================
+      if (e.key === "Escape") {
+        tutupLightboxFoto();
+        tutupModal();
+        document.getElementById("modalKonfirmasiBelum").style.display = "none";
+        document.getElementById("modalPanduanPwa").style.display = "none";
+        return;
+      }
+      var tagAktif = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toUpperCase() : "";
+      if (e.key === "/" && tagAktif !== "INPUT" && tagAktif !== "TEXTAREA" && tagAktif !== "SELECT") {
+        if (document.getElementById("layarUtama").style.display === "block") {
+          e.preventDefault();
+          var elCari = document.getElementById("kolomCari");
+          if (elCari) {
+            elCari.focus();
+            elCari.select();
+          }
+        }
+      }
+    });
+
+    // =========================================================================
     // PENGAMAN GESTUR GESER KEMBALI (PWA BACK-GUARD) & AMANKAN DRAFT SAAT KE HOME
     // =========================================================================
     var pwaGuardAktif = false;
@@ -1752,7 +1764,6 @@
       } catch (e) {}
     }
 
-    // Aktifkan pengaman setelah sentuhan pertama (aturan browser Android/iOS modern)
     document.addEventListener("pointerdown", function() {
       if (userAktif && !pwaGuardAktif) {
         pasangPengamanNavigasiPWA();
@@ -1764,7 +1775,7 @@
       pwaGuardAktif = false;
       clearTimeout(timerResetBackPWA);
 
-      // 1. Jika ada foto zoom, pop-up, panel tambah barang, atau area TTD terbuka -> tutup dulu (bukan keluar app)
+      // 1. Jika ada foto zoom, pop-up, panel tambah barang, atau area TTD terbuka -> tutup dulu
       if (document.getElementById("lightboxModal").style.display === "flex") {
         tutupLightboxFoto();
         pasangPengamanNavigasiPWA();
@@ -1795,7 +1806,6 @@
       getarHalus(15);
       tampilkanToast("Geser kembali sekali lagi untuk keluar (Sesi tetap aman)");
 
-      // Jika dalam 2,2 detik tidak menggeser lagi, pasang pengaman kembali
       timerResetBackPWA = setTimeout(function() {
         if (userAktif) {
           pasangPengamanNavigasiPWA();
@@ -1811,25 +1821,24 @@
         } catch (e) {}
       }
     });
-      if (e.key === "Escape") {
-        tutupLightboxFoto();
-        tutupModal();
-        document.getElementById("modalKonfirmasiBelum").style.display = "none";
-        document.getElementById("modalPanduanPwa").style.display = "none";
-        return;
+
+    // =========================================================================
+    // NORMALISASI & FALLBACK LINK FOTO IMGBB (LOLOS BLOKIR ISP INDONESIA)
+    // =========================================================================
+    function normalisasiUrlFoto(url) {
+      if (!url) return "";
+      return String(url).trim().replace(/^https?:\/\/i\.ibb\.co\//i, "https://i.ibb.co.com/");
+    }
+
+    function perbaikiLinkFotoPecah(elImg) {
+      if (!elImg || elImg.dataset.retried === "1") return;
+      elImg.dataset.retried = "1";
+      if (elImg.src.indexOf("i.ibb.co/") !== -1) {
+        elImg.src = elImg.src.replace(/^https?:\/\/i\.ibb\.co\//i, "https://i.ibb.co.com/");
+      } else if (elImg.src.indexOf("i.ibb.co.com/") !== -1) {
+        elImg.src = elImg.src.replace(/^https?:\/\/i\.ibb\.co\.com\//i, "https://i.ibb.co/");
       }
-      var tagAktif = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toUpperCase() : "";
-      if (e.key === "/" && tagAktif !== "INPUT" && tagAktif !== "TEXTAREA" && tagAktif !== "SELECT") {
-        if (document.getElementById("layarUtama").style.display === "block") {
-          e.preventDefault();
-          var elCari = document.getElementById("kolomCari");
-          if (elCari) {
-            elCari.focus();
-            elCari.select();
-          }
-        }
-      }
-    });
+    }
 
     // =========================================================================
     // SISTEM PROGRESSIVE WEB APP (PWA) LAYAR PENUH & DYNAMIC MANIFEST
@@ -1940,18 +1949,20 @@
         if (elSub) elSub.innerText = cfg.subjudulLogin;
       }
       if (cfg.logoUtama) {
+        var logoUrl = normalisasiUrlFoto(cfg.logoUtama);
         var logo1 = document.getElementById("imgLogoLogin");
         var logo2 = document.getElementById("imgLogoUtama");
-        if (logo1) { logo1.src = cfg.logoUtama; logo1.style.display = "inline-block"; }
-        if (logo2) { logo2.src = cfg.logoUtama; logo2.style.display = "inline-block"; }
+        if (logo1) { logo1.src = logoUrl; logo1.style.display = "inline-block"; }
+        if (logo2) { logo2.src = logoUrl; logo2.style.display = "inline-block"; }
       }
       if (cfg.iconTab) {
+        var iconUrl = normalisasiUrlFoto(cfg.iconTab);
         var fav = document.getElementById("faviconLink");
         var touch = document.getElementById("appleTouchIconLink");
-        if (fav) fav.href = cfg.iconTab;
-        if (touch) touch.href = cfg.iconTab;
+        if (fav) fav.href = iconUrl;
+        if (touch) touch.href = iconUrl;
       }
-      perbaruiManifestPWA(cfg.namaAplikasi, cfg.iconTab);
+      perbaruiManifestPWA(cfg.namaAplikasi, normalisasiUrlFoto(cfg.iconTab));
 
       if (cfg.opsiRemark && String(cfg.opsiRemark).indexOf("=>") !== -1) {
         var potongan = String(cfg.opsiRemark).split("|");
@@ -2108,7 +2119,9 @@
       getarHalus(10);
       var kode = document.getElementById("kodePilihan").value;
       var judul = (kode && kunciData[kode]) ? ("[" + kode + "] " + kunciData[kode].nama) : "Pratinjau Fisik Barang";
-      document.getElementById("lightboxImg").src = src;
+      var lbImg = document.getElementById("lightboxImg");
+      lbImg.dataset.retried = "0";
+      lbImg.src = src;
       document.getElementById("lightboxCaption").innerText = judul + " • Ketuk layar atau tekan [Esc] untuk menutup";
       document.getElementById("lightboxModal").style.display = "flex";
     }
@@ -2493,21 +2506,6 @@
       });
     }
 
-    function normalisasiUrlFoto(url) {
-  if (!url) return "";
-  return String(url).trim().replace(/^https?:\/\/i\.ibb\.co\//i, "https://i.ibb.co.com/");
-}
-
-function perbaikiLinkFotoPecah(elImg) {
-  if (!elImg || elImg.dataset.retried === "1") return;
-  elImg.dataset.retried = "1";
-  if (elImg.src.indexOf("i.ibb.co/") !== -1) {
-    elImg.src = elImg.src.replace(/^https?:\/\/i\.ibb\.co\//i, "https://i.ibb.co.com/");
-  } else if (elImg.src.indexOf("i.ibb.co.com/") !== -1) {
-    elImg.src = elImg.src.replace(/^https?:\/\/i\.ibb\.co\.com\//i, "https://i.ibb.co/");
-  }
-}
-    
     function prosesUploadFotoPratinjauLeader(input) {
       if (!apakahAdminToko()) return;
       if (!input.files || !input.files[0]) return;
@@ -2569,7 +2567,8 @@ function perbaikiLinkFotoPecah(elImg) {
           tampilkanModal("Gagal Upload Foto", err.message);
         });
       });
-      
+    }
+
     function hapusFotoBaru() {
       fotoBaruBase64 = "";
       var elInput = document.getElementById("inputKameraBaru");
@@ -2659,14 +2658,13 @@ function perbaikiLinkFotoPecah(elImg) {
           pasangPengamanNavigasiPWA();
           mulaiAplikasi();
         } else {
-          // Hapus sesi jika sudah lewat 24 jam
           localStorage.removeItem(KEY_SESI_USER);
           localStorage.removeItem(KEY_SESI_ID);
           localStorage.removeItem(KEY_SESI_ROLE);
           localStorage.removeItem(KEY_SESI_API_URL);
           localStorage.removeItem(KEY_SESI_EXP);
         }
-      } catch(e) {}    
+      } catch(e) {}
     });
 
     function selesaikanMasukLogin(idUser, namaLengkapUser, roleUser) {
@@ -2784,7 +2782,7 @@ function perbaikiLinkFotoPecah(elImg) {
         sessionStorage.removeItem(KEY_SESI_ROLE);
         sessionStorage.removeItem(KEY_SESI_API_URL);
       } catch(e) {}
-      
+
       if (Object.keys(keranjangOpname).length > 0) {
         var jsonKeranjang = JSON.stringify(keranjangOpname);
         try { localStorage.setItem(KEY_LOKAL_DRAFT, jsonKeranjang); } catch(e) {}
@@ -3811,4 +3809,3 @@ function perbaikiLinkFotoPecah(elImg) {
   </script>
 </body>
 </html>
-<!-- === AKHIR INDEX.HTML === -->
